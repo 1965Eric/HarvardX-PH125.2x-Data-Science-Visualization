@@ -191,30 +191,25 @@ Knowing that there are 51 states (counting DC) and based on this plot, how many 
 
 7. Below is a histogram of male heights in our heights dataset:
 
-
+![Unknown](https://user-images.githubusercontent.com/17474099/75706795-168b7000-5cbe-11ea-97af-639fa5d34b47.png)
 
 Based on this plot, how many males are between 62.5 and 65.5?
 
-A. 5
+- [ ] A. 5
+- [ ] B. 24
+- [X] C. 44
+- [ ] D. 100
 
-B. 24
+8. About what percentage are shorter than 60 inches?
 
-C. 44
+- [X] A. 1%
+- [ ] B. 10%
+- [ ] C. 25%
+- [ ] D. 50%
 
-D. 100
+9. Based on the density plot below, about what proportion of US states have populations larger than 10 million?
 
-    About what percentage are shorter than 60 inches?
 
-A. 1%
-
-B. 10%
-
-C. 25%
-
-D. 50%
-
-    Based on the density plot below, about what proportion of US states have populations larger than 10 million?
-    density-plot-populations
 
 A. 0.02
 
