@@ -135,31 +135,27 @@ Since there are a finite number of reported heights and technically the height c
     
 In the murders dataset, the region is a categorical variable and the following is its distribution:
 
-
+![Unknown](https://user-images.githubusercontent.com/17474099/75705803-6b2deb80-5cbc-11ea-86d8-5e3a187694e2.png)
 
 To the closet 5%, what proportion of the states are in the North Central region?
 
-A. 75%
+- [ ] A. 75%
+- [ ] B. 50%
+- [X] C. 20%
+- [ ] D. 5%
 
-B. 50%
+2. Distributions - 2
 
-C. 20%
+Which of the following is true:
 
-D. 5%
+- [ ] A. The graph above is a histogram.
+- [X] B. The graph above shows only four numbers with a bar plot.
+- [ ] C. Categories are not numbers, so it does not make sense to graph the distribution.
+- [ ] D. The colors, not the height of the bars, describe the distribution.
 
-    Distributions - 2
-    Which of the following is true:
+3. The plot below shows the eCDF for male heights:
 
-A. The graph above is a histogram.
 
-B. The graph above shows only four numbers with a bar plot.
-
-C. Categories are not numbers, so it does not make sense to graph the distribution.
-
-D. The colors, not the height of the bars, describe the distribution.
-
-    The plot below shows the eCDF for male heights:
-    eCDF
 
 Based on the plot, what percentage of males are shorter than 75 inches?
 
