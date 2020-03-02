@@ -155,30 +155,25 @@ Which of the following is true:
 
 3. The plot below shows the eCDF for male heights:
 
-
+![Unknown](https://user-images.githubusercontent.com/17474099/75706117-f6a77c80-5cbc-11ea-8689-ceb860f0f133.png)
 
 Based on the plot, what percentage of males are shorter than 75 inches?
 
-A. 100%
+- [ ] A. 100%
+- [X] B. 95%
+- [ ] C. 80%
+- [ ] D. 72 inches
 
-B. 95%
+4. To the closest inch, what height m has the property that 1/2 of the male students are taller than m and 1/2 are shorter?
 
-C. 80%
+- [ ] A. 61 inches
+- [ ] B. 64 inches
+- [X] C. 69 inches
+- [ ] D. 74 inches
 
-D. 72 inches
+5. Here is an eCDF of the murder rates across states:
 
-    To the closest inch, what height m has the property that 1/2 of the male students are taller than m and 1/2 are shorter?
 
-A. 61 inches
-
-B. 64 inches
-
-C. 69 inches
-
-D. 74 inches
-
-    Here is an eCDF of the murder rates across states:
-    eCDF
 
 Knowing that there are 51 states (counting DC) and based on this plot, how many states have murder rates larger than 10 per 100,000 people?
 
