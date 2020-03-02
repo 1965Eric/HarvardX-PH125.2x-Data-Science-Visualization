@@ -45,6 +45,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 ## Assessment 1 (Data Types)
 
 1. Variable names
+
 Let’s start by reviewing how to extract the variable names from a dataset using the names function. What are the two variable names used in the heights dataset?
 ```
 library(dslabs)
@@ -55,6 +56,7 @@ names(heights)
 ## [1] "sex"    "height"
 ```
 2. Variable type
+
 We saw that sex is the first variable. We know what values are represented by this variable and can confirm this by looking at the first few entires:
 
 library(dslabs)
