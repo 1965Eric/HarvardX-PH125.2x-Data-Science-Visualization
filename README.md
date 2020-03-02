@@ -173,30 +173,25 @@ Based on the plot, what percentage of males are shorter than 75 inches?
 
 5. Here is an eCDF of the murder rates across states:
 
-
+![Unknown](https://user-images.githubusercontent.com/17474099/75706458-80574a00-5cbd-11ea-806e-30358d1613ae.png)
 
 Knowing that there are 51 states (counting DC) and based on this plot, how many states have murder rates larger than 10 per 100,000 people?
 
-A. 1
+- [X] A. 1
+- [ ] B. 5
+- [ ] C. 10
+- [ ] D. 50
 
-B. 5
+6. Based on the eCDF above, which of the following statements are true:
 
-C. 10
+- [ ] A. About half the states have murder rates above 7 per 100,000 and the other half below.
+- [ ] B. Most states have murder rates below 2 per 100,000.
+- [ ] C. All the states have murder rates above 2 per 100,000.
+- [X] D. With the exception of 4 states, the murder rates are below 5 per 100,000.
 
-D. 50
+7. Below is a histogram of male heights in our heights dataset:
 
-    Based on the eCDF above, which of the following statements are true:
 
-A. About half the states have murder rates above 7 per 100,000 and the other half below.
-
-B. Most states have murder rates below 2 per 100,000.
-
-C. All the states have murder rates above 2 per 100,000.
-
-D. With the exception of 4 states, the murder rates are below 5 per 100,000.
-
-    Below is a histogram of male heights in our heights dataset:
-    histogram-male-heights
 
 Based on this plot, how many males are between 62.5 and 65.5?
 
