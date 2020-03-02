@@ -58,19 +58,14 @@ names(heights)
 2. Variable type
 
 We saw that sex is the first variable. We know what values are represented by this variable and can confirm this by looking at the first few entires:
-
+```
 library(dslabs)
 data(heights)
 head(heights)
-
- 
- 
-	
-sex
-<fctr>
-	
-height
-<dbl>
+```
+```
+	sex     height
+	<fctr>  <dbl>
 1	Male	75
 2	Male	70
 3	Male	68
@@ -78,16 +73,13 @@ height
 5	Male	61
 6	Female	65
 6 rows
-
+```
 What data type is the sex variable?
 
-A. Continuous
-
-B. Categorical
-
-C. Ordinal
-
-D. None of the above
+- [ ] A. Continuous
+- [X] B. Categorical
+- [ ] C. Ordinal
+- [ ] D. None of the above
 
     Numerical values
     Use the unique and length functions to determine how many unique heights were reported.
