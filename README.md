@@ -8,53 +8,54 @@ This is the second in a series of courses in a Professional Certificate in Data 
 The textbook for the Data Science course series is [freely available online](https://rafalab.github.io/dsbook/).
 
 ## Learning Objectives
+- Data visualization principles to better communicate data-driven findings
+- How to use ggplot2 to create custom plots
+- The weaknesses of several widely used plots and why you should avoid them
 
-    Data visualization principles to better communicate data-driven findings
-    How to use ggplot2 to create custom plots
-    The weaknesses of several widely used plots and why you should avoid them
+## Course Overview
 
-Course Overview
-
-Section 1: Introduction to Data Visualization and Distributions
+### Section 1: Introduction to Data Visualization and Distributions
 You will get started with data visualization and distributions in R.
 
-Section 2: Introduction to ggplot2
+### Section 2: Introduction to ggplot2
 You will learn how to use ggplot2 to create plots.
 
-Section 3: Summarizing with dplyr
+### Section 3: Summarizing with dplyr
 You will learn how to summarize data using dplyr.
 
-Section 4: Gapminder
+### Section 4: Gapminder
 You will see examples of ggplot2 and dplyr in action with the Gapminder dataset.
 
-Section 5: Data Visualization Principles
+### Section 5: Data Visualization Principles
 You will learn general principles to guide you in developing effective data visualizations.
-Section 1 Overview
+
+## Section 1 Overview
 
 Section 1 introduces you to Data Visualization and Distributions.
 
 After completing Section 1, you will:
+- understand the importance of data visualization for communicating data-driven findings.
+- be able to use distributions to summarize data.
+- be able to use the average and the standard deviation to understand the normal distribution.
+- be able to assess how well a normal distribution fits the data using a quantile-quantile plot.
+- be able to interpret data from a boxplot.
 
-    understand the importance of data visualization for communicating data-driven findings.
-    be able to use distributions to summarize data.
-    be able to use the average and the standard deviation to understand the normal distribution.
-    be able to assess how well a normal distribution fits the data using a quantile-quantile plot.
-    be able to interpret data from a boxplot.
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/introduction-to-data-visualization.html)
 
-The textbook for this section is available here
-Assessment 1 (Data Types)
+## Assessment 1 (Data Types)
 
-    Variable names
-    Let’s start by reviewing how to extract the variable names from a dataset using the names function. What are the two variable names used in the heights dataset?
-
+1. Variable names
+Let’s start by reviewing how to extract the variable names from a dataset using the names function. What are the two variable names used in the heights dataset?
+```
 library(dslabs)
 data(heights)
 names(heights)
-
+```
+```
 ## [1] "sex"    "height"
-
-    Variable type
-    We saw that sex is the first variable. We know what values are represented by this variable and can confirm this by looking at the first few entires:
+```
+2. Variable type
+We saw that sex is the first variable. We know what values are represented by this variable and can confirm this by looking at the first few entires:
 
 library(dslabs)
 data(heights)
