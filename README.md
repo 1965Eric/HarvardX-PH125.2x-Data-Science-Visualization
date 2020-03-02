@@ -81,52 +81,61 @@ What data type is the sex variable?
 - [ ] C. Ordinal
 - [ ] D. None of the above
 
-    Numerical values
-    Use the unique and length functions to determine how many unique heights were reported.
+3. Numerical values
 
+Use the unique and length functions to determine how many unique heights were reported.
+```
 library(dslabs)
 data(heights)
-
+```
+```
 x <- heights$height
 length(unique(x))
-
+```
+```
 ## [1] 139
+```
+4. Tables
 
-    Tables
-    Use the table function to compute the frequencies of each unique height value. Because we are using the resulting frequency table in a later exercise we want you to save the results into an object and call it tab.
-
+Use the table function to compute the frequencies of each unique height value. Because we are using the resulting frequency table in a later exercise we want you to save the results into an object and call it tab.
+```
 library(dslabs)
 data(heights)
-
+```
+```
 x <- heights$height
 tab <- table(x)
+```
+5. Indicator variables
 
-    Indicator variables
-    In the previous exercise we computed the variable tab which reports the number of times each unique value appears. For values reported only once tab will be 1. Use logicals and the function sum to count the number of times this happens.
-
+In the previous exercise we computed the variable tab which reports the number of times each unique value appears. For values reported only once tab will be 1. Use logicals and the function sum to count the number of times this happens.
+```
 library(dslabs)
 data(heights)
-
+```
+```
 tab <- table(heights$height)
 sum(tab==1)
-
+```
+```
 ## [1] 63
+```
+6. Data types - heights
 
-    Data types - heights
-    Since there are a finite number of reported heights and technically the height can be considered ordinal, which of the following is true:
+Since there are a finite number of reported heights and technically the height can be considered ordinal, which of the following is true:
 
-A. It is more effective to consider heights to be numerical given the number of unique values we observe and the fact that if we keep collecting data even more will be observed.
+- [X] A. It is more effective to consider heights to be numerical given the number of unique values we observe and the fact that if we keep collecting data even more will be observed.
+- [ ] B. It is actually preferable to consider heights ordinal since on a computer there are only a finite number of possibilities.
+- [ ] C. This is actually a categorical variable: tall, medium or short.
+- [ ] D. This is a numerical variable because numbers are used to represent it.
 
-B. It is actually preferable to consider heights ordinal since on a computer there are only a finite number of possibilities.
+## Assessment 2 (Distribution)
 
-C. This is actually a categorical variable: tall, medium or short.
+1. Distributions - 1
+    
+In the murders dataset, the region is a categorical variable and the following is its distribution:
 
-D. This is a numerical variable because numbers are used to represent it.
-Assessment 2 (Distribution)
 
-    Distributions - 1
-    In the murders dataset, the region is a categorical variable and the following is its distribution:
-    distribution
 
 To the closet 5%, what proportion of the states are in the North Central region?
 
