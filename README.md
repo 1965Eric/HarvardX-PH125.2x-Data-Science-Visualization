@@ -861,18 +861,21 @@ p + scale_x_log10()
 #Repeat the previous exercise but now change both axes to be in the log scale.
 p + scale_x_log10() + scale_y_log10()
 ```
-    
-   
+
+![Unknown-2](https://user-images.githubusercontent.com/17474099/75803897-739b2a80-5d7f-11ea-9d5a-18ec9b41bf29.png)   
     
 14. Titles
 
 Now edit the code above to add the title “Gun murder data” to the plot. Hint: use the ggtitle function.
-
+```
 p <- murders %>% ggplot(aes(population, total, label = abb, color = region)) +
   geom_label()
 # add a layer to add title to the next line
 p + scale_x_log10() + 
     scale_y_log10() + ggtitle("Gun murder data")
+```
+
+
 
     Histograms
     We are going to shift our focus from the murders dataset to explore the heights dataset.
