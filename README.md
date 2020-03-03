@@ -209,18 +209,16 @@ Based on this plot, how many males are between 62.5 and 65.5?
 
 9. Based on the density plot below, about what proportion of US states have populations larger than 10 million?
 
+![index](https://user-images.githubusercontent.com/17474099/75769618-c86e7f00-5d46-11ea-9b94-9ae8d2330565.png)
+
+- [ ] A. 0.02
+- [X] B. 0.15
+- [ ] C. 0.50
+- [ ] D. 0.55
+
+10. Below are three density plots. Is it possible that they are from the same dataset?
 
 
-A. 0.02
-
-B. 0.15
-
-C. 0.50
-
-D. 0.55
-
-    Below are three density plots. Is it possible that they are from the same dataset?
-    3-density-plot
 
 Which of the following statements is true:
 
