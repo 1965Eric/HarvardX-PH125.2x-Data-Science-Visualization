@@ -402,32 +402,36 @@ What would be a fair critique of our calculations?
 
 ## Assessment 4 (Quantiles, percentiles, and boxplots)
 
-    Vector lengths
-    When analyzing data it’s often important to know the number of measurements you have for each category.
-    Define a variable male that contains the male heights.
-    Define a variable female that contains the female heights.
-    Report the length of each variable.
+1. Vector lengths
 
+When analyzing data it’s often important to know the number of measurements you have for each category. Define a variable male that contains the male heights. Define a variable female that contains the female heights. Report the length of each variable.
+```
 library(dslabs)
 data(heights)
-
+```
+```
 male <- heights$height[heights$sex=="Male"]
 female <- heights$height[heights$sex=="Female"]
 
 length(male)
-
+```
+```
 ## [1] 812
-
+```
+```
 length(female)
-
+```
+```
 ## [1] 238
+```
+2. Percentiles
 
-    Percentiles
-    Suppose we can’t make a plot and want to compare the distributions side by side. We can’t just list all the numbers. Instead, we will look at the percentiles. Create a five row table showing female_percentiles and male_percentiles with the 10th, 30th, 50th, ., 90th percentiles for each sex. Then create a data frame with these two as columns.
-
+Suppose we can’t make a plot and want to compare the distributions side by side. We can’t just list all the numbers. Instead, we will look at the percentiles. Create a five row table showing female_percentiles and male_percentiles with the 10th, 30th, 50th, ., 90th percentiles for each sex. Then create a data frame with these two as columns.
+```
 library(dslabs)
 data(heights)
-
+```
+```
 male <- heights$height[heights$sex=="Male"]
 female <- heights$height[heights$sex=="Female"]
 
@@ -436,27 +440,24 @@ female_percentiles <- quantile(female, seq(0.1, 0.9,0.2))
 
 df <- data.frame(female = female_percentiles, male = male_percentiles)
 df
-
- 
- 
-	
-female
-<dbl>
-	
-male
-<dbl>
+```
+```
+        female          male
+        <dbl>           <dbl>
 10%	61.00000	65.00000
 30%	63.00000	68.00000
 50%	64.98031	69.00000
 70%	66.46417	71.00000
 90%	69.00000	73.22751
 5 rows
+```
+3. Interpretating Boxplots - 1
 
-    Interpretating Boxplots - 1
-    Study the boxplots summarizing the distributions of populations sizes by country.
+Study the boxplots summarizing the distributions of populations sizes by country.
 
 Which continent has the country with the largest population size?
-Interpretating Boxplots-1
+
+
 
 A. Africa
 
