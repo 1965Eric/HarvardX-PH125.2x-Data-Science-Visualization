@@ -819,27 +819,30 @@ murders %>% ggplot(aes(population, total,label= abb)) +
   geom_label(color='blue')
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/75777261-f14a4080-5d55-11ea-9ad7-1e4eb1af596a.png)
 
-    geom_labels by region
-    Now suppose we want to use color to represent the different regions. In this case which of the following is most appropriate:
+11. geom_labels by region
 
-A. Adding a column called color to murders with the color we want to use
+Now suppose we want to use color to represent the different regions. In this case which of the following is most appropriate:
 
-B. Mapping the colors through the color argument of aes because each label needs a different color
+- [ ] A. Adding a column called color to murders with the color we want to use
+- [X] B. Mapping the colors through the color argument of aes because each label needs a different color
+- [ ] C. Using the color argument in ggplot
+- [ ] D. Using the color argument in geom_label because we want all colors to be blue so we do not need to map colors
 
-C. Using the color argument in ggplot
+12. geom_label colors
 
-D. Using the color argument in geom_label because we want all colors to be blue so we do not need to map colors
-
-    geom_label colors
-    Rewrite the code above to make the label color correspond to the state’s region.
-
+Rewrite the code above to make the label color correspond to the state’s region.
+```
 ## edit this code
 murders %>% ggplot(aes(population, total, label = abb,color=region)) +
   geom_label()
+```
 
-    Log-scale
-    Now we are going to change the x-axis to a log scale to account for the fact the distribution of population is skewed. Let’s start by define an object p holding the plot we have made up to now
+
+13. Log-scale
+
+Now we are going to change the x-axis to a log scale to account for the fact the distribution of population is skewed. Let’s start by define an object p holding the plot we have made up to now
 
 p <- murders %>% 
   ggplot(aes(population, total, label = abb, color = region)) +
