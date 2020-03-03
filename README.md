@@ -457,23 +457,21 @@ Study the boxplots summarizing the distributions of populations sizes by country
 
 Which continent has the country with the largest population size?
 
+![index](https://user-images.githubusercontent.com/17474099/75773033-5baab300-5d4d-11ea-878e-c54b7a7f94f4.png)
 
+- [ ] A. Africa
+- [ ] B. Americas
+- [X] C. Asia
+- [ ] D. Europe
+- [ ] E. Oceania
 
-A. Africa
+4. Interpretating Boxplots - 2
 
-B. Americas
-
-C. Asia
-
-D. Europe
-
-E. Oceania
-
-    Interpretating Boxplots - 2
-    Study the boxplots summarizing the distributions of populations sizes by country.
+Study the boxplots summarizing the distributions of populations sizes by country.
 
 Which continent has median country with the largest population?
-Interpretating Boxplots-1
+
+
 
 A. Africa
 
