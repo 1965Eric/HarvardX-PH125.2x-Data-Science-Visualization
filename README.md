@@ -506,121 +506,133 @@ Examine the following boxplots and report approximately what proportion of count
     
 Based on the boxplot, if we use a log transformation, which continent shown below has the largest interquartile range?
 
+![index](https://user-images.githubusercontent.com/17474099/75774893-391a9900-5d51-11ea-938b-daaf1b49415f.png)
 
+- [ ] A. Africa
+- [X] B. Americas
+- [ ] C. Asia
+- [ ] D. Europe
+- [ ] E. Oceania
 
-A. Africa
+## Assessment 5 (Robust Summaries With Outliers)
 
-B. Americas
+1. Exploring the Galton Dataset - Average and Median
 
-C. Asia
-
-D. Europe
-
-E. Oceania
-Assessment 5 (Robust Summaries With Outliers)
-
-    Exploring the Galton Dataset - Average and Median
-    For this chapter, we will use height data collected by Francis Galton for his genetics studies. Here we just use height of the children in the dataset:
-
+For this chapter, we will use height data collected by Francis Galton for his genetics studies. Here we just use height of the children in the dataset:
+```
 library(HistData)
 data(Galton)
 x <- Galton$child
-
+```
 Compute the average and median of these data. Note: do not assign them to a variable.
-
+```
 mean(x)
-
+```
+```
 ## [1] 68.08847
-
+```
+```
 median(x)
-
+```
+```
 ## [1] 68.2
+```
+2. Exploring the Galton Dataset - SD and MAD
 
-    Exploring the Galton Dataset - SD and MAD
-    Now for the same data compute the standard deviation and the median absolute deviation (MAD).
-
+Now for the same data compute the standard deviation and the median absolute deviation (MAD).
+```
 sd(x)
-
+```
+```
 ## [1] 2.517941
-
+```
+```
 mad(x)
-
+```
+```
 ## [1] 2.9652
+```
+3. Error impact on average
 
-    Error impact on average
-    In the previous exercises we saw that the mean and median are very similar and so are the standard deviation and MAD. This is expected since the data is approximated by a normal distribution which has this propoerty.
+In the previous exercises we saw that the mean and median are very similar and so are the standard deviation and MAD. This is expected since the data is approximated by a normal distribution which has this propoerty.
 
 Now suppose that suppose Galton made a mistake when entering the first value, forgetting to use the decimal point. You can imitate this error by typing:
-
+```
 library(HistData)
 data(Galton)
 x <- Galton$child
 x_with_error <- x
 x_with_error[1] <- x_with_error[1]*10
-
+```
 The data now has an outlier that the normal approximation does not account for. Let’s see how this affects the average.
 
 Report how many inches the average grow after this mistake. Specifically, report the difference between the average of the data with the mistake x_with_error and the data without the mistake x.
-
+```
 mean(x_with_error)-mean(x)
-
+```
+```
 ## [1] 0.5983836
+```
+4. Error impact on SD
 
-    Error impact on SD
-    In the previous exercise we saw how a simple mistake can result in the average of our data increasing more than half a foot, which is a large difference in practical terms. Now let’s explore the effect this outlier has on the standard deviation.
+In the previous exercise we saw how a simple mistake can result in the average of our data increasing more than half a foot, which is a large difference in practical terms. Now let’s explore the effect this outlier has on the standard deviation.
 
 Report how many inches the SD grows after this mistake. Specifically, report the difference between the SD of the data with the mistake x_with_error and the data without the mistake x.
-
+```
 x_with_error <- x
 x_with_error[1] <- x_with_error[1]*10
 
 sd(x_with_error)-sd(x)
-
+```
+```
 ## [1] 15.6746
+```
+5. Error impact on median
 
-    Error impact on median
-    In the previous exercises we saw how one mistake can have a substantial effect on the average and the standard deviation.
+In the previous exercises we saw how one mistake can have a substantial effect on the average and the standard deviation.
 
 Now we are going to see how the median and MAD are much more resistant to outliers. For this reason we say that they are robust summaries.
 
 Report how many inches the median grows after the mistake. Specifically, report the difference between the median of the data with the mistake x_with_error and the data without the mistake x.
-
+```
 x_with_error <- x
 x_with_error[1] <- x_with_error[1]*10
 
 median(x_with_error)-median(x)
-
+```
+```
 ## [1] 0
+```
+6. Error impact on MAD
 
-    Error impact on MAD
-    We saw that the median barely changes. Now let’s see how the MAD is affected.
+We saw that the median barely changes. Now let’s see how the MAD is affected.
 
 Report how many inches the MAD grows after the mistake. Specifically, report the difference between the MAD of the data with the mistake x_with_error and the data without the mistake x.
-
+```
 x_with_error <- x
 x_with_error[1] <- x_with_error[1]*10
 
 mad(x_with_error)-mad(x)
-
+```
+```
 ## [1] 0
+```
+7. Usefulness of EDA
 
-    Usefulness of EDA
-    How could you use exploratory data analysis to detect that an error was made?
+How could you use exploratory data analysis to detect that an error was made?
+- [ ] A. Since it is only one value out of many, we will not be able to detect this.
+- [ ] B. We would see an obvious shift in the distribution.
+- [X] C. A boxplot, histogram, or qq-plot would reveal a clear outlier.
+- [ ] D. A scatter plot would show high levels of measurement error.
 
-A. Since it is only one value out of many, we will not be able to detect this.
+8. Using EDA to explore changes
 
-B. We would see an obvious shift in the distribution.
-
-C. A boxplot, histogram, or qq-plot would reveal a clear outlier.
-
-D. A scatter plot would show high levels of measurement error.
-
-    Using EDA to explore changes We have seen how the average can be affected by outliers. But how large can this effect get? This of course depends on the size of the outlier and the size of the dataset.
+We have seen how the average can be affected by outliers. But how large can this effect get? This of course depends on the size of the outlier and the size of the dataset.
 
 To see how outliers can affect the average of a dataset, let’s write a simple function that takes the size of the outlier as input and returns the average.
 
 Write a function called error_avg that takes a value k and returns the average of the vector x after the first entry changed to k. Show the results for k=10000 and k=-10000.
-
+```
 x <- Galton$child
 
 error_avg <- function(k){
@@ -629,113 +641,122 @@ error_avg <- function(k){
 }
 
 error_avg(10000)
-
+```
+```
 ## [1] 78.79784
-
+```
+```
 error_avg(-10000)
-
+```
+```
 ## [1] 57.24612
+```
+## Section 2 Overview
 
-Section 2 Overview
-
-n Section 2, you will learn how to create data visualizations in R using ggplot2.
+In Section 2, you will learn how to create data visualizations in R using ggplot2.
 
 After completing Section 2, you will:
+- be able to use ggplot2 to create data visualizations in R.
+- be able to explain what the data component of a graph is.
+- be able to identify the geometry component of a graph and know when to use which type of geometry.
+- be able to explain what the aesthetic mapping component of a graph is.
+- be able to understand the scale component of a graph and select an appropriate scale component to use.
 
-    be able to use ggplot2 to create data visualizations in R.
-    be able to explain what the data component of a graph is.
-    be able to identify the geometry component of a graph and know when to use which type of geometry.
-    be able to explain what the aesthetic mapping component of a graph is.
-    be able to understand the scale component of a graph and select an appropriate scale component to use.
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/ggplot2.html)
 
-The textbook for this section is available here
-Assessment 6 (ggplot2)
+## Assessment 6 (ggplot2)
 
 Start by loading the dplyr and ggplot2 library as well as the murders and heights data.
-
+```
 library(dplyr)
 library(ggplot2)
 library(dslabs)
 data(heights)
 data(murders)
+```
+1. ggplot2 basics
 
-    ggplot2 basics
-    With ggplot2 plots can be saved as objects. For example we can associate a dataset with a plot object like this
-
+With ggplot2 plots can be saved as objects. For example we can associate a dataset with a plot object like this
+```
 p <- ggplot(data = murders)
-
+```
 Because data is the first argument we don’t need to spell it out
-
+```
 p <- ggplot(murders)
-
+```
 or, if we load dplyr, we can also use the pipe:
-
+```
 p <- murders %>% ggplot()
-
+```
 Remember the pipe sends the object on the left of %>% to be the first argument for the function the right of %>%.
 What is class of the object p?
-
+```
 class(p)
-
+```
+```
 ## [1] "gg"     "ggplot"
+```
+2. Printing
 
-    printing
-    Remember that to print an object you can use the command print or simply type the object. For example
-
+Remember that to print an object you can use the command print or simply type the object. For example
+```
 x <- 2
 x
-
+```
+```
 ## [1] 2
-
+```
+```
 print(x)
-
+```
+```
 ## [1] 2
-
+```
 Print the object p defined in exercise one and describe what you see.
+- [ ] A. Nothing happens.
+- [X] B. A blank slate plot.
+- [ ] C. A scatter plot.
+- [ ] D. A histogram.
 
-A. Nothing happens.
+3. Pipes
 
-B. A blank slate plot.
-
-C. A scatter plot.
-
-D. A histogram.
-
-    Pipes
-    Using the pipe %>%, create an object p but this time associated with the heights dataset instead of the murders dataset.
-
+Using the pipe %>%, create an object p but this time associated with the heights dataset instead of the murders dataset.
+```
 # define ggplot object called p like in the previous exercise but using a pipe 
 p <- heights %>% ggplot()
 
-#What is the class of the object p you have just created?
+# What is the class of the object p you have just created?
 class(p)
-
+```
+```
 ## [1] "gg"     "ggplot"
+```
+4. Layers
 
-    Layers
-    Now we are going to add a layers and the corresponding aesthetic mappings. For the murders data we plotted total murders versus population sizes. Explore the murders data frame to remind yourself what are the names for these two variables and select the correct answer. Hint: Look at ?murders.
+Now we are going to add a layers and the corresponding aesthetic mappings. For the murders data we plotted total murders versus population sizes. Explore the murders data frame to remind yourself what are the names for these two variables and select the correct answer. Hint: Look at ?murders.
 
-A. state and abb.
+- [ ] A. state and abb.
+- [ ] B. total_murers and population_size.
+- [X] C. total and population.
+- [ ] D. murders and size.
 
-B. total_murers and population_size.
+5. geom_point 1
 
-C. total and population.
-
-D. murders and size.
-
-    geom_point 1
-    To create the scatter plot we add a layer with geom_point. The aesthetic mappings require us to define the x-axis and y-axis variables respectively. So the code looks like this:
-
-    murders %>% ggplot(aes(x = , y = )) + geom_point()
-
+To create the scatter plot we add a layer with geom_point. The aesthetic mappings require us to define the x-axis and y-axis variables respectively. So the code looks like this:
+```
+murders %>% ggplot(aes(x = , y = )) + geom_point()
+```
 except we have to define the two variables x and y. Fill this out with the correct variable names.
-
+```
 ## Fill in the blanks
 murders %>% ggplot(aes(x =population , y =total )) +
   geom_point()
+```
 
-    geom_point 1
-    Note that if we don’t use argument names, we can obtain the same plot by making sure we enter the variable names in the right order like this:
+
+6. geom_point 1
+
+Note that if we don’t use argument names, we can obtain the same plot by making sure we enter the variable names in the right order like this:
 
 murders %>% ggplot(aes(population, total)) +
   geom_point()
