@@ -753,13 +753,16 @@ murders %>% ggplot(aes(x =population , y =total )) +
   geom_point()
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/75776454-5c931300-5d54-11ea-8ec3-10c571a2459c.png)
 
 6. geom_point 1
 
 Note that if we don’t use argument names, we can obtain the same plot by making sure we enter the variable names in the right order like this:
-
+```
 murders %>% ggplot(aes(population, total)) +
   geom_point()
+```
+
 
 Remake the plot but now with total in the x-axis and population in the y-axis.
 
