@@ -927,15 +927,18 @@ p <- heights %>%
 p + geom_histogram(binwidth=1)
 ```
 
-
+![Unknown](https://user-images.githubusercontent.com/17474099/75804938-2750ea00-5d81-11ea-8c2f-f873808711bf.png)
 
 19. Smooth density plot
 
 Now instead of a histogram we are going to make a smooth density plot. In this case, we will not make an object p. Instead we will render the plot using a single line of code. In the previous exercise, we could have created a histogram using one line of code like this:
-
+```
 heights %>% 
   ggplot(aes(height)) +
   geom_histogram()
+```
+
+
 
 Now instead of geom_histogram we will use geom_density to create a smooth density plot.
 Add the appropriate layer to create a smooth density plot of heights.
