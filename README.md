@@ -856,13 +856,17 @@ p <- murders %>% ggplot(aes(population, total, label = abb, color = region)) + g
 p + scale_x_log10()
 ```
 
-
-
+![Unknown](https://user-images.githubusercontent.com/17474099/75803699-24ed9080-5d7f-11ea-9054-fcb5966f97e2.png)
+```
 #Repeat the previous exercise but now change both axes to be in the log scale.
 p + scale_x_log10() + scale_y_log10()
+```
+    
+   
+    
+14. Titles
 
-    Titles
-    Now edit the code above to add the title “Gun murder data” to the plot. Hint: use the ggtitle function.
+Now edit the code above to add the title “Gun murder data” to the plot. Hint: use the ggtitle function.
 
 p <- murders %>% ggplot(aes(population, total, label = abb, color = region)) +
   geom_label()
