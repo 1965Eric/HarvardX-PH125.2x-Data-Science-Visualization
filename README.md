@@ -471,21 +471,19 @@ Study the boxplots summarizing the distributions of populations sizes by country
 
 Which continent has median country with the largest population?
 
+![index](https://user-images.githubusercontent.com/17474099/75773208-b93eff80-5d4d-11ea-8b56-35f618df0b83.png)
+
+- [X] A. Africa
+- [ ] B. Americas
+- [ ] C. Asia
+- [ ] D. Europe
+- [ ] E. Oceania
+
+5. Interpretating Boxplots - 3
+
+Again, look at the boxplots summarizing the distributions of populations sizes by country. To the nearest million, what is the median population size for Africa?
 
 
-A. Africa
-
-B. Americas
-
-C. Asia
-
-D. Europe
-
-E. Oceania
-
-    Interpretating Boxplots - 3
-    Again, look at the boxplots summarizing the distributions of populations sizes by country. To the nearest million, what is the median population size for Africa?
-    Interpretating Boxplots-1
 
 A. 100 million
 
