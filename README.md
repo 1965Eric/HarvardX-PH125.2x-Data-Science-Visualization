@@ -949,6 +949,7 @@ heights %>%
   geom_density()
 ```
 
+![Unknown](https://user-images.githubusercontent.com/17474099/75805621-76e3e580-5d82-11ea-82a2-2e2dad7c669c.png)
 
 
 20. Two smooth density plots
