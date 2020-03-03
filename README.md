@@ -495,19 +495,18 @@ Again, look at the boxplots summarizing the distributions of populations sizes b
 
 Examine the following boxplots and report approximately what proportion of countries in Europe have populations below 14 million:
 
+![index](https://user-images.githubusercontent.com/17474099/75774043-649c8400-5d4f-11ea-917d-bdb8c62e79d9.png)
+
+- [X] A. 0.75
+- [ ] B. 0.50
+- [ ] C. 0.25
+- [ ] D. 0.01
+
+7. Interquantile Range (IQR)
+    
+Based on the boxplot, if we use a log transformation, which continent shown below has the largest interquartile range?
 
 
-A. 0.75
-
-B. 0.50
-
-C. 0.25
-
-D. 0.01
-
-    Interquantile Range (IQR)
-    Based on the boxplot, if we use a log transformation, which continent shown below has the largest interquartile range?
-    Interpretating Boxplots-1
 
 A. Africa
 
