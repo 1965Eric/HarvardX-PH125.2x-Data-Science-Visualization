@@ -938,19 +938,22 @@ heights %>%
   geom_histogram()
 ```
 
-
+![Unknown](https://user-images.githubusercontent.com/17474099/75805458-2d939600-5d82-11ea-8986-d27f5aea89a1.png)
 
 Now instead of geom_histogram we will use geom_density to create a smooth density plot.
 Add the appropriate layer to create a smooth density plot of heights.
-
+```
 ## add the correct layer using +
 heights %>% 
   ggplot(aes(height)) +
   geom_density()
+```
 
-    Two smooth density plots
-    Now we are going to make density plots for males and females separately. We can do this using the group argument within the aes mapping. Because each point will be assigned to a different density depending on a variable from the dataset, we need to map within aes.
-    Create separte smooth density plots for males and females by defining group by sex.
+
+
+20. Two smooth density plots
+
+Now we are going to make density plots for males and females separately. We can do this using the group argument within the aes mapping. Because each point will be assigned to a different density depending on a variable from the dataset, we need to map within aes. Create separte smooth density plots for males and females by defining group by sex.
 
 ## add the group argument then a layer with +
 heights %>% 
