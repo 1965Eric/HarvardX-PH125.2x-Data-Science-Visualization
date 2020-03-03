@@ -875,42 +875,46 @@ p + scale_x_log10() +
     scale_y_log10() + ggtitle("Gun murder data")
 ```
 
+![Unknown](https://user-images.githubusercontent.com/17474099/75804082-c379f180-5d7f-11ea-8fe7-c12ca342f5d2.png)
 
+15. Histograms
 
-    Histograms
-    We are going to shift our focus from the murders dataset to explore the heights dataset.
+We are going to shift our focus from the murders dataset to explore the heights dataset.
 
 We use the geom_histogram function to make a histogram of the heights in the heights data frame. When reading the documentation for this function we see that it requires just one mapping, the values to be used for the histogram.
 
 What is the variable containing the heights in inches in the heights data frame?
 
-A. sex
+- [ ] A. sex
+- [ ] B. heights
+- [X] C. height
+- [ ] D. heights$height
 
-B. heights
+16. A second example
 
-C. height
-
-D. heights$height
-
-    A second example
-    We are now going to make a histogram of the heights so we will load the heights dataset. The following code has been pre-run for you to load the heights dataset:
+We are now going to make a histogram of the heights so we will load the heights dataset. The following code has been pre-run for you to load the heights dataset:
 
 Create a ggplot object called p using the pipe to assign the heights data to a ggplot object. Assign height to the x values through the aes function.
-
+```
 # define p here
 p <- heights %>% ggplot(aes(height))
+```
+17. Histograms 2
 
-    Histograms 2
-    Now we are ready to add a layer to actually make the histogram.
+Now we are ready to add a layer to actually make the histogram.
 
 Add a layer to the object p (created in the previous exercise) using the geom_histogram function to make the histogram.
-
+```
 p <- heights %>% 
   ggplot(aes(height))
 ## add a layer to p
 p + geom_histogram()
+```
+
+
 
 18. Histogram binwidth
+
 Note that when we run the code from the previous exercise we get the following warning:
 
     stat_bin() using bins = 30. Pick better value with binwidth.
