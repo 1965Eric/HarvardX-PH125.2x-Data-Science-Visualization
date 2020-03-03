@@ -839,6 +839,7 @@ murders %>% ggplot(aes(population, total, label = abb,color=region)) +
   geom_label()
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/75777598-8816fd00-5d56-11ea-8c11-40a735fc9791.png)
 
 13. Log-scale
 
