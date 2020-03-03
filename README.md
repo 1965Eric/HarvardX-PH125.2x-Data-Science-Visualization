@@ -483,21 +483,19 @@ Which continent has median country with the largest population?
 
 Again, look at the boxplots summarizing the distributions of populations sizes by country. To the nearest million, what is the median population size for Africa?
 
+![index](https://user-images.githubusercontent.com/17474099/75773370-0f13a780-5d4e-11ea-8efd-9f2ba5e0c595.png)
+
+- [ ] A. 100 million
+- [ ] B. 25 million
+- [X] C. 10 million
+- [ ] D. 5 million
+- [ ] E. 1 million
+
+6. Low quantiles
+
+Examine the following boxplots and report approximately what proportion of countries in Europe have populations below 14 million:
 
 
-A. 100 million
-
-B. 25 million
-
-C. 10 million
-
-D. 5 million
-
-E. 1 million
-
-    Low quantiles
-    Examine the following boxplots and report approximately what proportion of countries in Europe have populations below 14 million:
-    Interpretating Boxplots-1
 
 A. 0.75
 
