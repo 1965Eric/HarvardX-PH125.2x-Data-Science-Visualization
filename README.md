@@ -771,38 +771,41 @@ murders %>% ggplot(aes(total,population)) +
   geom_point()
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/75776868-1f7b5080-5d55-11ea-8281-67e19557d262.png)
 
-    geom_point text
-    If instead of points we want to add text, we can use the geom_text() or geom_label() geometries. The following code
+7. geom_point text
 
-    murders %>% ggplot(aes(population, total)) + geom_label()
-
+If instead of points we want to add text, we can use the geom_text() or geom_label() geometries. The following code
+```
+murders %>% ggplot(aes(population, total)) + geom_label()
+```
 will give us the error message: Error: geom_label requires the following missing aesthetics: label
 
 Why is this?
 
-A. We need to map a character to each point through the label argument in aes.
+- [X] A. We need to map a character to each point through the label argument in aes.
+- [ ] B. We need to let geom_label know what character to use in the plot.
+- [ ] C. The geom_label geometry does not require x-axis and y-axis values.
+- [ ] D. geom_label is not a ggplot2 command.
 
-B. We need to let geom_label know what character to use in the plot.
-
-C. The geom_label geometry does not require x-axis and y-axis values.
-
-D. geom_label is not a ggplot2 command.
-
-    Rewrite the code from the previous exercise to add the state abbreviation as the label through aes.
-
+8. Rewrite the code from the previous exercise to add the state abbreviation as the label through aes.
+```
 library(dplyr)
 library(ggplot2)
 library(dslabs)
 data(murders)
-
+```
+```
 ## edit the next line to add the label
 murders %>% ggplot(aes(population, total, label=abb)) +
   geom_point()+
   geom_label()
+```
 
-    geom_point colors
-    Change the color of the labels through blue. How will we do this?
+
+9. geom_point colors
+
+Change the color of the labels through blue. How will we do this?
 
 A. Adding a column called blue to murders
 
