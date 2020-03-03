@@ -844,16 +844,19 @@ murders %>% ggplot(aes(population, total, label = abb,color=region)) +
 13. Log-scale
 
 Now we are going to change the x-axis to a log scale to account for the fact the distribution of population is skewed. Let’s start by define an object p holding the plot we have made up to now
-
+```
 p <- murders %>% 
   ggplot(aes(population, total, label = abb, color = region)) +
   geom_label() 
-
+```
 To change the y-axis to a log scale we learned about the scale_x_log10() function. Add this layer to the object p to change the scale and render the plot.
-
+```
 p <- murders %>% ggplot(aes(population, total, label = abb, color = region)) + geom_label()
 
 p + scale_x_log10()
+```
+
+
 
 #Repeat the previous exercise but now change both axes to be in the log scale.
 p + scale_x_log10() + scale_y_log10()
