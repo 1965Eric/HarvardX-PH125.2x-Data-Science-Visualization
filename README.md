@@ -802,23 +802,23 @@ murders %>% ggplot(aes(population, total, label=abb)) +
   geom_label()
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/75777094-a03a4c80-5d55-11ea-991c-ca4a05ed2ea2.png)
 
 9. geom_point colors
 
 Change the color of the labels through blue. How will we do this?
 
-A. Adding a column called blue to murders
+- [ ] A. Adding a column called blue to murders
+- [ ] B. Because each label needs a different color we map the colors through aes
+- [ ] C. Use the color argument in ggplot
+- [X] D. Because we want all colors to be blue, we do not need to map colors, just use the color argument in geom_label
 
-B. Because each label needs a different color we map the colors through aes
-
-C. Use the color argument in ggplot
-
-D. Because we want all colors to be blue, we do not need to map colors, just use the color argument in geom_label
-
-    Rewrite the code above to make the labels blue.
-
+10. Rewrite the code above to make the labels blue.
+```
 murders %>% ggplot(aes(population, total,label= abb)) +
   geom_label(color='blue')
+```
+
 
     geom_labels by region
     Now suppose we want to use color to represent the different regions. In this case which of the following is most appropriate:
