@@ -763,11 +763,14 @@ murders %>% ggplot(aes(population, total)) +
   geom_point()
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/75776655-a8de5300-5d54-11ea-909b-872e45a057d5.png)
 
 Remake the plot but now with total in the x-axis and population in the y-axis.
-
+```
 murders %>% ggplot(aes(total,population)) +
   geom_point()
+```
+
 
     geom_point text
     If instead of points we want to add text, we can use the geom_text() or geom_label() geometries. The following code
