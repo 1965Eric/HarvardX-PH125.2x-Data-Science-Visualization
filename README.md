@@ -911,22 +911,27 @@ p <- heights %>%
 p + geom_histogram()
 ```
 
-
+![Unknown](https://user-images.githubusercontent.com/17474099/75804614-8f530080-5d80-11ea-9430-b5cb2cc7fc37.png)
 
 18. Histogram binwidth
 
 Note that when we run the code from the previous exercise we get the following warning:
-
-    stat_bin() using bins = 30. Pick better value with binwidth.
-
+```
+stat_bin() using bins = 30. Pick better value with binwidth.
+```
 Use the binwidth argument to change the histogram made in the previous exercise to use bins of size 1 inch.
-
+```
 p <- heights %>% 
   ggplot(aes(height))
 ## add the geom_histogram layer but with the requested argument
 p + geom_histogram(binwidth=1)
+```
 
-    Smooth density plot Now instead of a histogram we are going to make a smooth density plot. In this case, we will not make an object p. Instead we will render the plot using a single line of code. In the previous exercise, we could have created a histogram using one line of code like this:
+
+
+19. Smooth density plot
+
+Now instead of a histogram we are going to make a smooth density plot. In this case, we will not make an object p. Instead we will render the plot using a single line of code. In the previous exercise, we could have created a histogram using one line of code like this:
 
 heights %>% 
   ggplot(aes(height)) +
