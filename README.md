@@ -1264,16 +1264,16 @@ NHANES %>% arrange(desc(BPSysAve))
 ```
 ID        SurveyYr    Gender     Age        AgeDecade     AgeMonths    Race1      Race3       Education
 <int>     <fctr>      <fctr>     <int>      <fctr>        <int>        <fctr>     <fctr>      <fctr>
-55311	  2009_10	female	55	50-59	671	Hispanic	NA	Some College	
-67957	  2011_12	male	50	50-59	NA	Black	Black	9 - 11th Grade	
-67957	  2011_12	male	50	50-59	NA	Black	Black	9 - 11th Grade	
-62727	  2011_12	female	80	NA	NA	White	White	Some College	
-62727	  2011_12	female	80	NA	NA	White	White	Some College	
-53371	  2009_10	male	68	60-69	817	White	NA	9 - 11th Grade	
-58276	  2009_10	female	80	NA	NA	White	NA	College Grad	
-65475	  2011_12	female	44	40-49	NA	Black	Black	High School	
-60848	  2009_10	male	80	NA	NA	Other	NA	College Grad	
-68301	  2011_12	male	59	50-59	NA	White	White	High School	
+55311	  2009_10     female	 55	    50-59	  671	       Hispanic	  NA	      Some College	
+67957	  2011_12     male	 50	    50-59	  NA	       Black	  Black	      9 - 11th Grade	
+67957	  2011_12     male	 50	    50-59	  NA	       Black	  Black	      9 - 11th Grade	
+62727	  2011_12     female	 80	    NA	          NA	       White	  White	      Some College	
+62727	  2011_12     female	 80	    NA	          NA	       White	  White	      Some College	
+53371	  2009_10     male	 68	    60-69	  817	       White	  NA	      9 - 11th Grade	
+58276	  2009_10     female	 80	    NA	          NA	       White	  NA	      College Grad	
+65475	  2011_12     female	 44	    40-49	  NA	       Black	  Black	      High School	
+60848	  2009_10     male	 80	    NA	          NA	       Other	  NA	      College Grad	
+68301	  2011_12     male	 59	    50-59	  NA	       White	  White	      High School	
 ...
 1-10 of 10,000 rows | 1-9 of 76 columns
 ```
@@ -1283,89 +1283,73 @@ Compute the average and standard deviation for each value of Race1 for males in 
 Order the resulting table from lowest to highest average systolic blood pressure.
 Use the functions filter, group_by, summarize, arrange, and the pipe %>% to do this in one line of code.
 Within summarize, save the average and standard deviation of systolic blood pressure as average and standard_deviation.
-
+```
 library(dplyr)
 library(NHANES)
 data(NHANES)
-
+```
+```
 NHANES %>%
       filter(AgeDecade ==" 40-49" & Gender == "male")  %>% group_by(Race1) %>% summarize(average=mean(BPSysAve,na.rm=TRUE),standard_deviation = sd(BPSysAve,na.rm=TRUE))%>% arrange(average)
-
-Race1
-<fctr>
-	
-average
-<dbl>
-	
-standard_deviation
-<dbl>
-White	119.9188	13.42355
-Other	120.4000	16.20241
-Hispanic	121.6098	11.06770
-Mexican	121.8500	13.93756
-Black	125.8387	17.06707
+```
+```
+Race1       average        standard_deviation
+<fctr>      <dbl>          <dbl>
+White	    119.9188	   13.42355
+Other	    120.4000	   16.20241
+Hispanic    121.6098	   11.06770
+Mexican	    121.8500	   13.93756
+Black	    125.8387	   17.06707
 5 rows
-Section 4 Overview
+```
+## Section 4 Overview
 
-n Section 4, you will look at a case study involving data from the Gapminder Foundation about trends in world health and economics.
+In Section 4, you will look at a case study involving data from the Gapminder Foundation about trends in world health and economics.
 
 After completing Section 4, you will:
+- understand how Hans Rosling and the Gapminder Foundation use effective data visualization to convey data-based trends.
+- be able to apply the ggplot2 techniques from the previous section to answer questions using data.
+- understand how fixed scales across plots can ease comparisons.
+- be able to modify graphs to improve data visualization.
 
-    understand how Hans Rosling and the Gapminder Foundation use effective data visualization to convey data-based trends.
-    be able to apply the ggplot2 techniques from the previous section to answer questions using data.
-    understand how fixed scales across plots can ease comparisons.
-    be able to modify graphs to improve data visualization.
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#case-study-new-insights-on-poverty)
 
-The textbook for this section is available here
-Assessment 8 (Exploring the Gapminder Dataset)
+## Assessment 8 (Exploring the Gapminder Dataset)
 
-    Life expectancy vs fertility - part 1
-    The Gapminder Foundation (www.gapminder.org) is a non-profit organization based in Sweden that promotes global development through the use of statistics that can help reduce misconceptions about global development.
+1. Life expectancy vs fertility - part 1
 
-    Using ggplot and the points layer, create a scatter plot of life expectancy versus fertility for the African continent in 2012.
-    Remember that you can use the R console to explore the gapminder dataset to figure out the names of the columns in the dataframe.
-    In this exercise we provide parts of code to get you going. You need to fill out what is missing. But note that going forward, in the next exercises, you will be required to write most of the code.
+The [Gapminder Foundation](www.gapminder.org) is a non-profit organization based in Sweden that promotes global development through the use of statistics that can help reduce misconceptions about global development.
 
+- Using ggplot and the points layer, create a scatter plot of life expectancy versus fertility for the African continent in 2012.
+- Remember that you can use the R console to explore the gapminder dataset to figure out the names of the columns in the dataframe.
+- In this exercise we provide parts of code to get you going. You need to fill out what is missing. But note that going forward, in the next exercises, you will be required to write most of the code.
+```
 library(dplyr)
 library(ggplot2)
 library(dslabs)
-
+```
+```
 data(gapminder)
 head(gapminder)
-
- 
- 
-	
-country
-<fctr>
-	
-year
-<int>
-	
-infant_mortality
-<dbl>
-	
-life_expectancy
-<dbl>
-	
-fertility
-<dbl>
-	
-population
-<dbl>
-	
-1	Albania	1960	115.40	62.87	6.19	1636054	
-2	Algeria	1960	148.20	47.50	7.65	11124892	
-3	Angola	1960	208.00	35.98	7.32	5270844	
-4	Antigua and Barbuda	1960	NA	62.97	4.43	54681	
-5	Argentina	1960	59.87	65.39	3.11	20619075	
-6	Armenia	1960	NA	66.86	4.55	1867396	
+```
+```
+   country             year       infant_mortality      life_expectancy     fertility     population
+   <fctr>              <int>      <dbl>                 <dbl>               <dbl>         <dbl>
+1  Albania	       1960	  115.40	        62.87	            6.19	  1636054	
+2  Algeria	       1960	  148.20	        47.50               7.65	  11124892	
+3  Angola	       1960	  208.00	        35.98	            7.32	  5270844	
+4  Antigua and Barbuda 1960	  NA	                62.97	            4.43	  54681	
+5  Argentina	       1960	  59.87	                65.39	            3.11	  20619075	
+6  Armenia	       1960	  NA	                66.86	            4.55	  1867396	
 6 rows | 1-7 of 10 columns
-
+```
+```
 ## fill out the missing parts in filter and aes
 gapminder %>% filter(continent=="Africa" & year=="2012") %>%
   ggplot(aes(fertility,life_expectancy)) +
   geom_point()
+```
+
 
     Life expectancy vs fertility - part 2 - coloring your plot
     Note that there is quite a bit of variability in life expectancy and fertility with some African countries having very high life expectancies. There also appear to be three clusters in the plot.
