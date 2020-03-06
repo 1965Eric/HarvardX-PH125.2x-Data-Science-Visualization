@@ -1511,27 +1511,31 @@ daydollars <- gapminder %>% mutate(dollars_per_day=gdp/population/365)%>% filter
 daydollars %>% ggplot(aes(dollars_per_day)) + geom_density() + scale_x_continuous(trans='log2') + facet_grid(.~year)
 ```
 
-    Dollars per day - part 4 - stacked histograms
-    Now we are going to edit the code from Exercise 9 to show stacked histograms of each region in Africa.
+![index](https://user-images.githubusercontent.com/17474099/76079192-74f96c80-5fa4-11ea-8fcf-1ccb1aa19636.png)
+
+10. Dollars per day - part 4 - stacked histograms
+
+Now we are going to edit the code from Exercise 9 to show stacked histograms of each region in Africa.
 
 Much of the code will be the same as in Exercise 9:
-
-    Create the dollars_per_day variable as in Exercise 7, but for African countries in the years 1970 and 2010 this time.
-    Make sure you remove any NA values.
-    Create a smooth density plot of dollars per day for 1970 and 2010 using a log (base 2) scale for the x axis.
-    Use facet_grid to show a different density plot for 1970 and 2010.
-    Make sure the densities are smooth by using bw = 0.5.
-    Use the fill and position arguments where appropriate to create the stacked histograms of each region.
-
+- Create the dollars_per_day variable as in Exercise 7, but for African countries in the years 1970 and 2010 this time.
+- Make sure you remove any NA values.
+- Create a smooth density plot of dollars per day for 1970 and 2010 using a log (base 2) scale for the x axis.
+- Use facet_grid to show a different density plot for 1970 and 2010.
+- Make sure the densities are smooth by using bw = 0.5.
+- Use the fill and position arguments where appropriate to create the stacked histograms of each region.
+```
 library(dplyr)
 library(ggplot2)
 library(dslabs)
-
+```
+```
 data(gapminder)
 
 daydollars <- gapminder %>% mutate(dollars_per_day=gdp/population/365)%>% filter(year %in% c(1970,2010) & continent=="Africa" & !is.na(dollars_per_day))
 
 daydollars %>% ggplot(aes(dollars_per_day,fill = region)) + geom_density(bw=0.5,position='stack') + scale_x_continuous(trans='log2') + facet_grid(.~year)
+```
 
     Infant mortality scatter plot - part 1
     We are going to continue looking at patterns in the gapminder dataset by plotting infant mortality rates versus dollars per day for African countries.
