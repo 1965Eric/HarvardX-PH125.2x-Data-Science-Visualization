@@ -1593,21 +1593,24 @@ gapminder_Africa_2010 %>% ggplot(aes(dollars_per_day,infant_mortality, color=reg
     geom_text()
 ```
 
-    Infant mortality scatter plot - part 4 - comparison of scatter plots
-    Now we are going to look at changes in the infant mortality and dollars per day patterns African countries between 1970 and 2010.
+![index](https://user-images.githubusercontent.com/17474099/76079763-acb4e400-5fa5-11ea-9c68-a36471bafd20.png)
 
-    Generate dollars_per_day using mutate and filter for the years 1970 and 2010 for African countries.
-    Remember to remove NA values.
-    As in the previous exercise, make a scatter plot of infant_mortaility versus dollars_per_day for countries in the African continent.
-    As in the previous exercise, use color to denote the different regions of Africa.
-    As in the previous exercise, transform the x axis to be in the log (base 2) scale.
-    As in the previous exercise, add a layer to display country names instead of points.
-    Use facet_grid to show different plots for 1970 and 2010.
+14. Infant mortality scatter plot - part 4 - comparison of scatter plots
 
+Now we are going to look at changes in the infant mortality and dollars per day patterns African countries between 1970 and 2010.
+- Generate dollars_per_day using mutate and filter for the years 1970 and 2010 for African countries.
+- Remember to remove NA values.
+- As in the previous exercise, make a scatter plot of infant_mortaility versus dollars_per_day for countries in the African continent.
+- As in the previous exercise, use color to denote the different regions of Africa.
+- As in the previous exercise, transform the x axis to be in the log (base 2) scale.
+- As in the previous exercise, add a layer to display country names instead of points.
+- Use facet_grid to show different plots for 1970 and 2010.
+```
 library(dplyr)
 library(ggplot2)
 library(dslabs)
-
+```
+```
 data(gapminder)
 gapminder  %>%
     filter(continent == "Africa" & year %in% c(1970,2010) & !is.na(gdp) & !is.na(year) & !is.na(infant_mortality)) %>%
@@ -1617,6 +1620,7 @@ gapminder  %>%
     scale_x_continuous(trans = "log2") +
     geom_text() +
     facet_grid(year~.)
+```
 
 Section 5 Overview
 
