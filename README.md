@@ -2049,25 +2049,28 @@ us_contagious_diseases %>% filter(state=="California" & !weeks_reporting<10) %>%
   geom_line()
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/76091336-ad597480-5fbd-11ea-945b-b908f19a681d.png)
 
-    Time series plot - all diseases in the United States
-    Now we are going to make a time series plot for the rates of all diseases in the United States. For this exercise, we have provided less sample code - you can take a look at the previous exercise to get you started.
+4. Time series plot - all diseases in the United States
 
-    Compute the US rate by using summarize to sum over states.
-    The US rate for each disease will be the total number of cases divided by the total population.
-    Remember to convert to cases per 10,000.
-    You will need to filter for !is.na(population) to get all the data.
-    Plot each disease in a different color.
-
+Now we are going to make a time series plot for the rates of all diseases in the United States. For this exercise, we have provided less sample code - you can take a look at the previous exercise to get you started.
+- Compute the US rate by using summarize to sum over states.
+- The US rate for each disease will be the total number of cases divided by the total population.
+- Remember to convert to cases per 10,000.
+- You will need to filter for !is.na(population) to get all the data.
+- Plot each disease in a different color.
+```
 library(dplyr)
 library(ggplot2)
 library(dslabs)
 library(RColorBrewer)
-
+```
+```
 data(us_contagious_diseases)
 
 us_contagious_diseases %>% filter(!is.na(population)) %>% 
   group_by(year, disease) %>%
   summarize(rate=sum(count)/sum(population)*10000) %>%
   ggplot(aes(year, rate,color=disease)) + geom_line()
+```
 
