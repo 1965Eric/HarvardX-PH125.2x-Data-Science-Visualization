@@ -1537,25 +1537,29 @@ daydollars <- gapminder %>% mutate(dollars_per_day=gdp/population/365)%>% filter
 daydollars %>% ggplot(aes(dollars_per_day,fill = region)) + geom_density(bw=0.5,position='stack') + scale_x_continuous(trans='log2') + facet_grid(.~year)
 ```
 
-    Infant mortality scatter plot - part 1
-    We are going to continue looking at patterns in the gapminder dataset by plotting infant mortality rates versus dollars per day for African countries.
+![index](https://user-images.githubusercontent.com/17474099/76079366-c86bba80-5fa4-11ea-8a1e-00ac6915239a.png)
 
-    Generate dollars_per_day using mutate and filter for the year 2010 for African countries.
-    Remember to remove NA values.
-    Store the mutated dataset in gapminder_Africa_2010.
-    Make a scatter plot of infant_mortaility versus dollars_per_day for countries in the African continent.
-    Use color to denote the different regions of Africa.
+11. Infant mortality scatter plot - part 1
 
+We are going to continue looking at patterns in the gapminder dataset by plotting infant mortality rates versus dollars per day for African countries.
+- Generate dollars_per_day using mutate and filter for the year 2010 for African countries.
+- Remember to remove NA values.
+- Store the mutated dataset in gapminder_Africa_2010.
+- Make a scatter plot of infant_mortaility versus dollars_per_day for countries in the African continent.
+- Use color to denote the different regions of Africa.
+```
 library(dplyr)
 library(ggplot2)
 library(dslabs)
-
+```
+```
 data(gapminder)
 gapminder_Africa_2010 <- daydollars <- gapminder %>% mutate(dollars_per_day=gdp/population/365)%>% filter(year %in% c(2010) & continent=="Africa" & !is.na(dollars_per_day))
 
 # now make the scatter plot
 
 gapminder_Africa_2010 %>% ggplot(aes(dollars_per_day,infant_mortality,color = region)) + geom_point()
+```
 
     Infant mortality scatter plot - part 2 - logarithmic axis
     Now we are going to transform the x axis of the plot from the previous exercise.
