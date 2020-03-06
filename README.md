@@ -1002,54 +1002,63 @@ heights %>%
   geom_density(alpha=0.2) 
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/76072317-09a99d80-5f98-11ea-977e-5e6881a81c21.png)
 
-Section 3 Overview
+## Section 3 Overview
 
 Section 3 introduces you to summarizing with dplyr.
 
 After completing Section 3, you will:
+- understand the importance of summarizing data in exploratory data analysis.
+- be able to use the “summarize” verb in dplyr to facilitate summarizing data.
+- be able to use the “group_by” verb in dplyr to facilitate summarizing data.
+- be able to access values using the dot placeholder.
+- be able to use “arrange” to examine data after sorting.
 
-    understand the importance of summarizing data in exploratory data analysis.
-    be able to use the “summarize” verb in dplyr to facilitate summarizing data.
-    be able to use the “group_by” verb in dplyr to facilitate summarizing data.
-    be able to access values using the dot placeholder.
-    be able to use “arrange” to examine data after sorting.
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/tidyverse.html#tidy-data)
 
-The textbook for this section is available here
-Assessment 7 (Summarizing with dplyr)
+## Assessment 7 (Summarizing with dplyr)
 
-Practice Exercise. National Center for Health Statistics
+**Practice Exercise. National Center for Health Statistics**
+
 To practice our dplyr skills we will be working with data from the survey collected by the United States National Center for Health Statistics (NCHS). This center has conducted a series of health and nutrition surveys since the 1960’s.
 
 Starting in 1999, about 5,000 individuals of all ages have been interviewed every year and then they complete the health examination component of the survey. Part of this dataset is made available via the NHANES package which can be loaded this way:
-
+```
 library(NHANES)
 data(NHANES)
-
+```
 The NHANES data has many missing values. Remember that the main summarization function in R will return NA if any of the entries of the input vector is an NA. Here is an example:
-
+```
 library(dslabs)
 data(na_example)
 mean(na_example)
-
+```
+```
 ## [1] NA
-
+```
+```
 sd(na_example)
-
+```
+```
 ## [1] NA
-
+```
 To ignore the NAs, we can use the na.rm argument:
-
+```
 mean(na_example, na.rm = TRUE)
-
+```
+```
 ## [1] 2.301754
-
+```
+```
 sd(na_example, na.rm = TRUE)
-
+```
+```
 ## [1] 1.22338
+```
+1. Blood pressure 1
 
-    Blood pressure 1
-    Let’s explore the NHANES data. We will be exploring blood pressure in this dataset.
+Let’s explore the NHANES data. We will be exploring blood pressure in this dataset.
 
 First let’s select a group to set the standard. We will use 20-29 year old females. Note that the category is coded with 20-29, with a space in front of the 20! The AgeDecade is a categorical variable with these ages.
 
@@ -1058,70 +1067,75 @@ To know if someone is female, you can look at the Gender variable.
 Filter the NHANES dataset so that only 20-29 year old females are included and assign this new data frame to the object tab.
 Use the pipe to apply the function filter, with the appropriate logicals, to NHANES.
 Remember that this age group is coded with 20-29, which includes a space. You can use head to explore the NHANES table to construct the correct call to filter.
-
+```
 library(dplyr)
 library(NHANES)
 data(NHANES)
 ## fill in what is needed
 tab <- NHANES %>% filter(AgeDecade==" 20-29" & Gender=="female")
+```
+2. Blood pressure 2
 
-    Blood pressure 2
-    Now we will compute the average and standard deviation for the subgroup we defined in the previous exercise (20-29 year old females), which we will use reference for what is typical.
+Now we will compute the average and standard deviation for the subgroup we defined in the previous exercise (20-29 year old females), which we will use reference for what is typical.
 
 You will determine the average and standard deviation of systolic blood pressure, which are stored in the BPSysAve variable in the NHANES dataset.
 
 Complete the line of code to save the average and standard deviation of systolic blood pressure as average and standard_deviation to a variable called ref.
 Use the summarize function after filtering for 20-29 year old females and connect the results using the pipe %>%. When doing this remember there are NAs in the data!
-
+```
 library(dplyr)
 library(NHANES)
 data(NHANES)
-
+```
+```
 ## complete this line of code.
 ref <- NHANES %>% filter(AgeDecade == " 20-29" & Gender == "female") %>% summarize(average=mean(BPSysAve,na.rm=TRUE), standard_deviation=sd(BPSysAve,na.rm=TRUE))
+```
+3. Summarizing averages
 
-    Summarizing averages
-    Now we will repeat the exercise and generate only the average blood pressure for 20-29 year old females. For this exercise, you should review how to use the place holder . in dplyr.
+Now we will repeat the exercise and generate only the average blood pressure for 20-29 year old females. For this exercise, you should review how to use the place holder . in dplyr.
 
 Modify the line of sample code to assign the average to a numeric variable called ref_avg.
-
+```
 library(dplyr)
 library(NHANES)
 data(NHANES)
-
+```
+```
 ## modify the code we wrote for previous exercise.
 ref_avg <- NHANES %>%
   filter(AgeDecade == " 20-29" & Gender == "female") %>%
   summarize(average = mean(BPSysAve, na.rm = TRUE), 
             standard_deviation = sd(BPSysAve, na.rm=TRUE)) %>% .$average
+```
+4. Min and max
 
-    Min and max
-    Let’s continue practicing by calculating two other data summaries: the minimum and the maximum.
+Let’s continue practicing by calculating two other data summaries: the minimum and the maximum.
 
 Again we will do it for the BPSysAve variable and the group of 20-29 year old females.
 
 Report the min and max values for the same group as in the previous exercises.
 Use filter and summarize connected by the pipe %>% again. The functions min and max can be used to get the values you want.
 Within summarize, save the min and max of systolic blood pressure as min and max.
-
+```
 library(dplyr)
 library(NHANES)
 data(NHANES)
-
+```
+```
 ## complete the line
 NHANES %>%
       filter(AgeDecade == " 20-29"  & Gender == "female") %>% summarize(min=min(BPSysAve,na.rm=TRUE),max=max(BPSysAve,na.rm=TRUE))
-
-min
-<int>
-	
-max
-<int>
+```
+```
+min     max
+<int>   <int>
 84	179
 1 row
+```
+5. group_by
 
-    group_by
-    Now let’s practice using the group_by function.
+Now let’s practice using the group_by function.
 
 What we are about to do is a very common operation in data science: you will split a data table into groups and then compute summary statistics for each group.
 
@@ -1130,194 +1144,134 @@ We will compute the average and standard deviation of systolic blood pressure fo
 Use the functions filter, group_by, summarize, and the pipe %>% to compute the average and standard deviation of systolic blood pressure for females for each age group separately.
 
 Within summarize, save the average and standard deviation of systolic blood pressure (BPSysAve) as average and standard_deviation.
-
+```
 library(dplyr)
 library(NHANES)
 data(NHANES)
-
+```
+```
 ##complete the line with group_by and summarize
 NHANES %>%
       filter(Gender == "female") %>% group_by(AgeDecade) %>% summarize(average=mean(BPSysAve,na.rm=TRUE),standard_deviation = sd(BPSysAve,na.rm=TRUE))
-
-AgeDecade
-<fctr>
-	
-average
-<dbl>
-	
-standard_deviation
-<dbl>
-0-9	99.95041	9.071798
-10-19	104.27466	9.461431
-20-29	108.42243	10.146681
-30-39	111.25512	12.314790
-40-49	115.49385	14.530054
-50-59	121.84245	16.179333
-60-69	127.17787	17.125713
-70+	133.51652	19.841781
-NA	141.54839	22.908521
+```
+```
+AgeDecade       average      standard_deviation
+<fctr>          <dbl>        <dbl>
+0-9	        99.95041     9.071798
+10-19	        104.27466    9.461431
+20-29	        108.42243    10.146681
+30-39	        111.25512    12.314790
+40-49	        115.49385    14.530054
+50-59	        121.84245    16.179333
+60-69	        127.17787    17.125713
+70+	        133.51652    19.841781
+NA	        141.54839    22.908521
 9 rows
 
-    group_by example 2
-    Now let’s practice using group_by some more. We are going to repeat the previous exercise of calculating the average and standard deviation of systolic blood pressure, but for males instead of females.
+6. group_by example 2
+
+Now let’s practice using group_by some more. We are going to repeat the previous exercise of calculating the average and standard deviation of systolic blood pressure, but for males instead of females.
 
 This time we will not provide much sample code. You are on your own!
 
 Calculate the average and standard deviation of systolic blood pressure for males for each age group separately using the same methods as in the previous exercise.
-
+```
 library(dplyr)
 library(NHANES)
 data(NHANES)
-
+```
+```
 NHANES %>%
       filter(Gender == "male") %>% group_by(AgeDecade) %>% summarize(average=mean(BPSysAve,na.rm=TRUE),standard_deviation = sd(BPSysAve,na.rm=TRUE))
-
-AgeDecade
-<fctr>
-	
-average
-<dbl>
-	
-standard_deviation
-<dbl>
-0-9	97.41912	8.317367
-10-19	109.59789	11.227769
-20-29	117.85084	11.274795
-30-39	119.40063	12.306656
-40-49	120.78390	13.968338
-50-59	125.75000	17.760536
-60-69	126.88578	17.478117
-70+	130.20172	18.657475
-NA	136.40000	23.534731
+```
+```
+AgeDecade       average      standard_deviation
+<fctr>          <dbl>        <dbl>
+0-9	        97.41912     8.317367
+10-19	        109.59789    11.227769
+20-29	        117.85084    11.274795
+30-39	        119.40063    12.306656
+40-49	        120.78390    13.968338
+50-59	        125.75000    17.760536
+60-69	        126.88578    17.478117
+70+	        130.20172    18.657475
+NA	        136.40000    23.534731
 9 rows
 
-    group_by example 3
-    We can actually combine both of these summaries into a single line of code. This is because group_by permits us to group by more than one variable.
+7. group_by example 3
+
+We can actually combine both of these summaries into a single line of code. This is because group_by permits us to group by more than one variable.
 
 We can use group_by(AgeDecade, Gender) to group by both age decades and gender.
 
 Create a single summary table for the average and standard deviation of systolic blood pressure using group_by(AgeDecade, Gender).
-Note that we no longer have to filter!
-Your code within summarize should remain the same as in the previous exercises.
 
+Note that we no longer have to filter!
+
+Your code within summarize should remain the same as in the previous exercises.
+```
 library(NHANES)
 data(NHANES)
-
+```
+```
 NHANES %>% group_by(AgeDecade, Gender) %>% summarize(average=mean(BPSysAve,na.rm=TRUE),standard_deviation = sd(BPSysAve,na.rm=TRUE))
-
-AgeDecade
-<fctr>
-	
-Gender
-<fctr>
-	
-average
-<dbl>
-	
-standard_deviation
-<dbl>
-0-9	female	99.95041	9.071798
-0-9	male	97.41912	8.317367
-10-19	female	104.27466	9.461431
-10-19	male	109.59789	11.227769
-20-29	female	108.42243	10.146681
-20-29	male	117.85084	11.274795
-30-39	female	111.25512	12.314790
-30-39	male	119.40063	12.306656
-40-49	female	115.49385	14.530054
-40-49	male	120.78390	13.968338
+```
+AgeDecade    Gender     average      standard_deviation
+<fctr>       <fctr>     <dbl>        <dbl>
+0-9	     female	99.95041     9.071798
+0-9	     male	97.41912     8.317367
+10-19	     female	104.27466    9.461431
+10-19	     male	109.59789    11.227769
+20-29	     female	108.42243    10.146681
+20-29	     male	117.85084    11.274795
+30-39	     female	111.25512    12.314790
+30-39	     male	119.40063    12.306656
+40-49	     female	115.49385    14.530054
+40-49	     male	120.78390    13.968338
 1-10 of 18 rows
 
-    Arrange
-    Now we are going to explore differences in systolic blood pressure across races, as reported in the Race1 variable.
+8. Arrange
+
+Now we are going to explore differences in systolic blood pressure across races, as reported in the Race1 variable.
 
 We will learn to use the arrange function to order the outcome acording to one variable.
 
 Note that this function can be used to order any table by a given outcome. Here is an example that arranges by systolic blood pressure.
-
+```
 NHANES %>% arrange(BPSysAve)
-
-ID
-<int>
-	
-SurveyYr
-<fctr>
-	
-Gender
-<fctr>
-	
-Age
-<int>
-	
-AgeDecade
-<fctr>
-	
-AgeMonths
-<int>
-	
-Race1
-<fctr>
-	
-Race3
-<fctr>
-	
-Education
-<fctr>
-	
-53661	2009_10	male	12	10-19	145	Mexican	NA	NA	
-58821	2009_10	female	51	50-59	613	White	NA	9 - 11th Grade	
-67253	2011_12	female	10	10-19	NA	White	White	NA	
-51893	2009_10	female	70	70+	843	White	NA	9 - 11th Grade	
-54375	2009_10	male	76	70+	912	White	NA	High School	
-54375	2009_10	male	76	70+	912	White	NA	High School	
-58941	2009_10	male	8	0-9	104	Mexican	NA	NA	
-67616	2011_12	male	63	60-69	NA	White	White	9 - 11th Grade	
-67616	2011_12	male	63	60-69	NA	White	White	9 - 11th Grade	
-67616	2011_12	male	63	60-69	NA	White	White	9 - 11th Grade	
+```
+```
+ID        SurveyYr    Gender     Age        AgeDecade     AgeMonths    Race1      Race3       Education
+<int>     <fctr>      <fctr>     <int>      <fctr>        <int>        <fctr>     <fctr>      <fctr>
+53661	  2009_10     male	 12	    10-19	  145	       Mexican	  NA	      NA	
+58821	  2009_10     female	 51	    50-59	  613	       White	  NA	      9 - 11th Grade	
+67253	  2011_12     female	 10	    10-19	  NA	       White	  White	      NA	
+51893	  2009_10     female	 70	    70+	          843	       White	  NA	      9 - 11th Grade	
+54375	  2009_10     male	 76	    70+	          912	       White	  NA	      High School	
+54375	  2009_10     male	 76	    70+	          912	       White	  NA	      High School	
+58941	  2009_10     male	 8	    0-9	          104	       Mexican	  NA	      NA	
+67616	  2011_12     male	 63	    60-69	  NA	       White	  White	      9 - 11th Grade	
+67616	  2011_12     male	 63	    60-69	  NA	       White	  White	      9 - 11th Grade	
+67616	  2011_12     male	 63	    60-69	  NA	       White	  White	      9 - 11th Grade	
 ...
 1-10 of 10,000 rows | 1-9 of 76 columns
-
+```
 If we want it in descending order we can use the desc function like this:
-
+```
 NHANES %>% arrange(desc(BPSysAve))
-
-ID
-<int>
-	
-SurveyYr
-<fctr>
-	
-Gender
-<fctr>
-	
-Age
-<int>
-	
-AgeDecade
-<fctr>
-	
-AgeMonths
-<int>
-	
-Race1
-<fctr>
-	
-Race3
-<fctr>
-	
-Education
-<fctr>
-	
-55311	2009_10	female	55	50-59	671	Hispanic	NA	Some College	
-67957	2011_12	male	50	50-59	NA	Black	Black	9 - 11th Grade	
-67957	2011_12	male	50	50-59	NA	Black	Black	9 - 11th Grade	
-62727	2011_12	female	80	NA	NA	White	White	Some College	
-62727	2011_12	female	80	NA	NA	White	White	Some College	
-53371	2009_10	male	68	60-69	817	White	NA	9 - 11th Grade	
-58276	2009_10	female	80	NA	NA	White	NA	College Grad	
-65475	2011_12	female	44	40-49	NA	Black	Black	High School	
-60848	2009_10	male	80	NA	NA	Other	NA	College Grad	
-68301	2011_12	male	59	50-59	NA	White	White	High School	
+```
+ID        SurveyYr    Gender     Age        AgeDecade     AgeMonths    Race1      Race3       Education
+<int>     <fctr>      <fctr>     <int>      <fctr>        <int>        <fctr>     <fctr>      <fctr>
+55311	  2009_10	female	55	50-59	671	Hispanic	NA	Some College	
+67957	  2011_12	male	50	50-59	NA	Black	Black	9 - 11th Grade	
+67957	  2011_12	male	50	50-59	NA	Black	Black	9 - 11th Grade	
+62727	  2011_12	female	80	NA	NA	White	White	Some College	
+62727	  2011_12	female	80	NA	NA	White	White	Some College	
+53371	  2009_10	male	68	60-69	817	White	NA	9 - 11th Grade	
+58276	  2009_10	female	80	NA	NA	White	NA	College Grad	
+65475	  2011_12	female	44	40-49	NA	Black	Black	High School	
+60848	  2009_10	male	80	NA	NA	Other	NA	College Grad	
+68301	  2011_12	male	59	50-59	NA	White	White	High School	
 ...
 1-10 of 10,000 rows | 1-9 of 76 columns
 
