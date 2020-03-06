@@ -1489,23 +1489,27 @@ In the second part of this analysis, we will plot the smooth density plot using 
 daydollars %>% ggplot(aes(dollars_per_day)) + geom_density() + scale_x_continuous(trans="log2")
 ```
 
-    Dollars per day - part 3 - multiple density plots
-    Now we are going to combine the plotting tools we have used in the past two exercises to create density plots for multiple years.
+![index](https://user-images.githubusercontent.com/17474099/76079001-16cc8980-5fa4-11ea-87da-614f4318ae88.png)
 
-    Create the dollars_per_day variable as in Exercise 7, but for African countries in the years 1970 and 2010 this time.
-    Make sure you remove any NA values.
-    Create a smooth density plot of dollars per day for 1970 and 2010 using a log (base 2) scale for the x axis.
-    Use facet_grid to show a different density plot for 1970 and 2010.
+9. Dollars per day - part 3 - multiple density plots
 
+Now we are going to combine the plotting tools we have used in the past two exercises to create density plots for multiple years.
+- Create the dollars_per_day variable as in Exercise 7, but for African countries in the years 1970 and 2010 this time.
+- Make sure you remove any NA values.
+- Create a smooth density plot of dollars per day for 1970 and 2010 using a log (base 2) scale for the x axis.
+- Use facet_grid to show a different density plot for 1970 and 2010.
+```
 library(dplyr)
 library(ggplot2)
 library(dslabs)
-
+```
+```
 data(gapminder)
 
 daydollars <- gapminder %>% mutate(dollars_per_day=gdp/population/365)%>% filter(year %in% c(1970,2010) & continent=="Africa" & !is.na(dollars_per_day))
 
 daydollars %>% ggplot(aes(dollars_per_day)) + geom_density() + scale_x_continuous(trans='log2') + facet_grid(.~year)
+```
 
     Dollars per day - part 4 - stacked histograms
     Now we are going to edit the code from Exercise 9 to show stacked histograms of each region in Africa.
