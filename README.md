@@ -1924,15 +1924,18 @@ dat %>% ggplot(aes(year, state, fill = rate)) +
   xlab("")
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/76090911-c9104b00-5fbc-11ea-8fac-fb1a2b2a68f5.png)
 
-    Time series plot - measles and smallpox
-    The sample code given creates a time series plot showing the rate of measles cases per population by state. We are going to again modify this plot to look at smallpox cases instead.
+2. Time series plot - measles and smallpox
 
+The sample code given creates a time series plot showing the rate of measles cases per population by state. We are going to again modify this plot to look at smallpox cases instead.
+```
 library(dplyr)
 library(ggplot2)
 library(dslabs)
 library(RColorBrewer)
-
+```
+```
 data(us_contagious_diseases)
 
 the_disease = "Measles"
@@ -1941,7 +1944,8 @@ dat <- us_contagious_diseases %>%
    mutate(rate = count / population * 10000) %>%
    mutate(state = reorder(state, rate))
 str(dat)
-
+```
+```
 ## 'data.frame':    3724 obs. of  7 variables:
 ##  $ disease        : Factor w/ 7 levels "Hepatitis A",..: 2 2 2 2 2 2 2 2 2 2 ...
 ##  $ state          : Factor w/ 51 levels "Mississippi",..: 9 9 9 9 9 9 9 9 9 9 ...
@@ -1953,7 +1957,8 @@ str(dat)
 ##  $ count          : num  8843 2959 4156 8934 270 ...
 ##  $ population     : num  2589923 2619131 2646248 2670818 2693027 ...
 ##  $ rate           : num  34.1 11.3 15.7 33.5 1 ...
-
+```
+```
 avg <- us_contagious_diseases %>%
   filter(disease==the_disease) %>% group_by(year) %>%
   summarize(us_rate = sum(count, na.rm=TRUE)/sum(population, na.rm=TRUE)*10000)
@@ -1968,6 +1973,8 @@ dat %>% ggplot() +
   ylab("") +
   geom_text(data = data.frame(x=1955, y=50), mapping = aes(x, y, label="US average"), color="black") + 
   geom_vline(xintercept=1963, col = "blue")
+```
+
 
     Modify the sample code for the time series plot to plot data for smallpox instead of for measles.
     Once again, restrict the plot to years in which cases were reported in at least 10 weeks.
