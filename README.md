@@ -1651,19 +1651,18 @@ Pie charts are appropriate:
 
 What is the problem with this plot?
 
+![index](https://user-images.githubusercontent.com/17474099/76088773-e6431a80-5fb8-11ea-9346-3e065a4b05df.png)
 
+- [ ] A. The values are wrong. The final vote was 306 to 232.
+- [X] B. The axis does not start at 0. Judging by the length, it appears Trump received 3 times as many votes when in fact it was about 30% more.
+- [ ] C. The colors should be the same.
+- [ ] D. Percentages should be shown as a pie chart.
 
-A. The values are wrong. The final vote was 306 to 232.
+3. Customizing plots - What’s wrong 2?.
 
-B. The axis does not start at 0. Judging by the length, it appears Trump received 3 times as many votes when in fact it was about 30% more.
-
-C. The colors should be the same.
-
-D. Percentages should be shown as a pie chart.
-
-3: Customizing plots - What’s wrong 2?.
 Take a look at the following two plots. They show the same information: rates of measles by state in the United States for 1928.
-distribution
+
+
 
 A. Both plots provide the same information, so they are equally good.
 
