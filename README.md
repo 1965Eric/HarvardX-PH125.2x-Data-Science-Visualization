@@ -980,15 +980,19 @@ heights %>%
   geom_density()
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/76072011-7ec8a300-5f97-11ea-9e11-32a66d77f6a9.png)
 
-    Two smooth density plots 3
-    We can also assign groups using the fill argument. When using the geom_density geometry, color creates a colored line for the smooth density plot while fill colors in the area under the curve.
+22. Two smooth density plots 3
+
+We can also assign groups using the fill argument. When using the geom_density geometry, color creates a colored line for the smooth density plot while fill colors in the area under the curve.
 
 We can see what this looks like by running the following code:
-
+```
 heights %>% 
   ggplot(aes(height, fill = sex)) + 
   geom_density() 
+```
+
 
 However, here the second density is drawn over the other. We can change this by using something called alpha blending. Set the alpha parameter to 0.2 in the geom_density function to make this change.
 
