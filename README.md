@@ -1369,104 +1369,76 @@ gapminder %>% filter(continent=="Africa" & year=="2012") %>%
   geom_point()
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/76077664-6e1d2a80-5fa1-11ea-8fb1-256ad41ec093.png)
 
-    Life expectancy vs fertility - part 3 - selecting country and region
-    While many of the countries in the high life expectancy/low fertility cluster are from Northern Africa, three countries are not.
+3. Life expectancy vs fertility - part 3 - selecting country and region
 
-    Create a table showing the country and region for the African countries (use select) that in 2012 had fertility rates of 3 or less and life expectancies of at least 70.
-    Assign your result to a data frame called df.
+While many of the countries in the high life expectancy/low fertility cluster are from Northern Africa, three countries are not.
 
+- Create a table showing the country and region for the African countries (use select) that in 2012 had fertility rates of 3 or less and life expectancies of at least 70.
+- Assign your result to a data frame called df.
+```
 library(dplyr)
 library(dslabs)
-
+```
+```
 data(gapminder)
 head(gapminder)
-
- 
- 
-	
-country
-<fctr>
-	
-year
-<int>
-	
-infant_mortality
-<dbl>
-	
-life_expectancy
-<dbl>
-	
-fertility
-<dbl>
-	
-population
-<dbl>
-	
-1	Albania	1960	115.40	62.87	6.19	1636054	
-2	Algeria	1960	148.20	47.50	7.65	11124892	
-3	Angola	1960	208.00	35.98	7.32	5270844	
-4	Antigua and Barbuda	1960	NA	62.97	4.43	54681	
-5	Argentina	1960	59.87	65.39	3.11	20619075	
-6	Armenia	1960	NA	66.86	4.55	1867396	
+```
+```
+   country             year       infant_mortality      life_expectancy     fertility     population
+   <fctr>              <int>      <dbl>                 <dbl>               <dbl>         <dbl>
+1  Albania	       1960	  115.40	        62.87 	            6.19	  1636054	
+2  Algeria	       1960	  148.20	        47.50	            7.65	  11124892	
+3  Angola	       1960	  208.00	        35.98	            7.32	  5270844	
+4  Antigua and Barbuda 1960	  NA	                62.97	            4.43	  54681	
+5  Argentina	       1960	  59.87	                65.39	            3.11	  20619075	
+6  Armenia	       1960	  NA	                66.86	            4.55	  1867396	
 6 rows | 1-7 of 10 columns
-
+```
+```
 df <- gapminder %>% filter(continent=="Africa" & year=="2012" & fertility <=3 & life_expectancy>=70) %>%
   select(country,region)
+```
+4. Life expectancy and the Vietnam War - part 1
 
-    Life expectancy and the Vietnam War - part 1
-    The Vietnam War lasted from 1955 to 1975. Do the data support war having a negative effect on life expectancy? We will create a time series plot that covers the period from 1960 to 2010 of life expectancy for Vietnam and the United States, using color to distinguish the two countries. In this start we start the analysis by generating a table.
+The Vietnam War lasted from 1955 to 1975. Do the data support war having a negative effect on life expectancy? We will create a time series plot that covers the period from 1960 to 2010 of life expectancy for Vietnam and the United States, using color to distinguish the two countries. In this start we start the analysis by generating a table.
 
-    Use filter to create a table with data for the years from 1960 to 2010 in Vietnam and the United States.
-    Save the table in an object called tab.
-
+- Use filter to create a table with data for the years from 1960 to 2010 in Vietnam and the United States.
+- Save the table in an object called tab.
+```
 library(dplyr)
 library(dslabs)
-
+```
+```
 data(gapminder)
 
 head(gapminder)
-
- 
- 
-	
-country
-<fctr>
-	
-year
-<int>
-	
-infant_mortality
-<dbl>
-	
-life_expectancy
-<dbl>
-	
-fertility
-<dbl>
-	
-population
-<dbl>
-	
-1	Albania	1960	115.40	62.87	6.19	1636054	
-2	Algeria	1960	148.20	47.50	7.65	11124892	
-3	Angola	1960	208.00	35.98	7.32	5270844	
-4	Antigua and Barbuda	1960	NA	62.97	4.43	54681	
-5	Argentina	1960	59.87	65.39	3.11	20619075	
-6	Armenia	1960	NA	66.86	4.55	1867396	
+```
+```
+   country             year       infant_mortality      life_expectancy     fertility     population
+   <fctr>              <int>      <dbl>                 <dbl>               <dbl>         <dbl>
+1  Albania	       1960	  115.40	        62.87	            6.19	  1636054	
+2  Algeria	       1960	  148.20	        47.50	            7.65	  11124892	
+3  Angola	       1960	  208.00	        35.98	            7.32	  5270844	
+4  Antigua and Barbuda 1960	  NA	                62.97	            4.43	  54681	
+5  Argentina	       1960	  59.87	                65.39	            3.11	  20619075	
+6  Armenia	       1960	  NA	                66.86	            4.55	  1867396	
 6 rows | 1-7 of 10 columns
-
+```
+```
 tab <- gapminder %>% filter(year>=1960 & year<=2010 & country%in%c("Vietnam","United States"))
+```
+5. Life expectancy and the Vietnam War - part 2
 
-    Life expectancy and the Vietnam War - part 2
-    Now that you have created the data table in Exercise 4, it is time to plot the data for the two countries.
+Now that you have created the data table in Exercise 4, it is time to plot the data for the two countries.
 
-    Use geom_line to plot life expectancy vs year for Vietnam and the United States. The data table is stored in tab.
-    Use color to distinguish the two countries.
-
+- Use geom_line to plot life expectancy vs year for Vietnam and the United States. The data table is stored in tab.
+- Use color to distinguish the two countries.
+```
 p <- tab %>% ggplot(aes(year,life_expectancy,color=country)) + geom_line()
 p
-
+```
     Life expectancy in Cambodia
     Cambodia was also involved in this conflict and, after the war, Pol Pot and his communist Khmer Rouge took control and ruled Cambodia from 1975 to 1979. He is considered one of the most brutal dictators in history. Do the data support this claim?
 
