@@ -1807,34 +1807,34 @@ murders %>% mutate(rate = total/population*100000) %>%
   ylab("Murder Rate Average")
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/76089561-2e167180-5fba-11ea-901f-7335621734ff.png)
 
 and decide to move to a state in the western region. What is the main problem with this interpretaion?
+- [ ] A. The categories are ordered alphabetically.
+- [ ] B. The graph does not show standard errors.
+- [X] C. It does not show all the data. We do not see the variability within a region and it's possible that the safest states are not in the West.
+- [ ] D. The Northeast has the lowest average.
 
-A. The categories are ordered alphabetically.
+4. Making a box plot
 
-B. The graph does not show standard errors.
-
-C. It does not show all the data. We do not see the variability within a region and it's possible that the safest states are not in the West.
-
-D. The Northeast has the lowest average.
-
-4: Making a box plot
 To further investigate whether moving to the western region is a wise decision, let’s make a box plot of murder rates by region, showing all points.
-
-    Make a box plot of the murder rates by region.
-    Order the regions by their median murder rate.
-    Show all of the points on the box plot.
-
+- Make a box plot of the murder rates by region.
+- Order the regions by their median murder rate.
+- Show all of the points on the box plot.
+```
 library(dplyr)
 library(ggplot2)
 library(dslabs)
-
+```
+```
 data("murders")
 murders %>% mutate(rate = total/population*100000) %>%
   mutate(region=reorder(region, rate, FUN=median)) %>%
   ggplot(aes(region, rate)) +
   geom_boxplot() +
   geom_point()
+```
+
 
 Assessment 11 (Data Visualization Principles, Part 3)
 
