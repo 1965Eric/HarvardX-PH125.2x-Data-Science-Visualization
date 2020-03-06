@@ -1318,7 +1318,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 1. Life expectancy vs fertility - part 1
 
-The [Gapminder Foundation](www.gapminder.org) is a non-profit organization based in Sweden that promotes global development through the use of statistics that can help reduce misconceptions about global development.
+The [Gapminder Foundation](https://www.gapminder.org/) is a non-profit organization based in Sweden that promotes global development through the use of statistics that can help reduce misconceptions about global development.
 
 - Using ggplot and the points layer, create a scatter plot of life expectancy versus fertility for the African continent in 2012.
 - Remember that you can use the R console to explore the gapminder dataset to figure out the names of the columns in the dataframe.
@@ -1349,22 +1349,26 @@ gapminder %>% filter(continent=="Africa" & year=="2012") %>%
   ggplot(aes(fertility,life_expectancy)) +
   geom_point()
 ```
+![index](https://user-images.githubusercontent.com/17474099/76077478-1252a180-5fa1-11ea-8a6f-ab77face26e4.png)
 
+2. Life expectancy vs fertility - part 2 - coloring your plot
 
-    Life expectancy vs fertility - part 2 - coloring your plot
-    Note that there is quite a bit of variability in life expectancy and fertility with some African countries having very high life expectancies. There also appear to be three clusters in the plot.
+Note that there is quite a bit of variability in life expectancy and fertility with some African countries having very high life expectancies. There also appear to be three clusters in the plot.
 
 Remake the plot from the previous exercises but this time use color to dinstinguish the different regions of Africa to see if this explains the clusters. Remember that you can explore the gapminder data to see how the regions of Africa are labeled in the dataframe!
-
+```
 library(dplyr)
 library(ggplot2)
 library(dslabs)
-
+```
+```
 data(gapminder)
 
 gapminder %>% filter(continent=="Africa" & year=="2012") %>%
   ggplot(aes(fertility,life_expectancy, color=region)) +
   geom_point()
+```
+
 
     Life expectancy vs fertility - part 3 - selecting country and region
     While many of the countries in the high life expectancy/low fertility cluster are from Northern Africa, three countries are not.
