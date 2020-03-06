@@ -1640,19 +1640,18 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 ## Assessment 9 (Data Visualization Principles, Part 1)
 
 1: Customizing plots - Pie charts
+
 Pie charts are appropriate:
+- [ ] A. When we want to display percentages.
+- [ ] B. When ggplot2 is not available.
+- [ ] C. When I am in a bakery.
+- [X] D. Never. Barplots and tables are always better.
 
-A. When we want to display percentages.
+2. Customizing plots - What’s wrong?
 
-B. When ggplot2 is not available.
+What is the problem with this plot?
 
-C. When I am in a bakery.
 
-D. Never. Barplots and tables are always better.
-
-    Customizing plots - What’s wrong?
-    What is the problem with this plot?
-    distribution
 
 A. The values are wrong. The final vote was 306 to 232.
 
