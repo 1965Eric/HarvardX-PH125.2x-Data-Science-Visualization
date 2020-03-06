@@ -1786,14 +1786,17 @@ dat %>% ggplot(aes(state, rate)) +
   coord_flip()
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/76089443-f4456b00-5fb9-11ea-965f-31e0e94ee988.png)
 
-3: Showing the data and customizing plots
+3. Showing the data and customizing plots
+
 Say we are interested in comparing gun homicide rates across regions of the US. We see this plot:
-
+```
 library(dplyr)
 library(ggplot2)
 library(dslabs)
-
+```
+```
 data("murders")
 murders %>% mutate(rate = total/population*100000) %>%
   group_by(region) %>%
@@ -1802,6 +1805,8 @@ murders %>% mutate(rate = total/population*100000) %>%
   ggplot(aes(region, avg)) +
   geom_bar(stat="identity") +
   ylab("Murder Rate Average")
+```
+
 
 and decide to move to a state in the western region. What is the main problem with this interpretaion?
 
