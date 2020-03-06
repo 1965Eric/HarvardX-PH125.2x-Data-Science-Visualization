@@ -2073,4 +2073,4 @@ us_contagious_diseases %>% filter(!is.na(population)) %>%
   summarize(rate=sum(count)/sum(population)*10000) %>%
   ggplot(aes(year, rate,color=disease)) + geom_line()
 ```
-
+![index](https://user-images.githubusercontent.com/17474099/76091504-fb6e7800-5fbd-11ea-8a2b-469772c558a9.png)
