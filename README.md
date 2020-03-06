@@ -1881,46 +1881,32 @@ dat %>% ggplot(aes(year, state, fill = rate)) +
   xlab("")
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/76090644-396a9c80-5fbc-11ea-82c3-f440dd00decd.png)
 
 - Modify the tile plot to show the rate of smallpox cases instead of measles cases.
 - Exclude years in which cases were reported in fewer than 10 weeks from the plot.
-
+```
 library(dplyr)
 library(ggplot2)
 library(RColorBrewer)
 library(dslabs)
-
+```
+```
 data(us_contagious_diseases)
 head(us_contagious_diseases)
-
- 
- 
-	
-disease
-<fctr>
-	
-state
-<fctr>
-	
-year
-<dbl>
-	
-weeks_reporting
-<int>
-	
-count
-<dbl>
-	
-population
-<dbl>
-1	Hepatitis A	Alabama	1966	50	321	3345787
-2	Hepatitis A	Alabama	1967	49	291	3364130
-3	Hepatitis A	Alabama	1968	52	314	3386068
-4	Hepatitis A	Alabama	1969	49	380	3412450
-5	Hepatitis A	Alabama	1970	51	413	3444165
-6	Hepatitis A	Alabama	1971	51	378	3481798
+```
+```	
+   disease       state      year      weeks_reporting     count      population
+   <fctr>        <fctr>     <dbl>     <int>               <dbl>      <dbl>
+1  Hepatitis A	 Alabama    1966      50	          321	     3345787
+2  Hepatitis A	 Alabama    1967      49	          291        3364130
+3  Hepatitis A	 Alabama    1968      52	          314	     3386068
+4  Hepatitis A	 Alabama    1969      49	          380	     3412450
+5  Hepatitis A	 Alabama    1970      51	          413	     3444165
+6  Hepatitis A	 Alabama    1971      51	          378	     3481798
 6 rows
-
+```
+```
 the_disease = "Smallpox"
 dat <- us_contagious_diseases %>% 
    filter(!state%in%c("Hawaii","Alaska") & disease == the_disease & !weeks_reporting<10) %>% 
@@ -1936,6 +1922,8 @@ dat %>% ggplot(aes(year, state, fill = rate)) +
   ggtitle(the_disease) + 
   ylab("") + 
   xlab("")
+```
+
 
     Time series plot - measles and smallpox
     The sample code given creates a time series plot showing the rate of measles cases per population by state. We are going to again modify this plot to look at smallpox cases instead.
