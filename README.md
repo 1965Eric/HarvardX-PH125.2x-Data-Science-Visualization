@@ -1457,32 +1457,37 @@ data(gapminder)
 
 gapminder %>% filter(year>=1960 & year <= 2010 & country=="Cambodia") %>% ggplot(aes(year,life_expectancy)) + geom_line()
 ```
-    Dollars per day - part 1
-    Now we are going to calculate and plot dollars per day for African countries in 2010 using GDP data.
+
+![index](https://user-images.githubusercontent.com/17474099/76078812-b50c1f80-5fa3-11ea-8301-e3f67e12470b.png)
+
+7. Dollars per day - part 1
+
+Now we are going to calculate and plot dollars per day for African countries in 2010 using GDP data.
 
 In the first part of this analysis, we will create the dollars per day variable.
-
-    Use mutate to create a dollars_per_day variable, which is defined as gdp/population/365.
-    Create the dollars_per_day variable for African countries for the year 2010.
-    Remove any NA values.
-    Save the mutated dataset as daydollars.
-
+- Use mutate to create a dollars_per_day variable, which is defined as gdp/population/365.
+- Create the dollars_per_day variable for African countries for the year 2010.
+- Remove any NA values.
+- Save the mutated dataset as daydollars.
+```
 library(dplyr)
 library(dslabs)
-
+```
+```
 data(gapminder)
 daydollars <- gapminder %>% mutate(dollars_per_day=gdp/population/365)%>% filter(year==2010 & continent=="Africa" & !is.na(dollars_per_day))
+```
+8. Dollars per day - part 2
 
-    Dollars per day - part 2
-    Now we are going to calculate and plot dollars per day for African countries in 2010 using GDP data.
+Now we are going to calculate and plot dollars per day for African countries in 2010 using GDP data.
 
 In the second part of this analysis, we will plot the smooth density plot using a log (base 2) x axis.
-
-    The dataset including the dollars_per_day variable is preloaded as daydollars.
-    Create a smooth density plot of dollars per day from daydollars.
-    Use a log (base 2) scale for the x axis.
-
+- The dataset including the dollars_per_day variable is preloaded as daydollars.
+- Create a smooth density plot of dollars per day from daydollars.
+- Use a log (base 2) scale for the x axis.
+```
 daydollars %>% ggplot(aes(dollars_per_day)) + geom_density() + scale_x_continuous(trans="log2")
+```
 
     Dollars per day - part 3 - multiple density plots
     Now we are going to combine the plotting tools we have used in the past two exercises to create density plots for multiple years.
