@@ -1439,19 +1439,24 @@ Now that you have created the data table in Exercise 4, it is time to plot the d
 p <- tab %>% ggplot(aes(year,life_expectancy,color=country)) + geom_line()
 p
 ```
-    Life expectancy in Cambodia
-    Cambodia was also involved in this conflict and, after the war, Pol Pot and his communist Khmer Rouge took control and ruled Cambodia from 1975 to 1979. He is considered one of the most brutal dictators in history. Do the data support this claim?
+
+![index](https://user-images.githubusercontent.com/17474099/76078449-ffd96780-5fa2-11ea-8f57-93389b4435bf.png)
+
+6. Life expectancy in Cambodia
+
+Cambodia was also involved in this conflict and, after the war, Pol Pot and his communist Khmer Rouge took control and ruled Cambodia from 1975 to 1979. He is considered one of the most brutal dictators in history. Do the data support this claim?
 
 Use a single line of code to create a time series plot from 1960 to 2010 of life expectancy vs year for Cambodia.
-
+```
 library(dplyr)
 library(ggplot2)
 library(dslabs)
-
+```
+```
 data(gapminder)
 
 gapminder %>% filter(year>=1960 & year <= 2010 & country=="Cambodia") %>% ggplot(aes(year,life_expectancy)) + geom_line()
-
+```
     Dollars per day - part 1
     Now we are going to calculate and plot dollars per day for African countries in 2010 using GDP data.
 
