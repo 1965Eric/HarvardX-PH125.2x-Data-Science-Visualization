@@ -1835,48 +1835,35 @@ murders %>% mutate(rate = total/population*100000) %>%
   geom_point()
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/76089763-97968000-5fba-11ea-914e-0d5817ff7665.png)
 
-Assessment 11 (Data Visualization Principles, Part 3)
+## Assessment 11 (Data Visualization Principles, Part 3)
 
-    Tile plot - measles and smallpox
-    The sample code given creates a tile plot showing the rate of measles cases per population. We are going to modify the tile plot to look at smallpox cases instead.
+1. Tile plot - measles and smallpox
 
+The sample code given creates a tile plot showing the rate of measles cases per population. We are going to modify the tile plot to look at smallpox cases instead.
+```
 library(dplyr)
 library(ggplot2)
 library(RColorBrewer)
 library(dslabs)
-
+```
+```
 data(us_contagious_diseases)
 head(us_contagious_diseases)
-
- 
- 
-	
-disease
-<fctr>
-	
-state
-<fctr>
-	
-year
-<dbl>
-	
-weeks_reporting
-<int>
-	
-count
-<dbl>
-	
-population
-<dbl>
-1	Hepatitis A	Alabama	1966	50	321	3345787
-2	Hepatitis A	Alabama	1967	49	291	3364130
-3	Hepatitis A	Alabama	1968	52	314	3386068
-4	Hepatitis A	Alabama	1969	49	380	3412450
-5	Hepatitis A	Alabama	1970	51	413	3444165
-6	Hepatitis A	Alabama	1971	51	378	3481798
+```
+```
+   disease       state      year      weeks_reporting     count      population
+   <fctr>        <fctr>     <dbl>     <int>               <dbl>      <dbl>
+1  Hepatitis A	 Alabama    1966      50	          321	     3345787
+2  Hepatitis A	 Alabama    1967      49	          291	     3364130
+3  Hepatitis A	 Alabama    1968      52	          314	     3386068
+4  Hepatitis A	 Alabama    1969      49	          380	     3412450
+5  Hepatitis A	 Alabama    1970      51                  413	     3444165
+6  Hepatitis A	 Alabama    1971      51	          378	     3481798
 6 rows
-
+```
+```
 the_disease = "Measles"
 dat <- us_contagious_diseases %>% 
    filter(!state%in%c("Hawaii","Alaska") & disease == the_disease) %>% 
@@ -1892,9 +1879,11 @@ dat %>% ggplot(aes(year, state, fill = rate)) +
   ggtitle(the_disease) + 
   ylab("") + 
   xlab("")
+```
 
-    Modify the tile plot to show the rate of smallpox cases instead of measles cases.
-    Exclude years in which cases were reported in fewer than 10 weeks from the plot.
+
+- Modify the tile plot to show the rate of smallpox cases instead of measles cases.
+- Exclude years in which cases were reported in fewer than 10 weeks from the plot.
 
 library(dplyr)
 library(ggplot2)
