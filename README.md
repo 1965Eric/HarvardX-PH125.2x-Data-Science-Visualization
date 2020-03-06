@@ -1975,15 +1975,17 @@ dat %>% ggplot() +
   geom_vline(xintercept=1963, col = "blue")
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/76091054-21474d00-5fbd-11ea-9492-6f335200aba6.png)
 
-    Modify the sample code for the time series plot to plot data for smallpox instead of for measles.
-    Once again, restrict the plot to years in which cases were reported in at least 10 weeks.
-
+- Modify the sample code for the time series plot to plot data for smallpox instead of for measles.
+- Once again, restrict the plot to years in which cases were reported in at least 10 weeks.
+```
 library(dplyr)
 library(ggplot2)
 library(dslabs)
 library(RColorBrewer)
-
+```
+```
 data(us_contagious_diseases)
 
 the_disease = "Smallpox"
@@ -1992,7 +1994,8 @@ dat <- us_contagious_diseases %>%
    mutate(rate = count / population * 10000) %>%
    mutate(state = reorder(state, rate))
 str(dat)
-
+```
+```
 ## 'data.frame':    1014 obs. of  7 variables:
 ##  $ disease        : Factor w/ 7 levels "Hepatitis A",..: 7 7 7 7 7 7 7 7 7 7 ...
 ##  $ state          : Factor w/ 51 levels "Rhode Island",..: 17 17 17 17 17 17 17 17 17 17 ...
@@ -2004,7 +2007,8 @@ str(dat)
 ##  $ count          : num  341 378 192 295 467 82 23 42 12 54 ...
 ##  $ population     : num  2589923 2619131 2646248 2670818 2693027 ...
 ##  $ rate           : num  1.317 1.443 0.726 1.105 1.734 ...
-
+```
+```
 avg <- us_contagious_diseases %>%
   filter(disease==the_disease) %>% group_by(year) %>%
   summarize(us_rate = sum(count, na.rm=TRUE)/sum(population, na.rm=TRUE)*10000)
@@ -2019,6 +2023,8 @@ dat %>% ggplot() +
   ylab("") +
   geom_text(data = data.frame(x=1955, y=50), mapping = aes(x, y, label="US average"), color="black") + 
   geom_vline(xintercept=1963, col = "blue")
+```
+
 
     Time series plot - all diseases in California
     Now we are going to look at the rates of all diseases in one state. Again, you will be modifying the sample code to produce the desired plot.
