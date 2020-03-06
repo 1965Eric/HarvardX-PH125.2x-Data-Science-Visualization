@@ -2025,19 +2025,21 @@ dat %>% ggplot() +
   geom_vline(xintercept=1963, col = "blue")
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/76091191-61a6cb00-5fbd-11ea-9d09-f8d10995d59c.png)
 
-    Time series plot - all diseases in California
-    Now we are going to look at the rates of all diseases in one state. Again, you will be modifying the sample code to produce the desired plot.
+3. Time series plot - all diseases in California
 
-    For the state of California, make a time series plot showing rates for all diseases.
-    Include only years with 10 or more weeks reporting.
-    Use a different color for each disease.
-
+Now we are going to look at the rates of all diseases in one state. Again, you will be modifying the sample code to produce the desired plot.
+- For the state of California, make a time series plot showing rates for all diseases.
+- Include only years with 10 or more weeks reporting.
+- Use a different color for each disease.
+```
 library(dplyr)
 library(ggplot2)
 library(dslabs)
 library(RColorBrewer)
-
+```
+```
 data(us_contagious_diseases)
 
 us_contagious_diseases %>% filter(state=="California" & !weeks_reporting<10) %>% 
@@ -2045,6 +2047,8 @@ us_contagious_diseases %>% filter(state=="California" & !weeks_reporting<10) %>%
   summarize(rate = sum(count)/sum(population)*10000) %>%
   ggplot(aes(year, rate,color=disease)) + 
   geom_line()
+```
+
 
     Time series plot - all diseases in the United States
     Now we are going to make a time series plot for the rates of all diseases in the United States. For this exercise, we have provided less sample code - you can take a look at the previous exercise to get you started.
