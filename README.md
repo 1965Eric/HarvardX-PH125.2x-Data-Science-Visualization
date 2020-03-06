@@ -1167,7 +1167,7 @@ AgeDecade       average      standard_deviation
 70+	        133.51652    19.841781
 NA	        141.54839    22.908521
 9 rows
-
+```
 6. group_by example 2
 
 Now let’s practice using group_by some more. We are going to repeat the previous exercise of calculating the average and standard deviation of systolic blood pressure, but for males instead of females.
@@ -1197,7 +1197,7 @@ AgeDecade       average      standard_deviation
 70+	        130.20172    18.657475
 NA	        136.40000    23.534731
 9 rows
-
+```
 7. group_by example 3
 
 We can actually combine both of these summaries into a single line of code. This is because group_by permits us to group by more than one variable.
@@ -1216,6 +1216,7 @@ data(NHANES)
 ```
 NHANES %>% group_by(AgeDecade, Gender) %>% summarize(average=mean(BPSysAve,na.rm=TRUE),standard_deviation = sd(BPSysAve,na.rm=TRUE))
 ```
+```
 AgeDecade    Gender     average      standard_deviation
 <fctr>       <fctr>     <dbl>        <dbl>
 0-9	     female	99.95041     9.071798
@@ -1229,7 +1230,7 @@ AgeDecade    Gender     average      standard_deviation
 40-49	     female	115.49385    14.530054
 40-49	     male	120.78390    13.968338
 1-10 of 18 rows
-
+```
 8. Arrange
 
 Now we are going to explore differences in systolic blood pressure across races, as reported in the Race1 variable.
@@ -1260,6 +1261,7 @@ If we want it in descending order we can use the desc function like this:
 ```
 NHANES %>% arrange(desc(BPSysAve))
 ```
+```
 ID        SurveyYr    Gender     Age        AgeDecade     AgeMonths    Race1      Race3       Education
 <int>     <fctr>      <fctr>     <int>      <fctr>        <int>        <fctr>     <fctr>      <fctr>
 55311	  2009_10	female	55	50-59	671	Hispanic	NA	Some College	
@@ -1274,7 +1276,7 @@ ID        SurveyYr    Gender     Age        AgeDecade     AgeMonths    Race1    
 68301	  2011_12	male	59	50-59	NA	White	White	High School	
 ...
 1-10 of 10,000 rows | 1-9 of 76 columns
-
+```
 In this example, we will compare systolic blood pressure across values of the Race1 variable for males between the ages of 40-49.
 
 Compute the average and standard deviation for each value of Race1 for males in the age decade 40-49.
