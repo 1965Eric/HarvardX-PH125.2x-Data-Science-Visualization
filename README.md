@@ -1622,20 +1622,22 @@ gapminder  %>%
     facet_grid(year~.)
 ```
 
-Section 5 Overview
+![index](https://user-images.githubusercontent.com/17474099/76079914-09b09a00-5fa6-11ea-8f39-f8556253ee2c.png)
+
+## Section 5 Overview
 
 Section 5 covers some general principles that can serve as guides for effective data visualization.
 
 After completing Section 5, you will:
+- understand basic principles of effective data visualization.
+- understand the importance of keeping your goal in mind when deciding on a visualization approach.
+- understand principles for encoding data, including position, aligned lengths, angles, area, brightness, and color hue.
+- know when to include the number zero in visualizations.
+- be able to use techniques to ease comparisons, such as using common axes, putting visual cues to be compared adjacent to one another, and using color effectively.
 
-    understand basic principles of effective data visualization.
-    understand the importance of keeping your goal in mind when deciding on a visualization approach.
-    understand principles for encoding data, including position, aligned lengths, angles, area, brightness, and color hue.
-    know when to include the number zero in visualizations.
-    be able to use techniques to ease comparisons, such as using common axes, putting visual cues to be compared adjacent to one another, and using color effectively.
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html)
 
-The textbook for this section is available here
-Assessment 9 (Data Visualization Principles, Part 1)
+## Assessment 9 (Data Visualization Principles, Part 1)
 
 1: Customizing plots - Pie charts
 Pie charts are appropriate:
