@@ -1574,21 +1574,24 @@ Now we are going to transform the x axis of the plot from the previous exercise.
 gapminder_Africa_2010 %>% ggplot(aes(dollars_per_day,infant_mortality, color=region)) + geom_point() + scale_x_continuous(trans='log2')
 ```
 
-    Infant mortality scatter plot - part 3 - adding labels
-    Note that there is a large variation in infant mortality and dollars per day among African countries.
+![index](https://user-images.githubusercontent.com/17474099/76079652-619ad100-5fa5-11ea-87ab-893c889572df.png)
+
+13. Infant mortality scatter plot - part 3 - adding labels
+
+Note that there is a large variation in infant mortality and dollars per day among African countries.
 
 As an example, one country has infant mortality rates of less than 20 per 1000 and dollars per day of 16, while another country has infant mortality rates over 10% and dollars per day of about 1.
 
 In this exercise, we will remake the plot from Exercise 12 with country names instead of points so we can identify which countries are which.
-
-    The mutated dataset is preloaded as gapminder_Africa_2010.
-    As in the previous exercise, make a scatter plot of infant_mortaility versus dollars_per_day for countries in the African continent.
-    As in the previous exercise, use color to denote the different regions of Africa.
-    As in the previous exercise, transform the x axis to be in the log (base 2) scale.
-    Add a layer to display country names instead of points.
-
+- The mutated dataset is preloaded as gapminder_Africa_2010.
+- As in the previous exercise, make a scatter plot of infant_mortaility versus dollars_per_day for countries in the African continent.
+- As in the previous exercise, use color to denote the different regions of Africa.
+- As in the previous exercise, transform the x axis to be in the log (base 2) scale.
+- Add a layer to display country names instead of points.
+```
 gapminder_Africa_2010 %>% ggplot(aes(dollars_per_day,infant_mortality, color=region,label = country)) + geom_point() + scale_x_continuous(trans='log2') +
     geom_text()
+```
 
     Infant mortality scatter plot - part 4 - comparison of scatter plots
     Now we are going to look at changes in the infant mortality and dollars per day patterns African countries between 1970 and 2010.
