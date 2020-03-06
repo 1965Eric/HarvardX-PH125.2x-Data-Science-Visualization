@@ -993,12 +993,15 @@ heights %>%
   geom_density() 
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/76072191-cea76a00-5f97-11ea-929e-2e6455293778.png)
 
 However, here the second density is drawn over the other. We can change this by using something called alpha blending. Set the alpha parameter to 0.2 in the geom_density function to make this change.
-
+```
 heights %>% 
   ggplot(aes(height, fill = sex)) + 
   geom_density(alpha=0.2) 
+```
+
 
 Section 3 Overview
 
