@@ -960,20 +960,26 @@ heights %>%
   ggplot(aes(height,group = sex)) + geom_density()
 ```
 
+![index](https://user-images.githubusercontent.com/17474099/76071763-0d88f000-5f97-11ea-86dc-b3a21fd96141.png)
 
-    Two smooth density plots 2
-    In the previous exercise we made the two density plots, one for each sex, using:
+21. Two smooth density plots 2
 
+In the previous exercise we made the two density plots, one for each sex, using:
+```
 heights %>% 
   ggplot(aes(height, group = sex)) + 
   geom_density()
+```
+![index](https://user-images.githubusercontent.com/17474099/76071763-0d88f000-5f97-11ea-86dc-b3a21fd96141.png)
 
 We can also assign groups through the color or fill argument. For example, if you type color = sex ggplot knows you want a different color for each sex. So two densities must be drawn. You can therefore skip the group = sex mapping. Using color has the added benefit that it uses color to distinguish the groups. Change the density plots from the previous exercise to add color.
-
+```
 ## edit the next line to use color instead of group then add a density layer
 heights %>% 
   ggplot(aes(height, color = sex))+
   geom_density()
+```
+
 
     Two smooth density plots 3
     We can also assign groups using the fill argument. When using the geom_density geometry, color creates a colored line for the smooth density plot while fill colors in the area under the curve.
