@@ -1662,27 +1662,26 @@ What is the problem with this plot?
 
 Take a look at the following two plots. They show the same information: rates of measles by state in the United States for 1928.
 
+![index](https://user-images.githubusercontent.com/17474099/76088976-37530e80-5fb9-11ea-9642-a94d5f40d7ae.png)
 
+- [ ] A. Both plots provide the same information, so they are equally good.
+- [ ] B. The plot on the left is better because it orders the states alphabetically.
+- [X] C. The plot on the right is better because it orders the states by disease rate so we can quickly see the states with highest and lowest rates.
+- [ ] D. Both plots should be pie charts instead.
 
-A. Both plots provide the same information, so they are equally good.
-
-B. The plot on the left is better because it orders the states alphabetically.
-
-C. The plot on the right is better because it orders the states by disease rate so we can quickly see the states with highest and lowest rates.
-
-D. Both plots should be pie charts instead.
-Assessment 10 (Data Visualization Principles, Part 2)
+## Assessment 10 (Data Visualization Principles, Part 2)
 
 1: Customizing plots - watch and learn
+
 To make the plot on the right in the exercise from the last set of assessments, we had to reorder the levels of the states’ variables.
-
-    Redefine the state object so that the levels are re-ordered by rate.
-    Print the new object state and its levels so you can see that the vector is now re-ordered by the levels.
-
+- Redefine the state object so that the levels are re-ordered by rate.
+- Print the new object state and its levels so you can see that the vector is now re-ordered by the levels.
+```
 library(dplyr)
 library(ggplot2)
 library(dslabs)
-
+```
+```
 dat <- us_contagious_diseases %>%
 filter(year == 1967 & disease=="Measles" & !is.na(population)) %>% mutate(rate = count / population * 10000 * 52 / weeks_reporting)
 state <- dat$state 
@@ -1690,7 +1689,8 @@ rate <- dat$count/(dat$population/10000)*(52/dat$weeks_reporting)
 
 state <- reorder(state,rate)
 print(state)
-
+```
+```
 ##  [1] Alabama              Alaska               Arizona             
 ##  [4] Arkansas             California           Colorado            
 ##  [7] Connecticut          Delaware             District Of Columbia
@@ -1744,9 +1744,11 @@ print(state)
 ##        West Virginia            Wisconsin              Wyoming 
 ##           8.59456463           4.96246019           6.97303449 
 ## 51 Levels: Georgia District Of Columbia Connecticut ... Washington
-
+```
+```
 levels(state)
-
+```
+```
 ##  [1] "Georgia"              "District Of Columbia" "Connecticut"         
 ##  [4] "Minnesota"            "Louisiana"            "New Hampshire"       
 ##  [7] "Maryland"             "Kansas"               "New York"            
@@ -1764,23 +1766,26 @@ levels(state)
 ## [43] "Nevada"               "Arkansas"             "Wyoming"             
 ## [46] "Colorado"             "West Virginia"        "Oregon"              
 ## [49] "Texas"                "North Dakota"         "Washington"
+```
+2. Customizing plots - redefining
 
-2: Customizing plots - redefining
 Now we are going to customize this plot a little more by creating a rate variable and reordering by that variable instead.
-
-    Add a single line of code to the definition of the dat table that uses mutate to reorder the states by the rate variable.
-    The sample code provided will then create a bar plot using the newly defined dat.
-
+- Add a single line of code to the definition of the dat table that uses mutate to reorder the states by the rate variable.
+- The sample code provided will then create a bar plot using the newly defined dat.
+```
 library(dplyr)
 library(ggplot2)
 library(dslabs)
-
+```
+```
 data(us_contagious_diseases)
 dat <- us_contagious_diseases %>% filter(year == 1967 & disease=="Measles" & count>0 & !is.na(population)) %>%
   mutate(rate = count / population * 10000 * 52 / weeks_reporting) %>% mutate(state = reorder(state, rate))
 dat %>% ggplot(aes(state, rate)) +
   geom_bar(stat="identity") +
   coord_flip()
+```
+
 
 3: Showing the data and customizing plots
 Say we are interested in comparing gun homicide rates across regions of the US. We see this plot:
