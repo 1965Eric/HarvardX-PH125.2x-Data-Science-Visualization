@@ -2436,5 +2436,3 @@ One way to differentiate natural co2 oscillations from today's manmade co2 spike
 
 Use the co2_time plot saved above. Change the limits as directed to investigate the rate of change in co2 over various periods with spikes in co2 concentration.
 
-```{r}
-```
