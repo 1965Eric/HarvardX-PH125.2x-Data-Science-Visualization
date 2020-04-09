@@ -2197,3 +2197,244 @@ stars %>%
   geom_point()
 # Which star type has the lowest temperature?
 ```
+
+# Climate Change Exercises
+
+**Background**
+
+The planet's surface temperature is increasing due to human greenhouse gas emissions, and this global warming and carbon cycle disruption is wreaking havoc on natural systems. Living systems that depend on current temperature, weather, currents and carbon balance are jeopardized, and human society will be forced to contend with widespread economic, social, political and environmental damage as the temperature continues to rise. Although most countries recognize that global warming is a crisis and that humans must act to limit its effects, little action has been taken to limit or reverse human impact on the climate.
+
+One limitation is the spread of misinformation related to climate change and its causes, especially the extent to which humans have contributed to global warming. In these exercises, we examine the relationship between global temperature changes, greenhouse gases and human carbon emissions using time series of actual atmospheric and ice core measurements from the National Oceanic and Atmospheric Administration (NOAA) and Carbon Dioxide Information Analysis Center (CDIAC).
+
+**Libraries and Options**  
+```{r}
+#update.packages()
+library(tidyverse)
+library(dslabs)
+data(temp_carbon)
+data(greenhouse_gases)
+data(historic_co2)
+```
+
+**Question 1**  
+Load the temp_carbon dataset from dslabs, which contains annual global temperature anomalies (difference from 20th century mean temperature in degrees Celsius), temperature anomalies over the land and ocean, and global carbon emissions (in metric tons). Note that the date ranges differ for temperature and carbon emissions.
+
+Which of these code blocks return the latest year for which carbon emissions are reported?
+
+```{r}
+str(temp_carbon)
+temp_carbon %>%
+    .$year %>%
+    max()
+temp_carbon %>%
+    filter(!is.na(carbon_emissions)) %>%
+    pull(year) %>%
+    max()
+#temp_carbon %>%
+#    filter(!is.na(carbon_emissions)) %>%
+#    max(year)
+temp_carbon %>%
+    filter(!is.na(carbon_emissions)) %>%
+    .$year %>%
+    max()
+temp_carbon %>%
+    filter(!is.na(carbon_emissions)) %>%
+    select(year) %>%
+    max()
+#temp_carbon %>%
+#    filter(!is.na(carbon_emissions)) %>%
+#    max(.$year)
+```
+
+**Question 2**  
+Inspect the difference in carbon emissions in temp_carbon from the first available year to the last available year.  
+
+```{r}
+# What is the first year for which carbon emissions (carbon_emissions) data are available?
+year_min <- temp_carbon %>%
+  filter(!is.na(carbon_emissions)) %>%
+  .$year %>%
+  min()
+# What is the last year for which carbon emissions data are available?
+year_max <- temp_carbon %>%
+  filter(!is.na(carbon_emissions)) %>%
+  .$year %>%
+  max()
+# How many times larger were carbon emissions in the last year relative to the first year?
+ratio <- temp_carbon %>%
+  filter(year %in% c(year_min, year_max)) %>%
+  .$carbon_emissions
+#A:
+ratio[1] / ratio[2]
+# Scatter plot
+temp_carbon %>%
+  filter(!is.na(carbon_emissions)) %>%
+  ggplot(aes(x=year, y=carbon_emissions)) +
+  geom_point()
+```
+
+
+**Question 3**  
+Inspect the difference in temperature in temp_carbon from the first available year to the last available year.  
+
+```{r}
+# What is the first year for which global temperature anomaly (temp_anomaly) data are available?
+year_min <- temp_carbon %>%
+  filter(!is.na(temp_anomaly)) %>%
+  .$year %>%
+  min()
+year_min
+# What is the last year for which global temperature anomaly data are available?
+year_max <- temp_carbon %>%
+  filter(!is.na(temp_anomaly)) %>%
+  .$year %>%
+  max()
+year_max
+# How many degrees Celsius has temperature increased over the date range?
+diff <- temp_carbon %>%
+  filter(year %in% c(year_min, year_max)) %>%
+  .$temp_anomaly
+#A:
+diff
+diff[1] - diff[2]
+```
+
+
+**Question 4**
+Create a time series line plot of the temperature anomaly. Only include years where temperatures are reported. Save this plot to the object p.  
+Which command adds a blue horizontal line indicating the 20th century mean temperature?
+
+```{r}
+p <- temp_carbon %>%
+  filter(!is.na(temp_anomaly)) %>%
+  ggplot(aes(year, temp_anomaly)) +
+  geom_line() + 
+  geom_hline(aes(yintercept=0), color='blue')
+p
+```
+
+
+**Question 5**  
+Continue working with p, the plot created in the previous question.
+
+Change the y-axis label to be "Temperature anomaly (degrees C)". Add a title, "Temperature anomaly relative to 20th century mean, 1880-2018". Also add a text layer to the plot: the x-coordinate should be 2000, the y-coordinate should be 0.05, the text should be "20th century mean", and the text color should be blue.
+
+```{r}
+q <- temp_carbon %>%
+  filter(!is.na(temp_anomaly)) %>%
+  ggplot(aes(year, temp_anomaly)) +
+  geom_line() + 
+  geom_hline(aes(yintercept=0), color='blue') +
+  ylab("Temperature anomaly (degrees C)") +
+  ggtitle("Temperature anomaly relative to 20th century mean, 1880-2018") +
+  geom_text(aes(x=2000, y=0.05, label="20th century mean"), col='blue')
+q
+```
+
+
+**Question 6**  
+
+When was the earliest year with a temperature above the 20th century mean?
+
+```{r}
+year_min <- temp_carbon %>%
+  filter(!is.na(temp_anomaly) & temp_anomaly>0) %>%
+  .$year %>%
+  min()
+year_min
+```
+
+When was the last year with an average temperature below the 20th century mean?
+```{r}
+year_max <- temp_carbon %>%
+  filter(!is.na(temp_anomaly) & temp_anomaly<0) %>%
+  .$year %>%
+  max()
+year_max
+```
+
+In what year did the temperature anomaly exceed 0.5 degrees Celsius for the first time?
+```{r}
+year_ <- temp_carbon %>%
+  filter(!is.na(temp_anomaly) & temp_anomaly>0.5) %>%
+  .$year %>%
+  min()
+year_
+```
+
+**Question 7**
+Add layers to the previous plot to include line graphs of the temperature anomaly in the ocean (ocean_anomaly) and on land (land_anomaly). Assign different colors to the lines. Compare the global temperature anomaly to the land temperature anomaly and ocean temperature anomaly.
+
+Which region has the largest 2018 temperature anomaly relative to the 20th century mean?
+
+```{r}
+temp_carbon %>%
+  filter(!is.na(temp_anomaly)) %>%
+  ggplot(aes(year, temp_anomaly)) +
+  geom_line(col='red') + 
+  geom_hline(aes(yintercept=0), color='blue') +
+  xlim(c(1880, 2018)) +
+  ylab("Temperature anomaly (degrees C)") +
+  ggtitle("Temperature anomaly relative to 20th century mean, 1880-2018") +
+  geom_text(aes(x=2000, y=0.05, label="20th century mean"), col='blue') +
+  geom_line(aes(year, ocean_anomaly), col='cyan') +
+  geom_line(aes(year, land_anomaly), col='green')
+```
+
+
+**Question 8**
+A major determinant of Earth's temperature is the greenhouse effect. Many gases trap heat and reflect it towards the surface, preventing heat from escaping the atmosphere. The greenhouse effect is vital in keeping Earth at a warm enough temperature to sustain liquid water and life; however, changes in greenhouse gas levels can alter the temperature balance of the planet.
+
+The greenhouse_gases data frame from dslabs contains concentrations of the three most significant greenhouse gases: carbon dioxide ( CO2 , abbreviated in the data as co2), methane ( CH4 , ch4 in the data), and nitrous oxide ( N2O , n2o in the data). Measurements are provided every 20 years for the past 2000 years.
+
+```{r}
+str(greenhouse_gases)
+```
+
+Complete the code outline below to make a line plot of concentration on the y-axis by year on the x-axis. Facet by gas, aligning the plots vertically so as to ease comparisons along the year axis. Add a vertical line with an x-intercept at the year 1850, noting the unofficial start of the industrial revolution and widespread fossil fuel consumption. Note that the units for ch4 and n2o are ppb while the units for co2 are ppm.
+
+
+```{r}
+greenhouse_gases %>%
+    ggplot(aes(year, concentration)) +
+    geom_line() +
+    facet_grid(gas ~ ., scales = "free") +
+    geom_vline(xintercept = 1850, col='red') +
+    ylab("Concentration (ch4/n2o ppb, co2 ppm)") +
+    ggtitle("Atmospheric greenhouse gas concentration by year, 0-2000")
+```
+
+
+**Question 10**
+Make a time series line plot of carbon emissions (carbon_emissions) from the temp_carbon dataset. The y-axis is metric tons of carbon emitted per year.
+
+```{r}
+temp_carbon %>%
+  filter(!is.na(carbon_emissions)) %>%
+  ggplot(aes(year, carbon_emissions)) +
+  geom_line()
+```
+
+**Question 11**  
+We saw how greenhouse gases have changed over the course of human history, but how has  CO2  (co2 in the data) varied over a longer time scale? The historic_co2 data frame in dslabs contains direct measurements of atmospheric co2 from Mauna Loa since 1959 as well as indirect measurements of atmospheric co2 from ice cores dating back 800,000 years.
+
+Make a line plot of co2 concentration over time (year), coloring by the measurement source (source). Save this plot as co2_time for later use.
+
+```{r}
+co2_time <- historic_co2 %>%
+  filter(!is.na(co2)) %>%
+  ggplot(aes(year, co2, col=source)) +
+  geom_line() +
+  ggtitle("Atmospheric CO2 concentration, -800,000 BC to today") +
+  ylab("co2 (ppmv)")
+co2_time
+```
+
+
+**Question 12**  
+One way to differentiate natural co2 oscillations from today's manmade co2 spike is by examining the rate of change of co2. The planet is affected not only by the absolute concentration of co2 but also by its rate of change. When the rate of change is slow, living and nonliving systems have time to adapt to new temperature and gas levels, but when the rate of change is fast, abrupt differences can overwhelm natural systems. How does the pace of natural co2 change differ from the current rate of change?
+
+Use the co2_time plot saved above. Change the limits as directed to investigate the rate of change in co2 over various periods with spikes in co2 concentration.
+
+```{r}
+```
