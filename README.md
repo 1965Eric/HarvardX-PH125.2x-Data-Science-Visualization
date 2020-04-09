@@ -2078,7 +2078,7 @@ us_contagious_diseases %>% filter(!is.na(population)) %>%
 # Properties of Stars Exercises
 
 **Background**  
-Astronomy is one of the oldest data-driven sciences. In the late 1800s, the director of the Harvard College Observatory hired women to analyze astronomical data, which at the time was done using photographic glass plates. These women became known as the ???Harvard Computers???. They computed the position and luminosity of various astronomical objects such as stars and galaxies. (If you are interested, you can learn more about the Harvard Computers). Today, astronomy is even more of a data-driven science, with an inordinate amount of data being produced by modern instruments every day.
+Astronomy is one of the oldest data-driven sciences. In the late 1800s, the director of the Harvard College Observatory hired women to analyze astronomical data, which at the time was done using photographic glass plates. These women became known as the Harvard Computers. They computed the position and luminosity of various astronomical objects such as stars and galaxies. (If you are interested, you can learn more about the Harvard Computers). Today, astronomy is even more of a data-driven science, with an inordinate amount of data being produced by modern instruments every day.
 
 In the following exercises we will analyze some actual astronomical data to inspect properties of stars, their absolute magnitude (which relates to a star's luminosity, or brightness), temperature and type (spectral class).
 
@@ -2101,7 +2101,6 @@ mean(stars$magnitude)
 sd(stars$magnitude)
 ```
 
-
 **Question 2**  
 Make a density plot of the magnitude.
 
@@ -2112,7 +2111,6 @@ stars %>%
 # How many peaks are there in the data?
 # A: 2
 ```
-
 
 **Question 3**  
 Examine the distribution of star temperature.
@@ -2126,7 +2124,6 @@ stars %>%
 # A: 2
 ```
 
-
 **Question 4**  
 Make a scatter plot of the data with temperature on the x-axis and magnitude on the y-axis and examine the relationship between the variables. Recall that lower magnitude means a more luminous (brighter) star.
 
@@ -2135,7 +2132,6 @@ stars %>%
   ggplot(aes(x=temp, y=magnitude)) +
   geom_point()
 ```
-
 
 **Question 5**  
 For various reasons, scientists do not always follow straight conventions when making plots, and astronomers usually transform values of star luminosity and temperature before plotting. Flip the y-axis so that lower values of magnitude are at the top of the axis (recall that more luminous stars have lower magnitude) using scale_y_reverse. Take the log base 10 of temperature and then also flip the x-axis.  
@@ -2151,7 +2147,7 @@ stars %>%
 ```
 
 **Question 6**  
-The trends you see allow scientists to learn about the evolution and lifetime of stars. The primary group of stars to which most stars belong (see question 4) we will call the main sequence stars. Most stars belong to this main sequence, however some of the more rare stars are classified as ???old??? and ???evolved??? stars. These stars tend to be hotter stars, but also have low luminosity, and are known as white dwarfs.  
+The trends you see allow scientists to learn about the evolution and lifetime of stars. The primary group of stars to which most stars belong (see question 4) we will call the main sequence stars. Most stars belong to this main sequence, however some of the more rare stars are classified as old and evolved stars. These stars tend to be hotter stars, but also have low luminosity, and are known as white dwarfs.  
 
 How many white dwarfs are there in our sample?  
 A: 4  
@@ -2273,7 +2269,6 @@ temp_carbon %>%
   geom_point()
 ```
 
-
 **Question 3**  
 Inspect the difference in temperature in temp_carbon from the first available year to the last available year.  
 
@@ -2299,7 +2294,6 @@ diff
 diff[1] - diff[2]
 ```
 
-
 **Question 4**
 Create a time series line plot of the temperature anomaly. Only include years where temperatures are reported. Save this plot to the object p.  
 Which command adds a blue horizontal line indicating the 20th century mean temperature?
@@ -2312,7 +2306,6 @@ p <- temp_carbon %>%
   geom_hline(aes(yintercept=0), color='blue')
 p
 ```
-
 
 **Question 5**  
 Continue working with p, the plot created in the previous question.
@@ -2330,7 +2323,6 @@ q <- temp_carbon %>%
   geom_text(aes(x=2000, y=0.05, label="20th century mean"), col='blue')
 q
 ```
-
 
 **Question 6**  
 
@@ -2381,7 +2373,6 @@ temp_carbon %>%
   geom_line(aes(year, land_anomaly), col='green')
 ```
 
-
 **Question 8**
 A major determinant of Earth's temperature is the greenhouse effect. Many gases trap heat and reflect it towards the surface, preventing heat from escaping the atmosphere. The greenhouse effect is vital in keeping Earth at a warm enough temperature to sustain liquid water and life; however, changes in greenhouse gas levels can alter the temperature balance of the planet.
 
@@ -2403,7 +2394,6 @@ greenhouse_gases %>%
     ylab("Concentration (ch4/n2o ppb, co2 ppm)") +
     ggtitle("Atmospheric greenhouse gas concentration by year, 0-2000")
 ```
-
 
 **Question 10**
 Make a time series line plot of carbon emissions (carbon_emissions) from the temp_carbon dataset. The y-axis is metric tons of carbon emitted per year.
@@ -2429,7 +2419,6 @@ co2_time <- historic_co2 %>%
   ylab("co2 (ppmv)")
 co2_time
 ```
-
 
 **Question 12**  
 One way to differentiate natural co2 oscillations from today's manmade co2 spike is by examining the rate of change of co2. The planet is affected not only by the absolute concentration of co2 but also by its rate of change. When the rate of change is slow, living and nonliving systems have time to adapt to new temperature and gas levels, but when the rate of change is fast, abrupt differences can overwhelm natural systems. How does the pace of natural co2 change differ from the current rate of change?
