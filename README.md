@@ -1,4 +1,4 @@
-# Data_Science_Visualization
+# Data Science Visualization
 # HarvardX: PH125.2x | Data Science: Visualization
 
 ## Abstract
