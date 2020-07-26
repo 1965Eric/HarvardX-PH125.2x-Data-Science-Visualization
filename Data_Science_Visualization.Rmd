@@ -168,7 +168,12 @@ sum(tab==1)
 
 ## Describe Heights to ET
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#case-study-describing-student-heights), [here](https://rafalab.github.io/dsbook/distributions.html#distribution-function), [here](https://rafalab.github.io/dsbook/distributions.html#cdf-intro) and [here](https://rafalab.github.io/dsbook/distributions.html#histograms)
+The textbook for this section is available:
+
+* [here](https://rafalab.github.io/dsbook/distributions.html#case-study-describing-student-heights)
+* [here](https://rafalab.github.io/dsbook/distributions.html#distribution-function)
+* [here](https://rafalab.github.io/dsbook/distributions.html#cdf-intro)
+* [here](https://rafalab.github.io/dsbook/distributions.html#histograms)
 
 **Key points**
 
