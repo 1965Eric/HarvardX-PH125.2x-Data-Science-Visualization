@@ -1,38 +1,45 @@
-\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 %
-\documentclass[]{article}
+\documentclass[
+]{article}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provides euro and other symbols
-\else % if luatex or xelatex
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
   \usepackage{unicode-math}
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
-% use upquote if available, for straight quotes in verbatim environments
+% Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage[]{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
-\usepackage{hyperref}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-            pdftitle={Data Science Visualization},
-            pdfborder={0 0 0},
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
+  pdftitle={Data Science Visualization},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -83,25 +90,14 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{0}
-% Redefines (sub)paragraphs to behave more like sections
-\ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
-
-% set default figure placement to htbp
+% Set default figure placement to htbp
 \makeatletter
 \def\fps@figure{htbp}
 \makeatother
-
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 
 \title{Data Science Visualization}
 \author{}
@@ -357,14 +353,14 @@ What data type is the \texttt{sex} variable?
 
 \begin{itemize}
 \tightlist
-\item
-  {[} {]} A. Continuous
-\item
-  {[}X{]} B. Categorical
-\item
-  {[} {]} C. Ordinal
-\item
-  {[} {]} D. None of the above
+\item[$\square$]
+  A. Continuous
+\item[$\boxtimes$]
+  B. Categorical
+\item[$\square$]
+  C. Ordinal
+\item[$\square$]
+  D. None of the above
 \end{itemize}
 
 \begin{enumerate}
@@ -465,19 +461,18 @@ times this happens.
 
 \begin{itemize}
 \tightlist
-\item
-  {[}X{]} A. It is more effective to consider heights to be numerical
-  given the number of unique values we observe and the fact that if we
-  keep collecting data even more will be observed.
-\item
-  {[} {]} B. It is actually preferable to consider heights ordinal since
-  on a computer there are only a finite number of possibilities.
-\item
-  {[} {]} C. This is actually a categorical variable: tall, medium or
-  short.
-\item
-  {[} {]} D. This is a numerical variable because numbers are used to
-  represent it.
+\item[$\boxtimes$]
+  A. It is more effective to consider heights to be numerical given the
+  number of unique values we observe and the fact that if we keep
+  collecting data even more will be observed.
+\item[$\square$]
+  B. It is actually preferable to consider heights ordinal since on a
+  computer there are only a finite number of possibilities.
+\item[$\square$]
+  C. This is actually a categorical variable: tall, medium or short.
+\item[$\square$]
+  D. This is a numerical variable because numbers are used to represent
+  it.
 \end{itemize}
 
 \hypertarget{describe-heights-to-et}{%
@@ -578,14 +573,14 @@ Central region?
 
 \begin{itemize}
 \tightlist
-\item
-  {[} {]} A. 75\%
-\item
-  {[} {]} B. 50\%
-\item
-  {[}X{]} C. 20\%
-\item
-  {[} {]} D. 5\%
+\item[$\square$]
+  A. 75\%
+\item[$\square$]
+  B. 50\%
+\item[$\boxtimes$]
+  C. 20\%
+\item[$\square$]
+  D. 5\%
 \end{itemize}
 
 \begin{enumerate}
@@ -600,16 +595,15 @@ Which of the following is true:
 
 \begin{itemize}
 \tightlist
-\item
-  {[} {]} A. The graph above is a histogram.
-\item
-  {[}X{]} B. The graph above shows only four numbers with a bar plot.
-\item
-  {[} {]} C. Categories are not numbers, so it does not make sense to
-  graph the distribution.
-\item
-  {[} {]} D. The colors, not the height of the bars, describe the
+\item[$\square$]
+  A. The graph above is a histogram.
+\item[$\boxtimes$]
+  B. The graph above shows only four numbers with a bar plot.
+\item[$\square$]
+  C. Categories are not numbers, so it does not make sense to graph the
   distribution.
+\item[$\square$]
+  D. The colors, not the height of the bars, describe the distribution.
 \end{itemize}
 
 \begin{enumerate}
@@ -630,14 +624,14 @@ Based on the plot, what percentage of males are shorter than 75 inches?
 
 \begin{itemize}
 \tightlist
-\item
-  {[} {]} A. 100\%
-\item
-  {[}X{]} B. 95\%
-\item
-  {[} {]} C. 80\%
-\item
-  {[} {]} D. 72 inches
+\item[$\square$]
+  A. 100\%
+\item[$\boxtimes$]
+  B. 95\%
+\item[$\square$]
+  C. 80\%
+\item[$\square$]
+  D. 72 inches
 \end{itemize}
 
 \begin{enumerate}
@@ -651,14 +645,14 @@ Based on the plot, what percentage of males are shorter than 75 inches?
 
 \begin{itemize}
 \tightlist
-\item
-  {[} {]} A. 61 inches
-\item
-  {[} {]} B. 64 inches
-\item
-  {[}X{]} C. 69 inches
-\item
-  {[} {]} D. 74 inches
+\item[$\square$]
+  A. 61 inches
+\item[$\square$]
+  B. 64 inches
+\item[$\boxtimes$]
+  C. 69 inches
+\item[$\square$]
+  D. 74 inches
 \end{itemize}
 
 \begin{enumerate}
@@ -680,14 +674,14 @@ how many states have murder rates larger than 10 per 100,000 people?
 
 \begin{itemize}
 \tightlist
-\item
-  {[}X{]} A. 1
-\item
-  {[} {]} B. 5
-\item
-  {[} {]} C. 10
-\item
-  {[} {]} D. 50
+\item[$\boxtimes$]
+  A. 1
+\item[$\square$]
+  B. 5
+\item[$\square$]
+  C. 10
+\item[$\square$]
+  D. 50
 \end{itemize}
 
 \begin{enumerate}
@@ -700,16 +694,16 @@ how many states have murder rates larger than 10 per 100,000 people?
 
 \begin{itemize}
 \tightlist
-\item
-  {[} {]} A. About half the states have murder rates above 7 per 100,000
-  and the other half below.
-\item
-  {[} {]} B. Most states have murder rates below 2 per 100,000.
-\item
-  {[} {]} C. All the states have murder rates above 2 per 100,000.
-\item
-  {[}X{]} D. With the exception of 4 states, the murder rates are below
-  5 per 100,000.
+\item[$\square$]
+  A. About half the states have murder rates above 7 per 100,000 and the
+  other half below.
+\item[$\square$]
+  B. Most states have murder rates below 2 per 100,000.
+\item[$\square$]
+  C. All the states have murder rates above 2 per 100,000.
+\item[$\boxtimes$]
+  D. With the exception of 4 states, the murder rates are below 5 per
+  100,000.
 \end{itemize}
 
 \begin{enumerate}
@@ -730,14 +724,14 @@ Based on this plot, how many males are between 62.5 and 65.5?
 
 \begin{itemize}
 \tightlist
-\item
-  {[} {]} A. 5
-\item
-  {[} {]} B. 24
-\item
-  {[}X{]} C. 44
-\item
-  {[} {]} D. 100
+\item[$\square$]
+  A. 5
+\item[$\square$]
+  B. 24
+\item[$\boxtimes$]
+  C. 44
+\item[$\square$]
+  D. 100
 \end{itemize}
 
 \begin{enumerate}
@@ -750,14 +744,14 @@ Based on this plot, how many males are between 62.5 and 65.5?
 
 \begin{itemize}
 \tightlist
-\item
-  {[}X{]} A. 1\%
-\item
-  {[} {]} B. 10\%
-\item
-  {[} {]} C. 25\%
-\item
-  {[} {]} D. 50\%
+\item[$\boxtimes$]
+  A. 1\%
+\item[$\square$]
+  B. 10\%
+\item[$\square$]
+  C. 25\%
+\item[$\square$]
+  D. 50\%
 \end{itemize}
 
 \begin{enumerate}
@@ -777,14 +771,14 @@ Based on this plot, how many males are between 62.5 and 65.5?
 
 \begin{itemize}
 \tightlist
-\item
-  {[} {]} A. 0.02
-\item
-  {[}X{]} B. 0.15
-\item
-  {[} {]} C. 0.50
-\item
-  {[} {]} D. 0.55
+\item[$\square$]
+  A. 0.02
+\item[$\boxtimes$]
+  B. 0.15
+\item[$\square$]
+  C. 0.50
+\item[$\square$]
+  D. 0.55
 \end{itemize}
 
 \begin{enumerate}
@@ -1019,7 +1013,7 @@ in the world, the age range for the NBA.
 Can we use the normal distribution to estimate how many of these 1
 billion men are at least seven feet tall? Use your answer to the
 previous exercise to estimate the proportion of men that are seven feet
-tall or taller in the world and store that value as p.~Then round the
+tall or taller in the world and store that value as p. Then round the
 number of 18-40 year old men who are seven feet tall or taller to the
 nearest integer. (Do not store this value in an object.)
 
@@ -1045,7 +1039,7 @@ There are about 10 National Basketball Association (NBA) players that
 are 7 feet tall or higher.
 
 Use your answer to exercise 4 to estimate the proportion of men that are
-seven feet tall or taller in the world and store that value as p.
+seven feet tall or taller in the world and store that value as p.~
 
 Use your answer to the previous exercise (exercise 5) to round the
 number of 18-40 year old men who are seven feet tall or taller to the
@@ -1225,16 +1219,16 @@ Which continent has the country with the largest population size?
 
 \begin{itemize}
 \tightlist
-\item
-  {[} {]} A. Africa
-\item
-  {[} {]} B. Americas
-\item
-  {[}X{]} C. Asia
-\item
-  {[} {]} D. Europe
-\item
-  {[} {]} E. Oceania
+\item[$\square$]
+  A. Africa
+\item[$\square$]
+  B. Americas
+\item[$\boxtimes$]
+  C. Asia
+\item[$\square$]
+  D. Europe
+\item[$\square$]
+  E. Oceania
 \end{itemize}
 
 \begin{enumerate}
@@ -1258,16 +1252,16 @@ Which continent has median country with the largest population?
 
 \begin{itemize}
 \tightlist
-\item
-  {[}X{]} A. Africa
-\item
-  {[} {]} B. Americas
-\item
-  {[} {]} C. Asia
-\item
-  {[} {]} D. Europe
-\item
-  {[} {]} E. Oceania
+\item[$\boxtimes$]
+  A. Africa
+\item[$\square$]
+  B. Americas
+\item[$\square$]
+  C. Asia
+\item[$\square$]
+  D. Europe
+\item[$\square$]
+  E. Oceania
 \end{itemize}
 
 \begin{enumerate}
@@ -1290,16 +1284,16 @@ size for Africa?
 
 \begin{itemize}
 \tightlist
-\item
-  {[} {]} A. 100 million
-\item
-  {[} {]} B. 25 million
-\item
-  {[}X{]} C. 10 million
-\item
-  {[} {]} D. 5 million
-\item
-  {[} {]} E. 1 million
+\item[$\square$]
+  A. 100 million
+\item[$\square$]
+  B. 25 million
+\item[$\boxtimes$]
+  C. 10 million
+\item[$\square$]
+  D. 5 million
+\item[$\square$]
+  E. 1 million
 \end{itemize}
 
 \begin{enumerate}
@@ -1321,14 +1315,14 @@ of countries in Europe have populations below 14 million:
 
 \begin{itemize}
 \tightlist
-\item
-  {[}X{]} A. 0.75
-\item
-  {[} {]} B. 0.50
-\item
-  {[} {]} C. 0.25
-\item
-  {[} {]} D. 0.01
+\item[$\boxtimes$]
+  A. 0.75
+\item[$\square$]
+  B. 0.50
+\item[$\square$]
+  C. 0.25
+\item[$\square$]
+  D. 0.01
 \end{itemize}
 
 \begin{enumerate}
@@ -1350,16 +1344,16 @@ shown below has the largest interquartile range?
 
 \begin{itemize}
 \tightlist
-\item
-  {[} {]} A. Africa
-\item
-  {[}X{]} B. Americas
-\item
-  {[} {]} C. Asia
-\item
-  {[} {]} D. Europe
-\item
-  {[} {]} E. Oceania
+\item[$\square$]
+  A. Africa
+\item[$\boxtimes$]
+  B. Americas
+\item[$\square$]
+  C. Asia
+\item[$\square$]
+  D. Europe
+\item[$\square$]
+  E. Oceania
 \end{itemize}
 
 \hypertarget{assessment-5-robust-summaries-with-outliers}{%
@@ -1667,9 +1661,9 @@ or, if we load dplyr, we can also use the pipe:
 p <- murders %>% ggplot()
 \end{verbatim}
 
-Remember the pipe sends the object on the left of \%\textgreater{}\% to
-be the first argument for the function the right of \%\textgreater{}\%.
-What is class of the object p?
+Remember the pipe sends the object on the left of \%\textgreater\% to be
+the first argument for the function the right of \%\textgreater\%. What
+is class of the object p?
 
 \begin{verbatim}
 class(p)
@@ -1719,7 +1713,7 @@ C. A scatter plot. - {[} {]} D. A histogram.
   Pipes
 \end{enumerate}
 
-Using the pipe \%\textgreater{}\%, create an object p but this time
+Using the pipe \%\textgreater\%, create an object p but this time
 associated with the heights dataset instead of the murders dataset.
 
 \begin{verbatim}
@@ -1750,14 +1744,14 @@ Hint: Look at ?murders.
 
 \begin{itemize}
 \tightlist
-\item
-  {[} {]} A. state and abb.
-\item
-  {[} {]} B. total\_murers and population\_size.
-\item
-  {[}X{]} C. total and population.
-\item
-  {[} {]} D. murders and size.
+\item[$\square$]
+  A. state and abb.
+\item[$\square$]
+  B. total\_murers and population\_size.
+\item[$\boxtimes$]
+  C. total and population.
+\item[$\square$]
+  D. murders and size.
 \end{itemize}
 
 \begin{enumerate}
@@ -1849,17 +1843,15 @@ Why is this?
 
 \begin{itemize}
 \tightlist
-\item
-  {[}X{]} A. We need to map a character to each point through the label
-  argument in aes.
-\item
-  {[} {]} B. We need to let geom\_label know what character to use in
-  the plot.
-\item
-  {[} {]} C. The geom\_label geometry does not require x-axis and y-axis
-  values.
-\item
-  {[} {]} D. geom\_label is not a ggplot2 command.
+\item[$\boxtimes$]
+  A. We need to map a character to each point through the label argument
+  in aes.
+\item[$\square$]
+  B. We need to let geom\_label know what character to use in the plot.
+\item[$\square$]
+  C. The geom\_label geometry does not require x-axis and y-axis values.
+\item[$\square$]
+  D. geom\_label is not a ggplot2 command.
 \end{itemize}
 
 \begin{enumerate}
@@ -1903,16 +1895,16 @@ Change the color of the labels through blue. How will we do this?
 
 \begin{itemize}
 \tightlist
-\item
-  {[} {]} A. Adding a column called blue to murders
-\item
-  {[} {]} B. Because each label needs a different color we map the
-  colors through aes
-\item
-  {[} {]} C. Use the color argument in ggplot
-\item
-  {[}X{]} D. Because we want all colors to be blue, we do not need to
-  map colors, just use the color argument in geom\_label
+\item[$\square$]
+  A. Adding a column called blue to murders
+\item[$\square$]
+  B. Because each label needs a different color we map the colors
+  through aes
+\item[$\square$]
+  C. Use the color argument in ggplot
+\item[$\boxtimes$]
+  D. Because we want all colors to be blue, we do not need to map
+  colors, just use the color argument in geom\_label
 \end{itemize}
 
 \begin{enumerate}
@@ -1947,17 +1939,17 @@ this case which of the following is most appropriate:
 
 \begin{itemize}
 \tightlist
-\item
-  {[} {]} A. Adding a column called color to murders with the color we
-  want to use
-\item
-  {[}X{]} B. Mapping the colors through the color argument of aes
-  because each label needs a different color
-\item
-  {[} {]} C. Using the color argument in ggplot
-\item
-  {[} {]} D. Using the color argument in geom\_label because we want all
-  colors to be blue so we do not need to map colors
+\item[$\square$]
+  A. Adding a column called color to murders with the color we want to
+  use
+\item[$\boxtimes$]
+  B. Mapping the colors through the color argument of aes because each
+  label needs a different color
+\item[$\square$]
+  C. Using the color argument in ggplot
+\item[$\square$]
+  D. Using the color argument in geom\_label because we want all colors
+  to be blue so we do not need to map colors
 \end{itemize}
 
 \begin{enumerate}
@@ -2074,14 +2066,14 @@ data frame?
 
 \begin{itemize}
 \tightlist
-\item
-  {[} {]} A. sex
-\item
-  {[} {]} B. heights
-\item
-  {[}X{]} C. height
-\item
-  {[} {]} D. heights\$height
+\item[$\square$]
+  A. sex
+\item[$\square$]
+  B. heights
+\item[$\boxtimes$]
+  C. height
+\item[$\square$]
+  D. heights\$height
 \end{itemize}
 
 \begin{enumerate}
@@ -2442,7 +2434,7 @@ dataset.
 Complete the line of code to save the average and standard deviation of
 systolic blood pressure as average and standard\_deviation to a variable
 called ref. Use the summarize function after filtering for 20-29 year
-old females and connect the results using the pipe \%\textgreater{}\%.
+old females and connect the results using the pipe \%\textgreater\%.
 When doing this remember there are NAs in the data!
 
 \begin{verbatim}
@@ -2501,8 +2493,8 @@ year old females.
 
 Report the min and max values for the same group as in the previous
 exercises. Use filter and summarize connected by the pipe
-\%\textgreater{}\% again. The functions min and max can be used to get
-the values you want. Within summarize, save the min and max of systolic
+\%\textgreater\% again. The functions min and max can be used to get the
+values you want. Within summarize, save the min and max of systolic
 blood pressure as min and max.
 
 \begin{verbatim}
@@ -2543,7 +2535,7 @@ pressure for females for each age group separately. Remember that the
 age groups are contained in AgeDecade.
 
 Use the functions filter, group\_by, summarize, and the pipe
-\%\textgreater{}\% to compute the average and standard deviation of
+\%\textgreater\% to compute the average and standard deviation of
 systolic blood pressure for females for each age group separately.
 
 Within summarize, save the average and standard deviation of systolic
@@ -2736,10 +2728,9 @@ of the Race1 variable for males between the ages of 40-49.
 Compute the average and standard deviation for each value of Race1 for
 males in the age decade 40-49. Order the resulting table from lowest to
 highest average systolic blood pressure. Use the functions filter,
-group\_by, summarize, arrange, and the pipe \%\textgreater{}\% to do
-this in one line of code. Within summarize, save the average and
-standard deviation of systolic blood pressure as average and
-standard\_deviation.
+group\_by, summarize, arrange, and the pipe \%\textgreater\% to do this
+in one line of code. Within summarize, save the average and standard
+deviation of systolic blood pressure as average and standard\_deviation.
 
 \begin{verbatim}
 library(dplyr)
@@ -3365,16 +3356,16 @@ What is the problem with this plot?
 
 \begin{itemize}
 \tightlist
-\item
-  {[} {]} A. The values are wrong. The final vote was 306 to 232.
-\item
-  {[}X{]} B. The axis does not start at 0. Judging by the length, it
-  appears Trump received 3 times as many votes when in fact it was about
-  30\% more.
-\item
-  {[} {]} C. The colors should be the same.
-\item
-  {[} {]} D. Percentages should be shown as a pie chart.
+\item[$\square$]
+  A. The values are wrong. The final vote was 306 to 232.
+\item[$\boxtimes$]
+  B. The axis does not start at 0. Judging by the length, it appears
+  Trump received 3 times as many votes when in fact it was about 30\%
+  more.
+\item[$\square$]
+  C. The colors should be the same.
+\item[$\square$]
+  D. Percentages should be shown as a pie chart.
 \end{itemize}
 
 \begin{enumerate}
@@ -3396,18 +3387,17 @@ rates of measles by state in the United States for 1928.
 
 \begin{itemize}
 \tightlist
-\item
-  {[} {]} A. Both plots provide the same information, so they are
-  equally good.
-\item
-  {[} {]} B. The plot on the left is better because it orders the states
+\item[$\square$]
+  A. Both plots provide the same information, so they are equally good.
+\item[$\square$]
+  B. The plot on the left is better because it orders the states
   alphabetically.
-\item
-  {[}X{]} C. The plot on the right is better because it orders the
-  states by disease rate so we can quickly see the states with highest
-  and lowest rates.
-\item
-  {[} {]} D. Both plots should be pie charts instead.
+\item[$\boxtimes$]
+  C. The plot on the right is better because it orders the states by
+  disease rate so we can quickly see the states with highest and lowest
+  rates.
+\item[$\square$]
+  D. Both plots should be pie charts instead.
 \end{itemize}
 
 \hypertarget{assessment-10-data-visualization-principles-part-2}{%
@@ -3988,7 +3978,7 @@ class).
 \end{Shaded}
 
 \begin{verbatim}
-## -- Attaching packages ----------------------------------------------- tidyverse 1.3.0 --
+## -- Attaching packages --------------------------------------------------------------------------------------------------------------------------------------------- tidyverse 1.3.0 --
 \end{verbatim}
 
 \begin{verbatim}
@@ -3999,7 +3989,7 @@ class).
 \end{verbatim}
 
 \begin{verbatim}
-## -- Conflicts -------------------------------------------------- tidyverse_conflicts() --
+## -- Conflicts ------------------------------------------------------------------------------------------------------------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
 \end{verbatim}
@@ -4153,6 +4143,15 @@ Fill in the blanks in the statements below:
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(ggrepel)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'ggrepel' was built under R version 4.0.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{stars }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\KeywordTok{log10}\NormalTok{(temp), }\DataTypeTok{y=}\NormalTok{magnitude, }\DataTypeTok{label=}\NormalTok{star)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{scale_y_reverse}\NormalTok{() }\OperatorTok{+}
@@ -4432,8 +4431,8 @@ available year to the last available year.
 
 \textbf{Question 4} Create a time series line plot of the temperature
 anomaly. Only include years where temperatures are reported. Save this
-plot to the object\\
-p.~Which command adds a blue horizontal line indicating the 20th century
+plot to the object p.\\
+Which command adds a blue horizontal line indicating the 20th century
 mean temperature?
 
 \begin{Shaded}
