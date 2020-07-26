@@ -15,9 +15,10 @@ knitr::opts_chunk$set(echo = TRUE)
 The textbook for the Data Science course series is [freely available online](https://rafalab.github.io/dsbook/).
 
 ## Learning Objectives
-- Data visualization principles to better communicate data-driven findings
-- How to use ggplot2 to create custom plots
-- The weaknesses of several widely used plots and why you should avoid them
+
+* Data visualization principles to better communicate data-driven findings
+* How to use ggplot2 to create custom plots
+* The weaknesses of several widely used plots and why you should avoid them
 
 ## Course Overview
 
@@ -41,100 +42,158 @@ You will learn general principles to guide you in developing effective data visu
 Section 1 introduces you to Data Visualization and Distributions.
 
 After completing Section 1, you will:
-- understand the importance of data visualization for communicating data-driven findings.
-- be able to use distributions to summarize data.
-- be able to use the average and the standard deviation to understand the normal distribution.
-- be able to assess how well a normal distribution fits the data using a quantile-quantile plot.
-- be able to interpret data from a boxplot.
+
+* understand the importance of data visualization for communicating data-driven findings.
+* be able to use distributions to summarize data.
+* be able to use the average and the standard deviation to understand the normal distribution.
+* be able to assess how well a normal distribution fits the data using a quantile-quantile plot.
+* be able to interpret data from a boxplot.
+
+## Introduction to Data Visualization
 
 The textbook for this section is available [here](https://rafalab.github.io/dsbook/introduction-to-data-visualization.html)
 
-## Assessment 1 (Data Types)
+**Key points**
 
-1. Variable names
+* Plots of data easily communicate information that is difficult to extract from tables of raw values.
+* Data visualization is a key component of exploratory data analysis (EDA), in which the properties of data are explored through visualization and summarization techniques.
+* Data visualization can help discover biases, systematic errors, mistakes and other unexpected problems in data before those data are incorporated into potentially flawed analysis.
+* This course covers the basics of data visualization and EDA in R using the **ggplot2** package and motivating examples from world health, economics and infectious disease.
 
-Let’s start by reviewing how to extract the variable names from a dataset using the names function. What are the two variable names used in the heights dataset?
-```
+*Code*
+
+```{r}
 library(dslabs)
+data(murders)
+head(murders)
+```
+
+## Introduction to Distributions
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html)
+
+**Key points**
+
+* The most basic statistical summary of a list of objects is its distribution.
+* We will learn ways to visualize and analyze distributions in the upcoming videos.
+* In some cases, data can be summarized by a two-number summary: the average and standard deviation. We will learn to use data visualization to determine when that is appropriate.
+
+## Data Types
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#variable-types)
+
+**Key points**
+
+* Categorical data are variables that are defined by a small number of groups.
+	- Ordinal categorical data have an inherent order to the categories (mild/medium/hot, for example).
+	- Non-ordinal categorical data have no order to the categories.
+* Numerical data take a variety of numeric values.
+	- Continuous variables can take any value.
+	- Discrete variables are limited to sets of specific values.
+
+## Assessment - Data Types
+
+1. The type of data we are working with will often influence the data visualization technique we use. 
+
+We will be working with two types of variables: categorical and numeric. Each can be divided into two other groups: categorical can be ordinal or not, whereas numerical variables can be discrete or continuous.
+
+We will review data types using some of the examples provided in the ```dslabs``` package. For example, the ```heights``` dataset.
+
+```{r, eval=FALSE, echo=TRUE}
+library(dslabs)
+data(heights)
+```
+
+```{r}
 data(heights)
 names(heights)
 ```
-```
-## [1] "sex"    "height"
-```
-2. Variable type
 
-We saw that sex is the first variable. We know what values are represented by this variable and can confirm this by looking at the first few entires:
-```
-library(dslabs)
-data(heights)
+2. We saw that ```sex``` is the first variable. We know what values are represented by this variable and can confirm this by looking at the first few entires:
+
+```{r}
 head(heights)
 ```
-```
-	sex     height
-	<fctr>  <dbl>
-1	Male	75
-2	Male	70
-3	Male	68
-4	Male	74
-5	Male	61
-6	Female	65
-6 rows
-```
-What data type is the sex variable?
+
+What data type is the ```sex``` variable?
 
 - [ ] A. Continuous
 - [X] B. Categorical
 - [ ] C. Ordinal
 - [ ] D. None of the above
 
-3. Numerical values
+3. Keep in mind that discrete numeric data can be considered ordinal. 
 
-Use the unique and length functions to determine how many unique heights were reported.
+Although this is technically true, we usually reserve the term ordinal data for variables belonging to a small number of different groups, with each group having many members.
+
+The ```height``` variable could be ordinal if, for example, we report a small number of values such as short, medium, and tall. Let's explore how many unique values are used by the heights variable. For this we can use the ```unique``` function:
+
+```{r, eval=FALSE, echo=TRUE}
+x <- c(3, 3, 3, 3, 4, 4, 2)
+unique(x)
 ```
-library(dslabs)
-data(heights)
-```
-```
+
+```{r}
 x <- heights$height
 length(unique(x))
 ```
-```
-## [1] 139
-```
-4. Tables
 
-Use the table function to compute the frequencies of each unique height value. Because we are using the resulting frequency table in a later exercise we want you to save the results into an object and call it tab.
+4. One of the useful outputs of data visualization is that we can learn about the distribution of variables. 
+
+For categorical data we can construct this distribution by simply computing the frequency of each unique value. This can be done with the function ```table```. Here is an example:
+
+```{r, eval=FALSE, echo=TRUE}
+x <- c(3, 3, 3, 3, 4, 4, 2)
+table(x)
 ```
-library(dslabs)
-data(heights)
-```
-```
+
+```{r}
 x <- heights$height
 tab <- table(x)
 ```
-5. Indicator variables
+
+5. To see why treating the reported heights as an ordinal value is not useful in practice we note how many values are reported only once.
 
 In the previous exercise we computed the variable tab which reports the number of times each unique value appears. For values reported only once tab will be 1. Use logicals and the function sum to count the number of times this happens.
-```
-library(dslabs)
-data(heights)
-```
-```
+
+```{r}
 tab <- table(heights$height)
 sum(tab==1)
 ```
-```
-## [1] 63
-```
-6. Data types - heights
 
-Since there are a finite number of reported heights and technically the height can be considered ordinal, which of the following is true:
+6. Since there are a finite number of reported heights and technically the height can be considered ordinal, which of the following is true:
 
 - [X] A. It is more effective to consider heights to be numerical given the number of unique values we observe and the fact that if we keep collecting data even more will be observed.
 - [ ] B. It is actually preferable to consider heights ordinal since on a computer there are only a finite number of possibilities.
 - [ ] C. This is actually a categorical variable: tall, medium or short.
 - [ ] D. This is a numerical variable because numbers are used to represent it.
+
+## Describe Heights to ET
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#case-study-describing-student-heights), [here](https://rafalab.github.io/dsbook/distributions.html#distribution-function), [here](https://rafalab.github.io/dsbook/distributions.html#cdf-intro) and [here](https://rafalab.github.io/dsbook/distributions.html#histograms)
+
+**Key points**
+
+* A distribution is a function or description that shows the possible values of a variable and how often those values occur.
+* For categorical variables, the distribution describes the proportions of each category.
+* A *frequency table* is the simplest way to show a categorical distribution. Use ```prop.table``` to convert a table of counts to a frequency table. *Barplots* display the distribution of categorical variables and are a way to visualize the information in frequency tables.
+* For continuous numerical data, reporting the frequency of each unique entry is not an effective summary as many or most values are unique. Instead, a distribution function is required.
+* The *cumulative distribution function (CDF)* is a function that reports the proportion of data below a value *a* for all values of *a*: $F(a) = Pr(x \le a)$.
+* The proportion of observations between any two values *a* and *b* can be computed from the CDF as $F(b) - F(a)$.
+* A *histogram* divides data into non-overlapping bins of the same size and plots the counts of number of values that fall in that interval.
+
+*Code*
+
+```{r, eval=FALSE, echo=TRUE}
+# load the dataset
+library(dslabs)
+data(heights)
+```
+
+```{r}
+# make a table of category proportions
+prop.table(table(heights$sex))
+```
 
 ## Assessment 2 (Distribution)
 
