@@ -873,22 +873,151 @@ Which of the following statements is true?
 \caption{Three density plots}
 \end{figure}
 
-\hypertarget{assessment-3-normal-distribution}{%
-\subsection{Assessment 3 (Normal
-Distribution)}\label{assessment-3-normal-distribution}}
+\hypertarget{normal-distribution}{%
+\subsection{Normal Distribution}\label{normal-distribution}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/distributions.html\#normal-distribution}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  The normal distribution:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Is centered around one value, the \emph{mean}
+  \item
+    Is symmetric around the mean
+  \item
+    Is defined completely by its mean (\(\mu\)) and standard deviation
+    (\(\sigma\))
+  \item
+    Always has the same proportion of observations within a given
+    distance of the mean (for example, 95\% within 2 \(\sigma\))
+  \end{itemize}
+\item
+  The standard deviation is the average distance between a value and the
+  mean value.
+\item
+  Calculate the mean using the \texttt{mean} function.
+\item
+  Calculate the standard deviation using the \texttt{sd} function or
+  manually.
+\item
+  Standard units describe how many standard deviations a value is away
+  from the mean. The z-score, or number of standard deviations an
+  observation \emph{x} is away from the mean (\(\mu\)):
+\end{itemize}
+
+\(Z = \frac{x - (\mu)}{\sigma}\)
+
+\begin{itemize}
+\tightlist
+\item
+  Compute standard units with the \texttt{scale} function.
+\item
+  \textbf{Important:} to calculate the proportion of values that meet a
+  certain condition, use the \texttt{mean} function on a logical vector.
+  Because TRUE is converted to 1 and FALSE is converted to 0, taking the
+  mean of this vector yields the proportion of TRUE.
+\end{itemize}
+
+\textbf{Equation for the normal distribution}
+
+The normal distribution is mathematically defined by the following
+formula for any mean \(\mu\) and standard deviation \(\sigma\):
+
+\(Pr(a < x < b) = \int_{a}^{b} \frac{1}{\sqrt2\pi\sigma} e^-\frac{1}{2}(\frac{x - \mu}{\sigma})^2 dx\)
+
+\emph{Code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# define x as vector of male heights}
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------------------------------------------------------------------------------------------------------------- tidyverse 1.3.0 --
+\end{verbatim}
+
+\begin{verbatim}
+## v ggplot2 3.3.2     v purrr   0.3.4
+## v tibble  3.0.3     v dplyr   1.0.0
+## v tidyr   1.1.0     v stringr 1.4.0
+## v readr   1.3.1     v forcats 0.5.0
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------------------------------------------------------------------------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{index <-}\StringTok{ }\NormalTok{heights}\OperatorTok{$}\NormalTok{sex}\OperatorTok{==}\StringTok{"Male"}
+\NormalTok{x <-}\StringTok{ }\NormalTok{heights}\OperatorTok{$}\NormalTok{height[index]}
+
+\CommentTok{# calculate the mean and standard deviation manually}
+\NormalTok{average <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(x)}\OperatorTok{/}\KeywordTok{length}\NormalTok{(x)}
+\NormalTok{SD <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{sum}\NormalTok{((x }\OperatorTok{-}\StringTok{ }\NormalTok{average)}\OperatorTok{^}\DecValTok{2}\NormalTok{)}\OperatorTok{/}\KeywordTok{length}\NormalTok{(x))}
+
+\CommentTok{# built-in mean and sd functions - note that the audio and printed values disagree}
+\NormalTok{average <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(x)}
+\NormalTok{SD <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x)}
+\KeywordTok{c}\NormalTok{(}\DataTypeTok{average =}\NormalTok{ average, }\DataTypeTok{SD =}\NormalTok{ SD)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   average        SD 
+## 69.314755  3.611024
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate standard units}
+\NormalTok{z <-}\StringTok{ }\KeywordTok{scale}\NormalTok{(x)}
+
+\CommentTok{# calculate proportion of values within 2 SD of mean}
+\KeywordTok{mean}\NormalTok{(}\KeywordTok{abs}\NormalTok{(z) }\OperatorTok{<}\StringTok{ }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9495074
+\end{verbatim}
+
+\textbf{Note about the sd function:} The built-in R function \texttt{sd}
+calculates the standard deviation, but it divides by
+\texttt{length(x)-1} instead of \texttt{length(x)}. When the length of
+the list is large, this difference is negligible and you can use the
+built-in \texttt{sd} function. Otherwise, you should compute \(\sigma\)
+by hand. For this course series, assume that you should use the
+\texttt{sd} function unless you are told not to do so.
+
+\hypertarget{assessment---normal-distribution}{%
+\subsection{Assessment - Normal
+Distribution}\label{assessment---normal-distribution}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Proportions
+  Histograms and density plots provide excellent summaries of a
+  distribution.
 \end{enumerate}
 
-Histograms and density plots provide excellent summaries of a
-distribution. But can we summarize even further? We often see the
-average and standard deviation used as summary statistics: a two number
-summary! To understand what these summaries are and why they are so
-widely used, we need to understand the normal distribution.
+But can we summarize even further? We often see the average and standard
+deviation used as summary statistics: a two number summary! To
+understand what these summaries are and why they are so widely used, we
+need to understand the normal distribution.
 
 The normal distribution, also known as the bell curve and as the
 Gaussian distribution, is one of the most famous mathematical concepts
@@ -905,30 +1034,26 @@ One way the normal distribution is useful is that it can be used to
 approximate the distribution of a list of numbers without having access
 to the entire list. We will demonstrate this with the heights dataset.
 
-Load the height data set and create a vector x with just the male
-heights:
+Load the height data set and create a vector \texttt{x} with just the
+male heights:
 
-\begin{verbatim}
-library(dslabs)  
-data(heights)  
-\end{verbatim}
-
-\begin{verbatim}
-x <- heights$height[heights$sex == "Male"]  
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dslabs)}
+\KeywordTok{data}\NormalTok{(heights)}
+\NormalTok{x <-}\StringTok{ }\NormalTok{heights}\OperatorTok{$}\NormalTok{height[heights}\OperatorTok{$}\NormalTok{sex }\OperatorTok{==}\StringTok{ "Male"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
 
 What proportion of the data is between 69 and 72 inches (taller than 69
-but shorter or equal to 72)?
+but shorter or equal to 72)? A proportion is between 0 and 1.
 
-\begin{verbatim}
-library(dslabs)
-data(heights)
-\end{verbatim}
-
-\begin{verbatim}
-x <- heights$height[heights$sex == "Male"]
-mean(x>69 & x<=72)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\NormalTok{heights}\OperatorTok{$}\NormalTok{height[heights}\OperatorTok{$}\NormalTok{sex }\OperatorTok{==}\StringTok{ "Male"}\NormalTok{]}
+\KeywordTok{mean}\NormalTok{(x }\OperatorTok{>}\StringTok{ }\DecValTok{69} \OperatorTok{&}\StringTok{ }\NormalTok{x }\OperatorTok{<=}\StringTok{ }\DecValTok{72}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 0.3337438
@@ -939,45 +1064,43 @@ mean(x>69 & x<=72)
 \setcounter{enumi}{1}
 \tightlist
 \item
-  Averages and Standard Deviations
+  Suppose all you know about the height data from the previous exercise
+  is the average and the standard deviation and that its distribution is
+  approximated by the normal distribution.
 \end{enumerate}
 
-Suppose all you know about the height data from the previous exercise is
-the average and the standard deviation and that its distribution is
-approximated by the normal distribution. We can compute the average and
-standard deviation like this:
+We can compute the average and standard deviation like this:
 
-\begin{verbatim}
-library(dslabs)  
-data(heights)  
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dslabs)}
+\KeywordTok{data}\NormalTok{(heights)}
+\NormalTok{x <-}\StringTok{ }\NormalTok{heights}\OperatorTok{$}\NormalTok{height[heights}\OperatorTok{$}\NormalTok{sex}\OperatorTok{==}\StringTok{"Male"}\NormalTok{]}
+\NormalTok{avg <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(x)}
+\NormalTok{stdev <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-x <- heights$height[heights$sex=="Male"]  
-avg <- mean(x)  
-stdev <- sd(x)  
-\end{verbatim}
+Suppose you only have \texttt{avg} and \texttt{stdev} below, but no
+access to \texttt{x}, can you approximate the proportion of the data
+that is between 69 and 72 inches?
 
-Suppose you only have avg and stdev below, but no access to x, can you
-approximate the proportion of the data that is between 69 and 72 inches?
+Given a normal distribution with a mean \texttt{mu} and standard
+deviation \texttt{sigma}, you can calculate the proportion of
+observations less than or equal to a certain \texttt{value} with
+\texttt{pnorm(value,\ mu,\ sigma)}. Notice that this is the CDF for the
+normal distribution. We will learn much more about \texttt{pnorm} later
+in the course series, but you can also learn more now with
+\texttt{?pnorm}.
 
-Use the normal approximation to estimate the proportion the proportion
-of the data that is between 69 and 72 inches. Note that you can't use x
-in your code, only avg and stdev. Also note that R has a function that
-may prove very helpful here - check out the pnorm function (and remember
-that you can get help by using ?pnorm)
-
-\begin{verbatim}
-library(dslabs)
-data(heights)
-\end{verbatim}
-
-\begin{verbatim}
-x <- heights$height[heights$sex=="Male"]
-avg <- mean(x)
-stdev <- sd(x)
-pnorm(72, avg, stdev) - pnorm(69, avg, stdev)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\NormalTok{heights}\OperatorTok{$}\NormalTok{height[heights}\OperatorTok{$}\NormalTok{sex}\OperatorTok{==}\StringTok{"Male"}\NormalTok{]}
+\NormalTok{avg <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(x)}
+\NormalTok{stdev <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x)}
+\KeywordTok{pnorm}\NormalTok{(}\DecValTok{72}\NormalTok{, avg, stdev) }\OperatorTok{-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(}\DecValTok{69}\NormalTok{, avg, stdev)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 0.3061779
@@ -988,49 +1111,55 @@ pnorm(72, avg, stdev) - pnorm(69, avg, stdev)
 \setcounter{enumi}{2}
 \tightlist
 \item
-  Approximations
+  Notice that the approximation calculated in the second question is
+  very close to the exact calculation in the first question.
 \end{enumerate}
 
-Notice that the approximation calculated in the second question is very
-close to the exact calculation in the first question. The normal
-distribution was a useful approximation for this case.
-
+The normal distribution was a useful approximation for this case.
 However, the approximation is not always useful. An example is for the
 more extreme values, often called the ``tails'' of the distribution.
 Let's look at an example. We can compute the proportion of heights
 between 79 and 81.
 
-\begin{verbatim}
-library(dslabs)  
-data(heights)  
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dslabs)  }
+\KeywordTok{data}\NormalTok{(heights)}
+\NormalTok{x <-}\StringTok{ }\NormalTok{heights}\OperatorTok{$}\NormalTok{height[heights}\OperatorTok{$}\NormalTok{sex }\OperatorTok{==}\StringTok{ "Male"}\NormalTok{]  }
+\KeywordTok{mean}\NormalTok{(x }\OperatorTok{>}\StringTok{ }\DecValTok{79} \OperatorTok{&}\StringTok{ }\NormalTok{x }\OperatorTok{<=}\StringTok{ }\DecValTok{81}\NormalTok{)  }
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-x <- heights$height[heights$sex == "Male"]  
-mean(x > 79 & x <= 81)  
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\NormalTok{heights}\OperatorTok{$}\NormalTok{height[heights}\OperatorTok{$}\NormalTok{sex }\OperatorTok{==}\StringTok{ "Male"}\NormalTok{]}
+\NormalTok{avg <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(x)}
+\NormalTok{stdev <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x)}
+\NormalTok{exact <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(x }\OperatorTok{>}\StringTok{ }\DecValTok{79} \OperatorTok{&}\StringTok{ }\NormalTok{x }\OperatorTok{<=}\StringTok{ }\DecValTok{81}\NormalTok{)}
+\NormalTok{approx <-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(}\DecValTok{81}\NormalTok{, avg, stdev) }\OperatorTok{-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(}\DecValTok{79}\NormalTok{, avg, stdev)}
+\NormalTok{exact}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 0.004926108
 \end{verbatim}
 
-Use normal approximation to estimate the proportion of heights between
-79 and 81 inches and save it in an object called approx. Report how many
-times bigger the actual proportion is compared to the approximation.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{approx}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-library(dslabs)
-data(heights)
+## [1] 0.003051617
 \end{verbatim}
 
-\begin{verbatim}
-x <- heights$height[heights$sex == "Male"]
-exact <- mean(x > 79 & x <= 81)
-avg <- mean(x)
-stdev <- sd(x)
-approx <- pnorm(81, avg, stdev) - pnorm(79, avg, stdev)
-exact/approx
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{exact}\OperatorTok{/}\NormalTok{approx}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 1.614261
@@ -1041,25 +1170,24 @@ exact/approx
 \setcounter{enumi}{3}
 \tightlist
 \item
-  Seven footers and the NBA
+  Someone asks you what percent of seven footers are in the National
+  Basketball Association (NBA). Can you provide an estimate? Let's try
+  using the normal approximation to answer this question.
 \end{enumerate}
-
-Someone asks you what percent of seven footers are in the National
-Basketball Association (NBA). Can you provide an estimate? Let's try
-using the normal approximation to answer this question.
 
 First, we will estimate the proportion of adult men that are 7 feet tall
 or taller.
 
 Assume that the distribution of adult men in the world as normally
 distributed with an average of 69 inches and a standard deviation of 3
-inches. Using this approximation, estimate the proportion of adult men
-that are 7 feet tall or taller, referred to as seven footers. Print out
-your estimate; don't store it in an object.
+inches.
 
-\begin{verbatim}
-1 - pnorm(7*12, 69, 3)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# use pnorm to calculate the proportion over 7 feet (7*12 inches)}
+\DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(}\DecValTok{7}\OperatorTok{*}\DecValTok{12}\NormalTok{, }\DecValTok{69}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 2.866516e-07
@@ -1070,30 +1198,25 @@ your estimate; don't store it in an object.
 \setcounter{enumi}{4}
 \tightlist
 \item
-  Estimating the number seven footers
+  Now we have an approximation for the proportion, call it \texttt{p},
+  of men that are 7 feet tall or taller.
 \end{enumerate}
-
-Now we have an approximation for the proportion, call it p, of men that
-are 7 feet tall or taller.
 
 We know that there are about 1 billion men between the ages of 18 and 40
 in the world, the age range for the NBA.
 
 Can we use the normal distribution to estimate how many of these 1
-billion men are at least seven feet tall? Use your answer to the
-previous exercise to estimate the proportion of men that are seven feet
-tall or taller in the world and store that value as p. Then round the
-number of 18-40 year old men who are seven feet tall or taller to the
-nearest integer. (Do not store this value in an object.)
+billion men are at least seven feet tall?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(}\DecValTok{7}\OperatorTok{*}\DecValTok{12}\NormalTok{, }\DecValTok{69}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\KeywordTok{round}\NormalTok{(p}\OperatorTok{*}\DecValTok{10}\OperatorTok{^}\DecValTok{9}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-p <- 1 - pnorm(7*12, 68, 3)
-
-round(p * 1*10^9)
-\end{verbatim}
-
-\begin{verbatim}
-## [1] 48
+## [1] 287
 \end{verbatim}
 
 \begin{enumerate}
@@ -1101,27 +1224,17 @@ round(p * 1*10^9)
 \setcounter{enumi}{5}
 \tightlist
 \item
-  How many seven footers are in the NBA?
+  There are about 10 National Basketball Association (NBA) players that
+  are 7 feet tall or higher.
 \end{enumerate}
 
-There are about 10 National Basketball Association (NBA) players that
-are 7 feet tall or higher.
-
-Use your answer to exercise 4 to estimate the proportion of men that are
-seven feet tall or taller in the world and store that value as p.~
-
-Use your answer to the previous exercise (exercise 5) to round the
-number of 18-40 year old men who are seven feet tall or taller to the
-nearest integer and store that value as N.
-
-Then calculate the proportion of the world's 18 to 40 year old seven
-footers that are in the NBA. (Do not store this value in an object.)
-
-\begin{verbatim}
-p <- 1-pnorm(7*12,69,3)
-N <- round(p*10^9)
-10/N
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(}\DecValTok{7}\OperatorTok{*}\DecValTok{12}\NormalTok{, }\DecValTok{69}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\NormalTok{N <-}\StringTok{ }\KeywordTok{round}\NormalTok{(p}\OperatorTok{*}\DecValTok{10}\OperatorTok{^}\DecValTok{9}\NormalTok{)}
+\DecValTok{10}\OperatorTok{/}\NormalTok{N}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 0.03484321
@@ -1132,35 +1245,42 @@ N <- round(p*10^9)
 \setcounter{enumi}{6}
 \tightlist
 \item
-  Lebron James' height
+  In the previous exerceise we estimated the proportion of seven footers
+  in the NBA using this simple code:
 \end{enumerate}
 
-In the previous exerceise we estimated the proportion of seven footers
-in the NBA using this simple code:
-
-\begin{verbatim}
-p <- 1 - pnorm(7*12, 69, 3)  
-N <- round(p * 10^9)  
-10/N  
-\end{verbatim}
-
-\begin{verbatim}
-## [1] 0.03484321
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(}\DecValTok{7}\OperatorTok{*}\DecValTok{12}\NormalTok{, }\DecValTok{69}\NormalTok{, }\DecValTok{3}\NormalTok{)  }
+\NormalTok{N <-}\StringTok{ }\KeywordTok{round}\NormalTok{(p }\OperatorTok{*}\StringTok{ }\DecValTok{10}\OperatorTok{^}\DecValTok{9}\NormalTok{)  }
+\DecValTok{10}\OperatorTok{/}\NormalTok{N  }
+\end{Highlighting}
+\end{Shaded}
 
 Repeat the calculations performed in the previous question for Lebron
 James' height: 6 feet 8 inches. There are about 150 players, instead of
 10, that are at least that tall in the NBA.
 
-Report the estimated proportion of people at least Lebron's height that
-are in the NBA.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## Change the solution to previous answer}
+\NormalTok{p <-}\StringTok{ }\DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(}\DecValTok{7}\OperatorTok{*}\DecValTok{12}\NormalTok{, }\DecValTok{69}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\NormalTok{N <-}\StringTok{ }\KeywordTok{round}\NormalTok{(p }\OperatorTok{*}\StringTok{ }\DecValTok{10}\OperatorTok{^}\DecValTok{9}\NormalTok{)}
+\DecValTok{10}\OperatorTok{/}\NormalTok{N}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-## Change the solution to previous answer
-p <- 1 - pnorm(6*12+8, 69, 3)
-N <- round(p * 10^9)
-150/N
+## [1] 0.03484321
 \end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(}\DecValTok{6}\OperatorTok{*}\DecValTok{12}\OperatorTok{+}\DecValTok{8}\NormalTok{, }\DecValTok{69}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\NormalTok{N <-}\StringTok{ }\KeywordTok{round}\NormalTok{(p }\OperatorTok{*}\StringTok{ }\DecValTok{10}\OperatorTok{^}\DecValTok{9}\NormalTok{)}
+\DecValTok{150}\OperatorTok{/}\NormalTok{N}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 0.001220842
@@ -1171,20 +1291,28 @@ N <- round(p * 10^9)
 \setcounter{enumi}{7}
 \tightlist
 \item
-  Interpretation
+  In answering the previous questions, we found that it is not at all
+  rare for a seven footer to become an NBA player.
 \end{enumerate}
 
-In answering the previous questions, we found that it is not at all rare
-for a seven footer to become an NBA player.
+What would be a fair critique of our calculations?
 
-What would be a fair critique of our calculations? - {[} {]} A. Practice
-and talent are what make a great basketball player, not height. - {[}
-{]} B. The normal approximation is not appropriate for heights. -
-{[}X{]} C. As seen in exercise 3, the normal approximation tends to
-underestimate the extreme values. It's possible that there are more
-seven footers than we predicted. - {[} {]} D. As seen in exercise 3, the
-normal approximation tends to overestimate the extreme values. It's
-possible that there are less seven footers than we predicted.
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  A. Practice and talent are what make a great basketball player, not
+  height.
+\item[$\square$]
+  B. The normal approximation is not appropriate for heights.
+\item[$\boxtimes$]
+  C. As seen in exercise 3, the normal approximation tends to
+  underestimate the extreme values. It's possible that there are more
+  seven footers than we predicted.
+\item[$\square$]
+  D. As seen in exercise 3, the normal approximation tends to
+  overestimate the extreme values. It's possible that there are less
+  seven footers than we predicted.
+\end{itemize}
 
 \hypertarget{assessment-4-quantiles-percentiles-and-boxplots}{%
 \subsection{Assessment 4 (Quantiles, percentiles, and
@@ -4043,28 +4171,6 @@ class).
 \begin{Highlighting}[]
 \CommentTok{#update.packages()}
 \KeywordTok{library}\NormalTok{(tidyverse)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## -- Attaching packages --------------------------------------------------------------------------------------------------------------------------------------------- tidyverse 1.3.0 --
-\end{verbatim}
-
-\begin{verbatim}
-## v ggplot2 3.3.2     v purrr   0.3.4
-## v tibble  3.0.3     v dplyr   1.0.0
-## v tidyr   1.1.0     v stringr 1.4.0
-## v readr   1.3.1     v forcats 0.5.0
-\end{verbatim}
-
-\begin{verbatim}
-## -- Conflicts ------------------------------------------------------------------------------------------------------------------------------------------------ tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(dslabs)}
 \KeywordTok{data}\NormalTok{(stars)}
 \KeywordTok{options}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{3}\NormalTok{)   }\CommentTok{# report 3 significant digits}
@@ -4111,7 +4217,7 @@ Make a density plot of the magnitude.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-14-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-26-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4132,7 +4238,7 @@ best characterizes the temperature distribution?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-15-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-27-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4155,7 +4261,7 @@ star.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-16-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-28-1.pdf}
 
 \textbf{Question 5}\\
 For various reasons, scientists do not always follow straight
@@ -4179,7 +4285,7 @@ The brighest, highest temperature stars are in the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-17-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-29-1.pdf}
 
 \textbf{Question 6}\\
 The trends you see allow scientists to learn about the evolution and
@@ -4231,7 +4337,7 @@ Fill in the blanks in the statements below:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-18-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-30-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4267,7 +4373,7 @@ amount of light produced at various wavelengths.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-19-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-31-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4437,7 +4543,7 @@ first available year to the last available year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-22-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-34-1.pdf}
 
 \textbf{Question 3}\\
 Inspect the difference in temperature in temp\_carbon from the first
@@ -4515,7 +4621,7 @@ mean temperature?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-24-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-36-1.pdf}
 
 \textbf{Question 5}\\
 Continue working with p, the plot created in the previous question.
@@ -4540,7 +4646,7 @@ and the text color should be blue.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-25-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-37-1.pdf}
 
 \textbf{Question 6}
 
@@ -4620,7 +4726,7 @@ Which region has the largest 2018 temperature anomaly relative to the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-29-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-41-1.pdf}
 
 \textbf{Question 8} A major determinant of Earth's temperature is the
 greenhouse effect. Many gases trap heat and reflect it towards the
@@ -4668,7 +4774,7 @@ ppm.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-31-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-43-1.pdf}
 
 \textbf{Question 10} Make a time series line plot of carbon emissions
 (carbon\_emissions) from the temp\_carbon dataset. The y-axis is metric
@@ -4683,7 +4789,7 @@ tons of carbon emitted per year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-32-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-44-1.pdf}
 
 \textbf{Question 11}\\
 We saw how greenhouse gases have changed over the course of human
@@ -4708,7 +4814,7 @@ measurement source (source). Save this plot as co2\_time for later use.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-33-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-45-1.pdf}
 
 \textbf{Question 12}\\
 One way to differentiate natural co2 oscillations from today's manmade
