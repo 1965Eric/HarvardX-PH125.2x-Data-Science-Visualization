@@ -212,6 +212,8 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 **A further note on histograms**: note that the choice of binwidth has a determinative effect on shape. There is no "true" choice for binwidth, and you can sometimes gain insights into the data by experimenting with binwidths.
 
+\newpage
+
 ## Assessment - Distributions
 
 1. You may have noticed that numerical data is often summarized with the average value. 
@@ -220,14 +222,14 @@ For example, the quality of a high school is sometimes summarized with one numbe
 
 Our first data visualization building block is learning to summarize lists of factors or numeric vectors. The most basic statistical summary of a list of objects or numbers is its distribution. Once a vector has been summarized as distribution, there are several data visualization techniques to effectively relay this information. In later assessments we will practice to write code for data visualization. Here we start with some multiple choice questions to test your understanding of distributions and related basic plots.
 
-In the murders dataset, the region is a categorical variable and on the right you can see its distribution (Figure 1). To the closest 5%, what proportion of the states are in the North Central region?
+In the murders dataset, the region is a categorical variable and on the right you can see its distribution. To the closest 5%, what proportion of the states are in the North Central region?
+
+![Region vs. Proportion](images/Region vs Proportion.png)
 
 - [ ] A. 75%
 - [ ] B. 50%
 - [X] C. 20%
 - [ ] D. 5%
-
-![Region vs. Proportion](images/Region vs Proportion.png)
 
 2. In the murders dataset, the region is a categorical variable and to the right is its distribution.
 
@@ -238,16 +240,16 @@ Which of the following is true:
 - [ ] C. Categories are not numbers, so it does not make sense to graph the distribution.
 - [ ] D. The colors, not the height of the bars, describe the distribution.
 
-3. The plot (Figure 2) shows the eCDF for male heights.
+3. The plot shows the eCDF for male heights.
 
 Based on the plot, what percentage of males are shorter than 75 inches?
+
+![eCDF for male heights](images/eCDF for male heights.png)
 
 - [ ] A. 100%
 - [X] B. 95%
 - [ ] C. 80%
 - [ ] D. 72 inches
-
-![eCDF for male heights](images/eCDF for male heights.png)
 
 4. To the closest inch, what height ```m``` has the property that 1/2 of the male students are taller than ```m``` and 1/2 are shorter?
 
@@ -256,7 +258,11 @@ Based on the plot, what percentage of males are shorter than 75 inches?
 - [X] C. 69 inches
 - [ ] D. 74 inches
 
-5. Here is an eCDF of the murder rates across states (Figure 3).
+\newpage
+
+5. Here is an eCDF of the murder rates across states.
+
+![eCDF of the murder rates across states](images/eCDF murder rates across states.png)
 
 Knowing that there are 51 states (counting DC) and based on this plot, how many states have murder rates larger than 10 per 100,000 people?
 
@@ -265,8 +271,6 @@ Knowing that there are 51 states (counting DC) and based on this plot, how many 
 - [ ] C. 10
 - [ ] D. 50
 
-![eCDF of the murder rates across states](images/eCDF murder rates across states.png)
-
 6. Based on the eCDF above, which of the following statements are true.
 
 - [ ] A. About half the states have murder rates above 7 per 100,000 and the other half below.
@@ -274,16 +278,18 @@ Knowing that there are 51 states (counting DC) and based on this plot, how many 
 - [ ] C. All the states have murder rates above 2 per 100,000.
 - [X] D. With the exception of 4 states, the murder rates are below 5 per 100,000.
 
+\newpage
+
 7. Here is a histogram of male heights in our ```heights``` dataset.
 
-Based on this plot (Figure 4), how many males are between 62.5 and 65.5?
+Based on this plot, how many males are between 62.5 and 65.5?
+
+![Histogram of male heights](images/Histogram of male heights.png)
 
 - [ ] A. 11
 - [ ] B. 29
 - [X] C. 58
 - [ ] D. 99
-
-![Histogram of male heights](images/Histogram of male heights.png)
 
 8. About what percentage are shorter than 60 inches?
 
@@ -292,16 +298,20 @@ Based on this plot (Figure 4), how many males are between 62.5 and 65.5?
 - [ ] C. 25%
 - [ ] D. 50%
 
-9. Based on this density plot (Figure 5), about what proportion of US states have populations larger than 10 million?
+\newpage
+
+9. Based on this density plot, about what proportion of US states have populations larger than 10 million?
+
+![Density plot population](images/Density plot population.png)
 
 - [ ] A. 0.02
 - [X] B. 0.15
 - [ ] C. 0.50
 - [ ] D. 0.55
 
-![Density plot population](images/Density plot population.png)
+10. Below are three density plots. Is it possible that they are from the same dataset?
 
-10. Here are three density plots (Figure 6). Is it possible that they are from the same dataset?
+![Three density plots](images/Three density plots.png)
 
 Which of the following statements is true?
 
@@ -310,7 +320,7 @@ Which of the following statements is true?
 - [ ] C. They are the same dataset, but the first and second plot undersmooth and the third oversmooths.
 - [X] D. They are the same dataset, but the first is not in the log scale, the second undersmooths and the third oversmooths.
 
-![Three density plots](images/Three density plots.png)
+\newpage
 
 ## Normal Distribution
 
@@ -337,7 +347,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 The normal distribution is mathematically defined by the following formula for any mean $\mu$ and standard deviation $\sigma$:
 
-	$Pr(a < x < b) = \int_{a}^{b} \frac{1}{\sqrt2\pi\sigma} e^-\frac{1}{2}(\frac{x - \mu}{\sigma})^2 dx$
+$Pr(a < x < b) = \int_{a}^{b} \frac{1}{\sqrt2\pi\sigma} e^-\frac{1}{2}(\frac{x - \mu}{\sigma})^2 dx$
 
 *Code*
 
