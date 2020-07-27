@@ -226,7 +226,6 @@ In the murders dataset, the region is a categorical variable and the following i
 
 ![Region vs. Proportion](images/Region vs Proportion.png)
 
-To the closet 5%, what proportion of the states are in the North Central region?
 
 - [ ] A. 75%
 - [ ] B. 50%
@@ -248,6 +247,7 @@ Based on the plot, what percentage of males are shorter than 75 inches?
 
 ![eCDF for male heights](images/eCDF for male heights.png)
 
+
 - [ ] A. 100%
 - [X] B. 95%
 - [ ] C. 80%
@@ -265,6 +265,7 @@ Based on the plot, what percentage of males are shorter than 75 inches?
 Knowing that there are 51 states (counting DC) and based on this plot, how many states have murder rates larger than 10 per 100,000 people?
 
 ![eCDF of the murder rates across states](images/eCDF murder rates across states.png)
+
 
 - [X] A. 1
 - [ ] B. 5
@@ -284,6 +285,7 @@ Based on this plot, how many males are between 62.5 and 65.5?
 
 ![Histogram of male heights](images/Histogram of male heights.png)
 
+
 - [ ] A. 11
 - [ ] B. 29
 - [X] C. 58
@@ -298,7 +300,8 @@ Based on this plot, how many males are between 62.5 and 65.5?
 
 9. Based on this density plot, about what proportion of US states have populations larger than 10 million?
 
-![Density plot population](https://user-images.githubusercontent.com/17474099/75769618-c86e7f00-5d46-11ea-9b94-9ae8d2330565.png)
+![Density plot population](images/Density plot population.png)
+
 
 - [ ] A. 0.02
 - [X] B. 0.15
@@ -308,6 +311,8 @@ Based on this plot, how many males are between 62.5 and 65.5?
 10. Here are three density plots. Is it possible that they are from the same dataset? 
 
 ![Three density plots](images/Three density plots.png)
+
+
 Which of the following statements is true?
 
 - [ ] A. It is impossible that they are from the same dataset.

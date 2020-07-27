@@ -621,7 +621,7 @@ with some multiple choice questions to test your understanding of
 distributions and related basic plots.
 
 In the murders dataset, the region is a categorical variable and on the
-right you can see its distribution. To the closet 5\%, what proportion
+right you can see its distribution. To the closest 5\%, what proportion
 of the states are in the North Central region?
 
 In the murders dataset, the region is a categorical variable and the
@@ -632,9 +632,6 @@ following is its distribution.
 \includegraphics{images/Region vs Proportion.png}
 \caption{Region vs.~Proportion}
 \end{figure}
-
-To the closet 5\%, what proportion of the states are in the North
-Central region?
 
 \begin{itemize}
 \tightlist
@@ -653,7 +650,8 @@ Central region?
 \setcounter{enumi}{1}
 \tightlist
 \item
-  Distributions - 2
+  In the murders dataset, the region is a categorical variable and to
+  the right is its distribution.
 \end{enumerate}
 
 Which of the following is true:
@@ -676,16 +674,16 @@ Which of the following is true:
 \setcounter{enumi}{2}
 \tightlist
 \item
-  The plot below shows the eCDF for male heights:
+  The plot shows the eCDF for male heights.
 \end{enumerate}
+
+Based on the plot, what percentage of males are shorter than 75 inches?
 
 \begin{figure}
 \centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75706117-f6a77c80-5cbc-11ea-8689-ceb860f0f133.png}
-\caption{Unknown}
+\includegraphics{images/eCDF for male heights.png}
+\caption{eCDF for male heights}
 \end{figure}
-
-Based on the plot, what percentage of males are shorter than 75 inches?
 
 \begin{itemize}
 \tightlist
@@ -704,8 +702,8 @@ Based on the plot, what percentage of males are shorter than 75 inches?
 \setcounter{enumi}{3}
 \tightlist
 \item
-  To the closest inch, what height m has the property that 1/2 of the
-  male students are taller than m and 1/2 are shorter?
+  To the closest inch, what height \texttt{m} has the property that 1/2
+  of the male students are taller than \texttt{m} and 1/2 are shorter?
 \end{enumerate}
 
 \begin{itemize}
@@ -725,17 +723,17 @@ Based on the plot, what percentage of males are shorter than 75 inches?
 \setcounter{enumi}{4}
 \tightlist
 \item
-  Here is an eCDF of the murder rates across states:
+  Here is an eCDF of the murder rates across states.
 \end{enumerate}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75706458-80574a00-5cbd-11ea-806e-30358d1613ae.png}
-\caption{Unknown}
-\end{figure}
 
 Knowing that there are 51 states (counting DC) and based on this plot,
 how many states have murder rates larger than 10 per 100,000 people?
+
+\begin{figure}
+\centering
+\includegraphics{images/eCDF murder rates across states.png}
+\caption{eCDF of the murder rates across states}
+\end{figure}
 
 \begin{itemize}
 \tightlist
@@ -754,7 +752,7 @@ how many states have murder rates larger than 10 per 100,000 people?
 \setcounter{enumi}{5}
 \tightlist
 \item
-  Based on the eCDF above, which of the following statements are true:
+  Based on the eCDF above, which of the following statements are true.
 \end{enumerate}
 
 \begin{itemize}
@@ -776,27 +774,27 @@ how many states have murder rates larger than 10 per 100,000 people?
 \setcounter{enumi}{6}
 \tightlist
 \item
-  Below is a histogram of male heights in our heights dataset:
+  Here is a histogram of male heights in our \texttt{heights} dataset.
 \end{enumerate}
+
+Based on this plot, how many males are between 62.5 and 65.5?
 
 \begin{figure}
 \centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75706795-168b7000-5cbe-11ea-97af-639fa5d34b47.png}
-\caption{Unknown}
+\includegraphics{images/Histogram of male heights.png}
+\caption{Histogram of male heights}
 \end{figure}
-
-Based on this plot, how many males are between 62.5 and 65.5?
 
 \begin{itemize}
 \tightlist
 \item[$\square$]
-  A. 5
+  A. 11
 \item[$\square$]
-  B. 24
+  B. 29
 \item[$\boxtimes$]
-  C. 44
+  C. 58
 \item[$\square$]
-  D. 100
+  D. 99
 \end{itemize}
 
 \begin{enumerate}
@@ -824,14 +822,14 @@ Based on this plot, how many males are between 62.5 and 65.5?
 \setcounter{enumi}{8}
 \tightlist
 \item
-  Based on the density plot below, about what proportion of US states
-  have populations larger than 10 million?
+  Based on this density plot, about what proportion of US states have
+  populations larger than 10 million?
 \end{enumerate}
 
 \begin{figure}
 \centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75769618-c86e7f00-5d46-11ea-9b94-9ae8d2330565.png}
-\caption{index}
+\includegraphics{images/Density plot population.png}
+\caption{Density plot population}
 \end{figure}
 
 \begin{itemize}
@@ -851,23 +849,32 @@ Based on this plot, how many males are between 62.5 and 65.5?
 \setcounter{enumi}{9}
 \tightlist
 \item
-  Below are three density plots. Is it possible that they are from the
+  Here are three density plots. Is it possible that they are from the
   same dataset?
 \end{enumerate}
 
 \begin{figure}
 \centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75769820-171c1900-5d47-11ea-9a2f-660e714bb1f5.png}
-\caption{index}
+\includegraphics{images/Three density plots.png}
+\caption{Three density plots}
 \end{figure}
 
-Which of the following statements is true: - {[} {]} A. It is impossible
-that they are from the same dataset. - {[} {]} B. They are from the same
-dataset, but the plots are different due to code errors. - {[} {]} C.
-They are the same dataset, but the first and second plot undersmooth and
-the third oversmooths. - {[}X{]} D. They are the same dataset, but the
-first is not in the log scale, the second undersmooths and the third
-oversmooths.
+Which of the following statements is true?
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  A. It is impossible that they are from the same dataset.
+\item[$\square$]
+  B. They are from the same dataset, but the plots are different due to
+  code errors.
+\item[$\square$]
+  C. They are the same dataset, but the first and second plot
+  undersmooth and the third oversmooths.
+\item[$\boxtimes$]
+  D. They are the same dataset, but the first is not in the log scale,
+  the second undersmooths and the third oversmooths.
+\end{itemize}
 
 \hypertarget{assessment-3-normal-distribution}{%
 \subsection{Assessment 3 (Normal
