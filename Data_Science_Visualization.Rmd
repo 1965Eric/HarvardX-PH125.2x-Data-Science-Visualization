@@ -170,10 +170,10 @@ sum(tab==1)
 
 The textbook for this section is available:
 
-* [here](https://rafalab.github.io/dsbook/distributions.html#case-study-describing-student-heights)
-* [here](https://rafalab.github.io/dsbook/distributions.html#distribution-function)
-* [here](https://rafalab.github.io/dsbook/distributions.html#cdf-intro)
-* [here](https://rafalab.github.io/dsbook/distributions.html#histograms)
+* [Case Study describing student heights](https://rafalab.github.io/dsbook/distributions.html#case-study-describing-student-heights)
+* [Distribution Function](https://rafalab.github.io/dsbook/distributions.html#distribution-function)
+* [CDF Intro](https://rafalab.github.io/dsbook/distributions.html#cdf-intro)
+* [Histograms](https://rafalab.github.io/dsbook/distributions.html#histograms)
 
 **Key points**
 
