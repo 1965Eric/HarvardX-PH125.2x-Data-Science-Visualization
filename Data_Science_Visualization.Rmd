@@ -341,30 +341,35 @@ $Pr(a < x < b) = \int_{a}^{b} \frac{1}{\sqrt2\pi\sigma} e^-\frac{1}{2}(\frac{x -
 
 *Code*
 
+```{r}
 # define x as vector of male heights
 library(tidyverse)
-library(dslabs)
-data(heights)
 index <- heights$sex=="Male"
 x <- heights$height[index]
+
 # calculate the mean and standard deviation manually
 average <- sum(x)/length(x)
 SD <- sqrt(sum((x - average)^2)/length(x))
+
 # built-in mean and sd functions - note that the audio and printed values disagree
 average <- mean(x)
 SD <- sd(x)
 c(average = average, SD = SD)
+
 # calculate standard units
 z <- scale(x)
+
 # calculate proportion of values within 2 SD of mean
 mean(abs(z) < 2)
-Note about the sd function: The built-in R function sd calculates the standard deviation, but it divides by length(x)-1 instead of length(x). When the length of the list is large, this difference is negligible and you can use the built-in sd function. Otherwise, you should compute σ by hand. For this course series, assume that you should use the sd function unless you are told not to do so.
+```
 
-## Assessment 3 (Normal Distribution)
+**Note about the sd function:** The built-in R function ```sd``` calculates the standard deviation, but it divides by ```length(x)-1``` instead of ```length(x)```. When the length of the list is large, this difference is negligible and you can use the built-in ```sd``` function. Otherwise, you should compute $\sigma$ by hand. For this course series, assume that you should use the ```sd``` function unless you are told not to do so.
 
-1. Proportions
+## Assessment - Normal Distribution
 
-Histograms and density plots provide excellent summaries of a distribution. But can we summarize even further? We often see the average and standard deviation used as summary statistics: a two number summary! To understand what these summaries are and why they are so widely used, we need to understand the normal distribution.
+1. Histograms and density plots provide excellent summaries of a distribution. 
+
+But can we summarize even further? We often see the average and standard deviation used as summary statistics: a two number summary! To understand what these summaries are and why they are so widely used, we need to understand the normal distribution.
 
 The normal distribution, also known as the bell curve and as the Gaussian distribution, is one of the most famous mathematical concepts in history. A reason for this is that approximately normal distributions occur in many situations. Examples include gambling winnings, heights, weights, blood pressure, standardized test scores, and experimental measurement errors. Often data visualization is needed to confirm that our data follows a normal distribution.
 
@@ -372,26 +377,20 @@ Here we focus on how the normal distribution helps us summarize data and can be 
 
 One way the normal distribution is useful is that it can be used to approximate the distribution of a list of numbers without having access to the entire list. We will demonstrate this with the heights dataset.
 
-Load the height data set and create a vector x with just the male heights:
-```
-library(dslabs)  
-data(heights)  
-```
-```
-x <- heights$height[heights$sex == "Male"]  
-```
-What proportion of the data is between 69 and 72 inches (taller than 69 but shorter or equal to 72)?
-```
+Load the height data set and create a vector ```x``` with just the male heights:
+
+```{r, eval=FALSE, scho=TRUE}
 library(dslabs)
 data(heights)
-```
-```
 x <- heights$height[heights$sex == "Male"]
-mean(x>69 & x<=72)
 ```
+What proportion of the data is between 69 and 72 inches (taller than 69 but shorter or equal to 72)? A proportion is between 0 and 1.
+
+```{r}
+x <- heights$height[heights$sex == "Male"]
+mean(x > 69 & x <= 72)
 ```
-## [1] 0.3337438
-```
+
 2. Averages and Standard Deviations
 
 Suppose all you know about the height data from the previous exercise is the average and the standard deviation and that its distribution is approximated by the normal distribution. We can compute the average and standard deviation like this:
