@@ -312,6 +312,53 @@ Which of the following statements is true?
 
 ![Three density plots](images/Three density plots.png)
 
+## Normal Distribution
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#normal-distribution)
+
+**Key points**
+
+* The normal distribution:
+	- Is centered around one value, the *mean*
+	- Is symmetric around the mean
+	- Is defined completely by its mean ($\mu$) and standard deviation ($\sigma$)
+	- Always has the same proportion of observations within a given distance of the mean (for example, 95% within 2 $\sigma$)
+* The standard deviation is the average distance between a value and the mean value.
+* Calculate the mean using the ```mean``` function.
+* Calculate the standard deviation using the ```sd``` function or manually. 
+* Standard units describe how many standard deviations a value is away from the mean. The z-score, or number of standard deviations an observation *x* is away from the mean ($\mu$):
+
+$Z = \frac{x - ($\mu$)}{$\sigma$)
+ 
+* Compute standard units with the ```scale``` function.
+* **Important:** to calculate the proportion of values that meet a certain condition, use the ```mean``` function on a logical vector. Because TRUE is converted to 1 and FALSE is converted to 0, taking the mean of this vector yields the proportion of TRUE.
+
+**Equation for the normal distribution**
+
+The normal distribution is mathematically defined by the following formula for any mean $\mu$ and standard deviation $\sigma$:
+
+$Pr(a < x < b) = \int_{a}^{b} \frac{1}{sqrt(2 \pi \sigma)} e^(\frac{1}{2} (\frac{x - \mu}{\sigma})^2) dx$
+
+*Code*
+
+# define x as vector of male heights
+library(tidyverse)
+library(dslabs)
+data(heights)
+index <- heights$sex=="Male"
+x <- heights$height[index]
+# calculate the mean and standard deviation manually
+average <- sum(x)/length(x)
+SD <- sqrt(sum((x - average)^2)/length(x))
+# built-in mean and sd functions - note that the audio and printed values disagree
+average <- mean(x)
+SD <- sd(x)
+c(average = average, SD = SD)
+# calculate standard units
+z <- scale(x)
+# calculate proportion of values within 2 SD of mean
+mean(abs(z) < 2)
+Note about the sd function: The built-in R function sd calculates the standard deviation, but it divides by length(x)-1 instead of length(x). When the length of the list is large, this difference is negligible and you can use the built-in sd function. Otherwise, you should compute σ by hand. For this course series, assume that you should use the sd function unless you are told not to do so.
 
 ## Assessment 3 (Normal Distribution)
 
