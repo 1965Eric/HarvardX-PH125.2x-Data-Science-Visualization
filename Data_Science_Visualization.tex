@@ -1491,40 +1491,39 @@ boxplots}\label{assessment---quantiles-percentiles-and-boxplots}}
 \setcounter{enumi}{1}
 \tightlist
 \item
-  Percentiles
+  Suppose we can't make a plot and want to compare the distributions
+  side by side. If the number of data points is large, listing all the
+  numbers is inpractical. A more practical approach is to look at the
+  percentiles. We can obtain percentiles using the \texttt{quantile}
+  function like this
 \end{enumerate}
 
-Suppose we can't make a plot and want to compare the distributions side
-by side. We can't just list all the numbers. Instead, we will look at
-the percentiles. Create a five row table showing female\_percentiles and
-male\_percentiles with the 10th, 30th, 50th, ., 90th percentiles for
-each sex. Then create a data frame with these two as columns.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dslabs)}
+\KeywordTok{data}\NormalTok{(heights)}
+\KeywordTok{quantile}\NormalTok{(heights}\OperatorTok{$}\NormalTok{height, }\KeywordTok{seq}\NormalTok{(.}\DecValTok{01}\NormalTok{, }\FloatTok{0.99}\NormalTok{, }\FloatTok{0.01}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{male <-}\StringTok{ }\NormalTok{heights}\OperatorTok{$}\NormalTok{height[heights}\OperatorTok{$}\NormalTok{sex}\OperatorTok{==}\StringTok{"Male"}\NormalTok{]}
+\NormalTok{female <-}\StringTok{ }\NormalTok{heights}\OperatorTok{$}\NormalTok{height[heights}\OperatorTok{$}\NormalTok{sex}\OperatorTok{==}\StringTok{"Female"}\NormalTok{]}
+\NormalTok{female_percentiles <-}\StringTok{ }\KeywordTok{quantile}\NormalTok{(female, }\KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }\FloatTok{0.2}\NormalTok{))}
+\NormalTok{male_percentiles <-}\StringTok{ }\KeywordTok{quantile}\NormalTok{(male, }\KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }\FloatTok{0.2}\NormalTok{))}
+\NormalTok{df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{female =}\NormalTok{ (female_percentiles), }\DataTypeTok{male =}\NormalTok{ (male_percentiles))}
+\NormalTok{df}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-library(dslabs)
-data(heights)
-\end{verbatim}
-
-\begin{verbatim}
-male <- heights$height[heights$sex=="Male"]
-female <- heights$height[heights$sex=="Female"]
-
-male_percentiles <- quantile(male, seq(0.1, 0.9,0.2))
-female_percentiles <- quantile(female, seq(0.1, 0.9,0.2))
-
-df <- data.frame(female = female_percentiles, male = male_percentiles)
-df
-\end{verbatim}
-
-\begin{verbatim}
-        female          male
-        <dbl>           <dbl>
-10% 61.00000    65.00000
-30% 63.00000    68.00000
-50% 64.98031    69.00000
-70% 66.46417    71.00000
-90% 69.00000    73.22751
-5 rows
+##       female     male
+## 10% 61.00000 65.00000
+## 30% 63.00000 68.00000
+## 50% 64.98031 69.00000
+## 70% 66.46417 71.00000
+## 90% 69.00000 73.22751
 \end{verbatim}
 
 \begin{enumerate}
@@ -1532,19 +1531,17 @@ df
 \setcounter{enumi}{2}
 \tightlist
 \item
-  Interpretating Boxplots - 1
+  Study the boxplots summarizing the distributions of populations sizes
+  by country.
 \end{enumerate}
-
-Study the boxplots summarizing the distributions of populations sizes by
-country.
-
-Which continent has the country with the largest population size?
 
 \begin{figure}
 \centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75773033-5baab300-5d4d-11ea-878e-c54b7a7f94f4.png}
-\caption{index}
+\includegraphics{images/Continent vs Population.png}
+\caption{Continent vs Population}
 \end{figure}
+
+Which continent has the country with the largest population size?
 
 \begin{itemize}
 \tightlist
@@ -1565,19 +1562,11 @@ Which continent has the country with the largest population size?
 \setcounter{enumi}{3}
 \tightlist
 \item
-  Interpretating Boxplots - 2
+  Study the boxplots summarizing the distributions of populations sizes
+  by country.
 \end{enumerate}
 
-Study the boxplots summarizing the distributions of populations sizes by
-country.
-
 Which continent has median country with the largest population?
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75773208-b93eff80-5d4d-11ea-8b56-35f618df0b83.png}
-\caption{index}
-\end{figure}
 
 \begin{itemize}
 \tightlist
@@ -1598,18 +1587,11 @@ Which continent has median country with the largest population?
 \setcounter{enumi}{4}
 \tightlist
 \item
-  Interpretating Boxplots - 3
+  Again, look at the boxplots summarizing the distributions of
+  populations sizes by country.
 \end{enumerate}
 
-Again, look at the boxplots summarizing the distributions of populations
-sizes by country. To the nearest million, what is the median population
-size for Africa?
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75773370-0f13a780-5d4e-11ea-8efd-9f2ba5e0c595.png}
-\caption{index}
-\end{figure}
+To the nearest million, what is the median population size for Africa?
 
 \begin{itemize}
 \tightlist
@@ -1630,17 +1612,9 @@ size for Africa?
 \setcounter{enumi}{5}
 \tightlist
 \item
-  Low quantiles
+  Examine the following boxplots and report approximately what
+  proportion of countries in Europe have populations below 14 million?
 \end{enumerate}
-
-Examine the following boxplots and report approximately what proportion
-of countries in Europe have populations below 14 million:
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75774043-649c8400-5d4f-11ea-917d-bdb8c62e79d9.png}
-\caption{index}
-\end{figure}
 
 \begin{itemize}
 \tightlist
@@ -1659,17 +1633,9 @@ of countries in Europe have populations below 14 million:
 \setcounter{enumi}{6}
 \tightlist
 \item
-  Interquantile Range (IQR)
+  Based on the boxplot, if we use a log transformation, which continent
+  shown below has the largest interquartile range?
 \end{enumerate}
-
-Based on the boxplot, if we use a log transformation, which continent
-shown below has the largest interquartile range?
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75774893-391a9900-5d51-11ea-938b-daaf1b49415f.png}
-\caption{index}
-\end{figure}
 
 \begin{itemize}
 \tightlist
@@ -4349,7 +4315,7 @@ Make a density plot of the magnitude.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-28-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-30-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4370,7 +4336,7 @@ best characterizes the temperature distribution?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-29-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-31-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4393,7 +4359,7 @@ star.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-30-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-32-1.pdf}
 
 \textbf{Question 5}\\
 For various reasons, scientists do not always follow straight
@@ -4417,7 +4383,7 @@ The brighest, highest temperature stars are in the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-31-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-33-1.pdf}
 
 \textbf{Question 6}\\
 The trends you see allow scientists to learn about the evolution and
@@ -4469,7 +4435,7 @@ Fill in the blanks in the statements below:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-32-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-34-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4505,7 +4471,7 @@ amount of light produced at various wavelengths.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-33-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-35-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4675,7 +4641,7 @@ first available year to the last available year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-36-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-38-1.pdf}
 
 \textbf{Question 3}\\
 Inspect the difference in temperature in temp\_carbon from the first
@@ -4753,7 +4719,7 @@ mean temperature?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-38-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-40-1.pdf}
 
 \textbf{Question 5}\\
 Continue working with p, the plot created in the previous question.
@@ -4778,7 +4744,7 @@ and the text color should be blue.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-39-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-41-1.pdf}
 
 \textbf{Question 6}
 
@@ -4858,7 +4824,7 @@ Which region has the largest 2018 temperature anomaly relative to the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-43-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-45-1.pdf}
 
 \textbf{Question 8} A major determinant of Earth's temperature is the
 greenhouse effect. Many gases trap heat and reflect it towards the
@@ -4906,7 +4872,7 @@ ppm.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-45-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-47-1.pdf}
 
 \textbf{Question 10} Make a time series line plot of carbon emissions
 (carbon\_emissions) from the temp\_carbon dataset. The y-axis is metric
@@ -4921,7 +4887,7 @@ tons of carbon emitted per year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-46-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-48-1.pdf}
 
 \textbf{Question 11}\\
 We saw how greenhouse gases have changed over the course of human
@@ -4946,7 +4912,7 @@ measurement source (source). Save this plot as co2\_time for later use.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-47-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-49-1.pdf}
 
 \textbf{Question 12}\\
 One way to differentiate natural co2 oscillations from today's manmade
