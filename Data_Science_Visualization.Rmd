@@ -337,7 +337,7 @@ $Z = \frac{x - ($\mu$)}{$\sigma$)
 
 The normal distribution is mathematically defined by the following formula for any mean $\mu$ and standard deviation $\sigma$:
 
-$Pr(a < x < b) = \int_{a}^{b} \frac{1}{sqrt(2 \pi \sigma)} e^(\frac{1}{2} (\frac{x - \mu}{\sigma})^2) dx$
+$Pr(a < x < b) = \int_{a}^{b} \frac{1}{\sqrt2\pi\sigma} e^-\frac{1}{2}(\frac{x - \mu}{\sigma})^2 dx$
 
 *Code*
 
