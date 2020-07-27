@@ -1,9 +1,9 @@
 ---
 title: "Data Science Visualization"
 output:
-  html_document: default
   pdf_document:
     latex_engine: xelatex
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -676,7 +676,7 @@ sd(x)
 mad(x)
 ```
 
-3. In the previous exercises we saw that the mean and median are very similar and so are the standard deviation and MAD. This is expected since the data is approximated by a normal distribution which has this propoerty.
+3. In the previous exercises we saw that the mean and median are very similar and so are the standard deviation and MAD. This is expected since the data is approximated by a normal distribution which has this property.
 
 Now suppose that suppose Galton made a mistake when entering the first value, forgetting to use the decimal point. You can imitate this error by typing:
 

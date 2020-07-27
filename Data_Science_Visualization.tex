@@ -1651,41 +1651,74 @@ To the nearest million, what is the median population size for Africa?
   E. Oceania
 \end{itemize}
 
-\hypertarget{assessment-5-robust-summaries-with-outliers}{%
-\subsection{Assessment 5 (Robust Summaries With
-Outliers)}\label{assessment-5-robust-summaries-with-outliers}}
+\hypertarget{distribution-of-female-heights}{%
+\subsection{Distribution of Female
+Heights}\label{distribution-of-female-heights}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/distributions.html\#student-height-cont}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  If a distribution is not normal, it cannot be summarized with only the
+  mean and standard deviation. Provide a histogram, smooth density or
+  boxplot instead.
+\item
+  A plot can force us to see unexpected results that make us question
+  the quality or implications of our data.
+\end{itemize}
+
+\hypertarget{assessment---robust-summaries-with-outliers}{%
+\subsection{Assessment - Robust Summaries With
+Outliers}\label{assessment---robust-summaries-with-outliers}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Exploring the Galton Dataset - Average and Median
+  For this chapter, we will use height data collected by Francis Galton
+  for his genetics studies. Here we just use height of the children in
+  the dataset:
 \end{enumerate}
 
-For this chapter, we will use height data collected by Francis Galton
-for his genetics studies. Here we just use height of the children in the
-dataset:
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(HistData)}
+\KeywordTok{data}\NormalTok{(Galton)}
+\NormalTok{x <-}\StringTok{ }\NormalTok{Galton}\OperatorTok{$}\NormalTok{child}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(HistData)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-library(HistData)
-data(Galton)
-x <- Galton$child
+## Warning: package 'HistData' was built under R version 4.0.2
 \end{verbatim}
 
-Compute the average and median of these data. Note: do not assign them
-to a variable.
-
-\begin{verbatim}
-mean(x)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(Galton)}
+\NormalTok{x <-}\StringTok{ }\NormalTok{Galton}\OperatorTok{$}\NormalTok{child}
+\KeywordTok{mean}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 68.08847
 \end{verbatim}
 
-\begin{verbatim}
-median(x)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{median}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 68.2
@@ -1696,23 +1729,26 @@ median(x)
 \setcounter{enumi}{1}
 \tightlist
 \item
-  Exploring the Galton Dataset - SD and MAD
+  Now for the same data compute the standard deviation and the median
+  absolute deviation (MAD).
 \end{enumerate}
 
-Now for the same data compute the standard deviation and the median
-absolute deviation (MAD).
-
-\begin{verbatim}
-sd(x)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\NormalTok{Galton}\OperatorTok{$}\NormalTok{child}
+\KeywordTok{sd}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 2.517941
 \end{verbatim}
 
-\begin{verbatim}
-mad(x)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mad}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 2.9652
@@ -1723,36 +1759,39 @@ mad(x)
 \setcounter{enumi}{2}
 \tightlist
 \item
-  Error impact on average
+  In the previous exercises we saw that the mean and median are very
+  similar and so are the standard deviation and MAD. This is expected
+  since the data is approximated by a normal distribution which has this
+  property.
 \end{enumerate}
-
-In the previous exercises we saw that the mean and median are very
-similar and so are the standard deviation and MAD. This is expected
-since the data is approximated by a normal distribution which has this
-propoerty.
 
 Now suppose that suppose Galton made a mistake when entering the first
 value, forgetting to use the decimal point. You can imitate this error
 by typing:
 
-\begin{verbatim}
-library(HistData)
-data(Galton)
-x <- Galton$child
-x_with_error <- x
-x_with_error[1] <- x_with_error[1]*10
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(HistData)}
+\KeywordTok{data}\NormalTok{(Galton)}
+\NormalTok{x <-}\StringTok{ }\NormalTok{Galton}\OperatorTok{$}\NormalTok{child}
+\NormalTok{x_with_error <-}\StringTok{ }\NormalTok{x}
+\NormalTok{x_with_error[}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\NormalTok{x_with_error[}\DecValTok{1}\NormalTok{]}\OperatorTok{*}\DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
 
 The data now has an outlier that the normal approximation does not
 account for. Let's see how this affects the average.
 
-Report how many inches the average grow after this mistake.
-Specifically, report the difference between the average of the data with
-the mistake x\_with\_error and the data without the mistake x.
-
-\begin{verbatim}
-mean(x_with_error)-mean(x)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\NormalTok{Galton}\OperatorTok{$}\NormalTok{child}
+\NormalTok{x_with_error <-}\StringTok{ }\NormalTok{x}
+\NormalTok{x_with_error[}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\NormalTok{x_with_error[}\DecValTok{1}\NormalTok{]}\OperatorTok{*}\DecValTok{10}
+\NormalTok{gem <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(x)}
+\NormalTok{gem_error <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(x_with_error)}
+\NormalTok{gem_error }\OperatorTok{-}\StringTok{ }\NormalTok{gem}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 0.5983836
@@ -1763,24 +1802,20 @@ mean(x_with_error)-mean(x)
 \setcounter{enumi}{3}
 \tightlist
 \item
-  Error impact on SD
+  In the previous exercise we saw how a simple mistake in 1 out of over
+  900 observations can result in the average of our data increasing more
+  than half an inch, which is a large difference in practical terms.
 \end{enumerate}
 
-In the previous exercise we saw how a simple mistake can result in the
-average of our data increasing more than half a foot, which is a large
-difference in practical terms. Now let's explore the effect this outlier
-has on the standard deviation.
+Now let's explore the effect this outlier has on the standard deviation.
 
-Report how many inches the SD grows after this mistake. Specifically,
-report the difference between the SD of the data with the mistake
-x\_with\_error and the data without the mistake x.
-
-\begin{verbatim}
-x_with_error <- x
-x_with_error[1] <- x_with_error[1]*10
-
-sd(x_with_error)-sd(x)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x_with_error <-}\StringTok{ }\NormalTok{x}
+\NormalTok{x_with_error[}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\NormalTok{x_with_error[}\DecValTok{1}\NormalTok{]}\OperatorTok{*}\DecValTok{10}
+\KeywordTok{sd}\NormalTok{(x_with_error)}\OperatorTok{-}\StringTok{ }\KeywordTok{sd}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 15.6746
@@ -1791,25 +1826,23 @@ sd(x_with_error)-sd(x)
 \setcounter{enumi}{4}
 \tightlist
 \item
-  Error impact on median
+  In the previous exercises we saw how one mistake can have a
+  substantial effect on the average and the standard deviation.
 \end{enumerate}
 
-In the previous exercises we saw how one mistake can have a substantial
-effect on the average and the standard deviation.
-
 Now we are going to see how the median and MAD are much more resistant
-to outliers. For this reason we say that they are robust summaries.
+to outliers. For this reason we say that they are \emph{robust}
+summaries.
 
-Report how many inches the median grows after the mistake. Specifically,
-report the difference between the median of the data with the mistake
-x\_with\_error and the data without the mistake x.
-
-\begin{verbatim}
-x_with_error <- x
-x_with_error[1] <- x_with_error[1]*10
-
-median(x_with_error)-median(x)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x_with_error <-}\StringTok{ }\NormalTok{x}
+\NormalTok{x_with_error[}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\NormalTok{x_with_error[}\DecValTok{1}\NormalTok{]}\OperatorTok{*}\DecValTok{10}
+\NormalTok{mediaan <-}\StringTok{ }\KeywordTok{median}\NormalTok{(x)}
+\NormalTok{mediaan_error <-}\StringTok{ }\KeywordTok{median}\NormalTok{(x_with_error)}
+\NormalTok{mediaan_error }\OperatorTok{-}\StringTok{ }\NormalTok{mediaan}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 0
@@ -1820,22 +1853,22 @@ median(x_with_error)-median(x)
 \setcounter{enumi}{5}
 \tightlist
 \item
-  Error impact on MAD
+  We saw that the median barely changes. Now let's see how the MAD is
+  affected.
 \end{enumerate}
 
 We saw that the median barely changes. Now let's see how the MAD is
 affected.
 
-Report how many inches the MAD grows after the mistake. Specifically,
-report the difference between the MAD of the data with the mistake
-x\_with\_error and the data without the mistake x.
-
-\begin{verbatim}
-x_with_error <- x
-x_with_error[1] <- x_with_error[1]*10
-
-mad(x_with_error)-mad(x)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x_with_error <-}\StringTok{ }\NormalTok{x}
+\NormalTok{x_with_error[}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\NormalTok{x_with_error[}\DecValTok{1}\NormalTok{]}\OperatorTok{*}\DecValTok{10}
+\NormalTok{mad_normal <-}\StringTok{ }\KeywordTok{mad}\NormalTok{(x)}
+\NormalTok{mad_error <-}\StringTok{ }\KeywordTok{mad}\NormalTok{(x_with_error)}
+\NormalTok{mad_error }\OperatorTok{-}\StringTok{ }\NormalTok{mad_normal}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 0
@@ -1846,54 +1879,58 @@ mad(x_with_error)-mad(x)
 \setcounter{enumi}{6}
 \tightlist
 \item
-  Usefulness of EDA
+  How could you use exploratory data analysis to detect that an error
+  was made?
 \end{enumerate}
 
-How could you use exploratory data analysis to detect that an error was
-made? - {[} {]} A. Since it is only one value out of many, we will not
-be able to detect this. - {[} {]} B. We would see an obvious shift in
-the distribution. - {[}X{]} C. A boxplot, histogram, or qq-plot would
-reveal a clear outlier. - {[} {]} D. A scatter plot would show high
-levels of measurement error.
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  A. Since it is only one value out of many, we will not be able to
+  detect this.
+\item[$\square$]
+  B. We would see an obvious shift in the distribution.
+\item[$\boxtimes$]
+  C. A boxplot, histogram, or qq-plot would reveal a clear outlier.
+\item[$\square$]
+  D. A scatter plot would show high levels of measurement error.
+\end{itemize}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{7}
 \tightlist
 \item
-  Using EDA to explore changes
+  We have seen how the average can be affected by outliers.
 \end{enumerate}
 
-We have seen how the average can be affected by outliers. But how large
-can this effect get? This of course depends on the size of the outlier
-and the size of the dataset.
+But how large can this effect get? This of course depends on the size of
+the outlier and the size of the dataset.
 
 To see how outliers can affect the average of a dataset, let's write a
 simple function that takes the size of the outlier as input and returns
 the average.
 
-Write a function called error\_avg that takes a value k and returns the
-average of the vector x after the first entry changed to k. Show the
-results for k=10000 and k=-10000.
-
-\begin{verbatim}
-x <- Galton$child
-
-error_avg <- function(k){
-  x[1] <- k
-  mean(x)
-}
-
-error_avg(10000)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\NormalTok{Galton}\OperatorTok{$}\NormalTok{child}
+\NormalTok{error_avg <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(k)\{}
+\NormalTok{x[}\DecValTok{1}\NormalTok{] =}\StringTok{ }\NormalTok{k}
+\KeywordTok{mean}\NormalTok{(x)}
+\NormalTok{\}}
+\KeywordTok{error_avg}\NormalTok{(}\DecValTok{10000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 78.79784
 \end{verbatim}
 
-\begin{verbatim}
-error_avg(-10000)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{error_avg}\NormalTok{(}\OperatorTok{-}\DecValTok{10000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 57.24612
@@ -1905,16 +1942,55 @@ error_avg(-10000)
 In Section 2, you will learn how to create data visualizations in R
 using ggplot2.
 
-After completing Section 2, you will: - be able to use ggplot2 to create
-data visualizations in R. - be able to explain what the data component
-of a graph is. - be able to identify the geometry component of a graph
-and know when to use which type of geometry. - be able to explain what
-the aesthetic mapping component of a graph is. - be able to understand
-the scale component of a graph and select an appropriate scale component
-to use.
+After completing Section 2, you will:
+
+\begin{itemize}
+\tightlist
+\item
+  be able to use ggplot2 to create data visualizations in R.
+\item
+  be able to explain what the data component of a graph is.
+\item
+  be able to identify the geometry component of a graph and know when to
+  use which type of geometry.
+\item
+  be able to explain what the aesthetic mapping component of a graph is.
+\item
+  be able to understand the scale component of a graph and select an
+  appropriate scale component to use.
+\end{itemize}
+
+Note that it can be hard to memorize all of the functions and arguments
+used by ggplot2, so we recommend that you have a
+\href{https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf}{cheat
+sheet} handy to help you remember the necessary commands.
+
+\hypertarget{ggplot}{%
+\subsection{ggplot}\label{ggplot}}
 
 The textbook for this section is available
 \href{https://rafalab.github.io/dsbook/ggplot2.html}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  Throughout the series, we will create plots with the \textbf{ggplot2}
+  package. ggplot2 is part of the tidyverse, which you can load with
+  \texttt{library(tidyverse)}.
+\item
+  Note that you can also load ggplot2 alone using the command
+  \texttt{library(ggplot2)}, instead of loading the entire tidyverse.
+\item
+  ggplot2 uses a \emph{grammar of graphics} to break plots into building
+  blocks that have intuitive syntax, making it easy to create relatively
+  complex and aesthetically pleasing plots with relatively simple and
+  readable code.
+\item
+  ggplot2 is designed to work exclusively with tidy data (rows are
+  observations and columns are variables).
+\end{itemize}
 
 \hypertarget{assessment-6-ggplot2}{%
 \subsection{Assessment 6 (ggplot2)}\label{assessment-6-ggplot2}}
@@ -4315,7 +4391,7 @@ Make a density plot of the magnitude.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-30-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-39-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4336,7 +4412,7 @@ best characterizes the temperature distribution?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-31-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-40-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4359,7 +4435,7 @@ star.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-32-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-41-1.pdf}
 
 \textbf{Question 5}\\
 For various reasons, scientists do not always follow straight
@@ -4383,7 +4459,7 @@ The brighest, highest temperature stars are in the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-33-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-42-1.pdf}
 
 \textbf{Question 6}\\
 The trends you see allow scientists to learn about the evolution and
@@ -4435,7 +4511,7 @@ Fill in the blanks in the statements below:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-34-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-43-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4471,7 +4547,7 @@ amount of light produced at various wavelengths.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-35-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-44-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4641,7 +4717,7 @@ first available year to the last available year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-38-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-47-1.pdf}
 
 \textbf{Question 3}\\
 Inspect the difference in temperature in temp\_carbon from the first
@@ -4719,7 +4795,7 @@ mean temperature?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-40-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-49-1.pdf}
 
 \textbf{Question 5}\\
 Continue working with p, the plot created in the previous question.
@@ -4744,7 +4820,7 @@ and the text color should be blue.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-41-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-50-1.pdf}
 
 \textbf{Question 6}
 
@@ -4824,7 +4900,7 @@ Which region has the largest 2018 temperature anomaly relative to the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-45-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-54-1.pdf}
 
 \textbf{Question 8} A major determinant of Earth's temperature is the
 greenhouse effect. Many gases trap heat and reflect it towards the
@@ -4872,7 +4948,7 @@ ppm.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-47-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-56-1.pdf}
 
 \textbf{Question 10} Make a time series line plot of carbon emissions
 (carbon\_emissions) from the temp\_carbon dataset. The y-axis is metric
@@ -4887,7 +4963,7 @@ tons of carbon emitted per year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-48-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-57-1.pdf}
 
 \textbf{Question 11}\\
 We saw how greenhouse gases have changed over the course of human
@@ -4912,7 +4988,7 @@ measurement source (source). Save this plot as co2\_time for later use.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-49-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-58-1.pdf}
 
 \textbf{Question 12}\\
 One way to differentiate natural co2 oscillations from today's manmade
