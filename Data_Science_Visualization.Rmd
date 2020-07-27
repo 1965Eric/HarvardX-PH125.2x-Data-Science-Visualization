@@ -578,40 +578,28 @@ length(male)
 length(female)
 ```
 
-2. Percentiles
+2. Suppose we can't make a plot and want to compare the distributions side by side. If the number of data points is large, listing all the numbers is inpractical. A more practical approach is to look at the percentiles. We can obtain percentiles using the ```quantile``` function like this
 
-Suppose we can’t make a plot and want to compare the distributions side by side. We can’t just list all the numbers. Instead, we will look at the percentiles. Create a five row table showing female_percentiles and male_percentiles with the 10th, 30th, 50th, ., 90th percentiles for each sex. Then create a data frame with these two as columns.
-```
+```{r, eval=FALSE, scho=TRUE}
 library(dslabs)
 data(heights)
-```
-```
+quantile(heights$height, seq(.01, 0.99, 0.01))
+
+```{r}
 male <- heights$height[heights$sex=="Male"]
 female <- heights$height[heights$sex=="Female"]
-
-male_percentiles <- quantile(male, seq(0.1, 0.9,0.2))
-female_percentiles <- quantile(female, seq(0.1, 0.9,0.2))
-
-df <- data.frame(female = female_percentiles, male = male_percentiles)
+female_percentiles <- quantile(female, seq(0.1, 0.9, 0.2))
+male_percentiles <- quantile(male, seq(0.1, 0.9, 0.2))
+df <- data.frame(female = (female_percentiles), male = (male_percentiles))
 df
 ```
-```
-        female          male
-        <dbl>           <dbl>
-10%	61.00000	65.00000
-30%	63.00000	68.00000
-50%	64.98031	69.00000
-70%	66.46417	71.00000
-90%	69.00000	73.22751
-5 rows
-```
-3. Interpretating Boxplots - 1
+\newpage
 
-Study the boxplots summarizing the distributions of populations sizes by country.
+3. Study the boxplots summarizing the distributions of populations sizes by country.
+
+![Continent vs Population](images/Continent vs Population.png)
 
 Which continent has the country with the largest population size?
-
-![index](https://user-images.githubusercontent.com/17474099/75773033-5baab300-5d4d-11ea-878e-c54b7a7f94f4.png)
 
 - [ ] A. Africa
 - [ ] B. Americas
@@ -619,13 +607,9 @@ Which continent has the country with the largest population size?
 - [ ] D. Europe
 - [ ] E. Oceania
 
-4. Interpretating Boxplots - 2
-
-Study the boxplots summarizing the distributions of populations sizes by country.
+4. Study the boxplots summarizing the distributions of populations sizes by country.
 
 Which continent has median country with the largest population?
-
-![index](https://user-images.githubusercontent.com/17474099/75773208-b93eff80-5d4d-11ea-8b56-35f618df0b83.png)
 
 - [X] A. Africa
 - [ ] B. Americas
@@ -633,11 +617,9 @@ Which continent has median country with the largest population?
 - [ ] D. Europe
 - [ ] E. Oceania
 
-5. Interpretating Boxplots - 3
+5. Again, look at the boxplots summarizing the distributions of populations sizes by country. 
 
-Again, look at the boxplots summarizing the distributions of populations sizes by country. To the nearest million, what is the median population size for Africa?
-
-![index](https://user-images.githubusercontent.com/17474099/75773370-0f13a780-5d4e-11ea-8efd-9f2ba5e0c595.png)
+To the nearest million, what is the median population size for Africa?
 
 - [ ] A. 100 million
 - [ ] B. 25 million
@@ -645,22 +627,14 @@ Again, look at the boxplots summarizing the distributions of populations sizes b
 - [ ] D. 5 million
 - [ ] E. 1 million
 
-6. Low quantiles
-
-Examine the following boxplots and report approximately what proportion of countries in Europe have populations below 14 million:
-
-![index](https://user-images.githubusercontent.com/17474099/75774043-649c8400-5d4f-11ea-917d-bdb8c62e79d9.png)
+6. Examine the following boxplots and report approximately what proportion of countries in Europe have populations below 14 million?
 
 - [X] A. 0.75
 - [ ] B. 0.50
 - [ ] C. 0.25
 - [ ] D. 0.01
 
-7. Interquantile Range (IQR)
-    
-Based on the boxplot, if we use a log transformation, which continent shown below has the largest interquartile range?
-
-![index](https://user-images.githubusercontent.com/17474099/75774893-391a9900-5d51-11ea-938b-daaf1b49415f.png)
+7. Based on the boxplot, if we use a log transformation, which continent shown below has the largest interquartile range?
 
 - [ ] A. Africa
 - [X] B. Americas
