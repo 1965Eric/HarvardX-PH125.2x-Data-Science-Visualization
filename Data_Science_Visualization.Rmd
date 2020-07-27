@@ -224,10 +224,6 @@ In the murders dataset, the region is a categorical variable and on the right yo
     
 In the murders dataset, the region is a categorical variable and the following is its distribution.
 
-```{r}
-data(murders)
-hist
-
 ![Region vs. Proportion](images/Region vs Proportion.png)
 
 To the closet 5%, what proportion of the states are in the North Central region?
