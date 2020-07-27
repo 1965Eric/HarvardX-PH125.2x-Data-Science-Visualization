@@ -593,7 +593,6 @@ male_percentiles <- quantile(male, seq(0.1, 0.9, 0.2))
 df <- data.frame(female = (female_percentiles), male = (male_percentiles))
 df
 ```
-\newpage
 
 3. Study the boxplots summarizing the distributions of populations sizes by country.
 
