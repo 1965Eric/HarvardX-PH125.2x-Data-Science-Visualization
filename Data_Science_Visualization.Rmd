@@ -328,7 +328,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 * Calculate the standard deviation using the ```sd``` function or manually. 
 * Standard units describe how many standard deviations a value is away from the mean. The z-score, or number of standard deviations an observation *x* is away from the mean ($\mu$):
 
-$Z = \frac{x - (\mu)}{\sigma}$
+	$Z = \frac{x - \mu}{\sigma}$
  
 * Compute standard units with the ```scale``` function.
 * **Important:** to calculate the proportion of values that meet a certain condition, use the ```mean``` function on a logical vector. Because TRUE is converted to 1 and FALSE is converted to 0, taking the mean of this vector yields the proportion of TRUE.
@@ -337,7 +337,7 @@ $Z = \frac{x - (\mu)}{\sigma}$
 
 The normal distribution is mathematically defined by the following formula for any mean $\mu$ and standard deviation $\sigma$:
 
-$Pr(a < x < b) = \int_{a}^{b} \frac{1}{\sqrt2\pi\sigma} e^-\frac{1}{2}(\frac{x - \mu}{\sigma})^2 dx$
+	$Pr(a < x < b) = \int_{a}^{b} \frac{1}{\sqrt2\pi\sigma} e^-\frac{1}{2}(\frac{x - \mu}{\sigma})^2 dx$
 
 *Code*
 
@@ -495,30 +495,79 @@ What would be a fair critique of our calculations?
 - [X] C. As seen in exercise 3, the normal approximation tends to underestimate the extreme values.  It's possible that there are more seven footers than we predicted.
 - [ ] D. As seen in exercise 3, the normal approximation tends to overestimate the extreme values. It’s possible that there are less seven footers than we predicted.
 
-## Assessment 4 (Quantiles, percentiles, and boxplots)
+## Quantile-Quantile Plots
 
-1. Vector lengths
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#quantile-quantile-plots)
 
-When analyzing data it’s often important to know the number of measurements you have for each category. Define a variable male that contains the male heights. Define a variable female that contains the female heights. Report the length of each variable.
+**Key points**
+
+* Quantile-quantile plots, or QQ-plots, are used to check whether distributions are well-approximated by a normal distribution.
+* Given a proportion *p*, the quantile *q* is the value such that the proportion of values in the data below *q* is *p*.
+* In a QQ-plot, the sample quantiles in the observed data are compared to the theoretical quantiles expected from the normal distribution. If the data are well-approximated by the normal distribution, then the points on the QQ-plot will fall near the identity line (sample = theoretical).
+* Calculate sample quantiles (observed quantiles) using the ```quantile``` function.
+* Calculate theoretical quantiles with the ```qnorm``` function. ```qnorm``` will calculate quantiles for the standard normal distribution ($\mu = 0$, $\sigma = 1$) by default, but it can calculate quantiles for any normal distribution given mean and ```sd``` arguments. We will learn more about ```qnorm``` in the probability course.
+* Note that we will learn alternate ways to make QQ-plots with less code later in the series.
+
+*Code*
+
+```{r}
+# define x and z
+index <- heights$sex=="Male"
+x <- heights$height[index]
+z <- scale(x)
+
+# proportion of data below 69.5
+mean(x <= 69.5)
+
+# calculate observed and theoretical quantiles
+p <- seq(0.05, 0.95, 0.05)
+observed_quantiles <- quantile(x, p)
+theoretical_quantiles <- qnorm(p, mean = mean(x), sd = sd(x))
+
+# make QQ-plot
+plot(theoretical_quantiles, observed_quantiles)
+abline(0,1)
+
+# make QQ-plot with scaled values
+observed_quantiles <- quantile(z, p)
+theoretical_quantiles <- qnorm(p) 
+plot(theoretical_quantiles, observed_quantiles)
+abline(0,1)
 ```
-library(dslabs)
-data(heights)
-```
-```
+
+## Percentiles
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#percentiles)
+
+**Key points**
+
+* *Percentiles* are the quantiles obtained when defining *p* as ```0.01,0.02,...,0.99```. They summarize the values at which a certain percent of the observations are equal to or less than that value.
+* The 50th percentile is also known as the *median*.
+* The *quartiles* are the 25th, 50th and 75th percentiles.
+
+## Boxplots
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#boxplots)
+
+**Key points**
+
+* When data do not follow a normal distribution and cannot be succinctly summarized by only the mean and standard deviation, an alternative is to report a five-number summary: range (ignoring outliers) and the quartiles (25th, 50th, 75th percentile).
+* In a *boxplot*, the box is defined by the 25th and 75th percentiles and the median is a horizontal line through the box. The whiskers show the range excluding outliers, and outliers are plotted separately as individual points.
+* The *interquartile* range is the distance between the 25th and 75th percentiles.
+* Boxplots are particularly useful when comparing multiple distributions.
+* We discuss outliers later.
+
+## Assessment - Quantiles, percentiles, and boxplots
+
+1. When analyzing data it’s often important to know the number of measurements you have for each category.
+
+```{r}
 male <- heights$height[heights$sex=="Male"]
 female <- heights$height[heights$sex=="Female"]
-
 length(male)
-```
-```
-## [1] 812
-```
-```
 length(female)
 ```
-```
-## [1] 238
-```
+
 2. Percentiles
 
 Suppose we can’t make a plot and want to compare the distributions side by side. We can’t just list all the numbers. Instead, we will look at the percentiles. Create a five row table showing female_percentiles and male_percentiles with the 10th, 30th, 50th, ., 90th percentiles for each sex. Then create a data frame with these two as columns.
