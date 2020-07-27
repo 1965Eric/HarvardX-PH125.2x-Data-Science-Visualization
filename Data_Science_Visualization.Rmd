@@ -204,7 +204,7 @@ prop.table(table(heights$sex))
     
 In the murders dataset, the region is a categorical variable and the following is its distribution:
 
-![Unknown](https://user-images.githubusercontent.com/17474099/75705803-6b2deb80-5cbc-11ea-86d8-5e3a187694e2.png)
+![Region vs. Proportion](images/Region vs Proportion.png)
 
 To the closet 5%, what proportion of the states are in the North Central region?
 
