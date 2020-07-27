@@ -328,7 +328,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 * Calculate the standard deviation using the ```sd``` function or manually. 
 * Standard units describe how many standard deviations a value is away from the mean. The z-score, or number of standard deviations an observation *x* is away from the mean ($\mu$):
 
-$Z = \frac{x - ($\mu$)}{$\sigma$)
+$Z = \frac{x - (\mu)}{\sigma}$
  
 * Compute standard units with the ```scale``` function.
 * **Important:** to calculate the proportion of values that meet a certain condition, use the ```mean``` function on a logical vector. Because TRUE is converted to 1 and FALSE is converted to 0, taking the mean of this vector yields the proportion of TRUE.
