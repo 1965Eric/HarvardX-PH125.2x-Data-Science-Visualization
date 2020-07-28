@@ -1476,15 +1476,150 @@ heights %>%
 Section 3 introduces you to summarizing with dplyr.
 
 After completing Section 3, you will:
-- understand the importance of summarizing data in exploratory data analysis.
-- be able to use the “summarize” verb in dplyr to facilitate summarizing data.
-- be able to use the “group_by” verb in dplyr to facilitate summarizing data.
-- be able to access values using the dot placeholder.
-- be able to use “arrange” to examine data after sorting.
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/tidyverse.html#tidy-data)
+* understand the importance of summarizing data in exploratory data analysis.
+* be able to use the “summarize” verb in dplyr to facilitate summarizing data.
+* be able to use the “group_by” verb in dplyr to facilitate summarizing data.
+* be able to access values using the dot placeholder.
+* be able to use “arrange” to examine data after sorting.
 
-## Assessment 7 (Summarizing with dplyr)
+## dplyr
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/tidyverse.html#summarizing-data)
+
+**Key points**
+
+* ```summarize``` from the dplyr/tidyverse package computes summary statistics from the data frame. It returns a data frame whose column names are defined within the function call.
+* ```summarize``` can compute any summary function that operates on vectors and returns a single value, but it cannot operate on functions that return multiple values.
+* Like most dplyr functions, ```summarize``` is aware of variable names within data frames and can use them directly.
+
+*Code*
+
+```{r}
+# compute average and standard deviation for males
+s <- heights %>%
+    filter(sex == "Male") %>%
+    summarize(average = mean(height), standard_deviation = sd(height))
+    
+# access average and standard deviation from summary table
+s$average
+s$standard_deviation
+
+# compute median, min and max
+heights %>%
+    filter(sex == "Male") %>%
+    summarize(median = median(height),
+                       minimum = min(height),
+                       maximum = max(height))
+		       
+# alternative way to get min, median, max in base R
+quantile(heights$height, c(0, 0.5, 1))
+```
+
+```{r, eval=FALSE, echo=TRUE}
+# generates an error: summarize can only take functions that return a single value
+heights %>%
+    filter(sex == "Male") %>%
+    summarize(range = quantile(height, c(0, 0.5, 1)))
+```
+
+## The Dot Placeholder
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/tidyverse.html#the-dot-operator)
+
+Note that a common replacement for the dot operator is the pull function. Here is the [textbook section on the pull function](https://rafalab.github.io/dsbook/tidyverse.html#pull).
+
+**Key points**
+
+* The dot operator allows you to access values stored in data that is being piped in using the ```%>%``` character. The dot is a placeholder for the data being passed in through the pipe.
+* The dot operator allows ```dplyr``` functions to return single vectors or numbers instead of only data frames.
+* ```us_murder_rate %>% .$rate``` is equivalent to ```us_murder_rate$rate```.
+* Note that an equivalent way to extract a single column using the pipe is ```us_murder_rate %>% pull(rate)```. The pull function will be used in later course material.
+
+*Code*
+
+```{r}
+murders <- murders %>% mutate(murder_rate = total/population*100000)
+summarize(murders, mean(murder_rate))
+
+# calculate US murder rate, generating a data frame
+us_murder_rate <- murders %>%
+    summarize(rate = sum(total) / sum(population) * 100000)
+us_murder_rate
+
+# extract the numeric US murder rate with the dot operator
+us_murder_rate %>% .$rate
+
+# calculate and extract the murder rate with one pipe
+us_murder_rate <- murders %>%
+    summarize(rate = sum(total) / sum(population * 100000)) %>%
+    .$rate
+```
+
+## Group By
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/tidyverse.html#group-by)
+
+**Key points**
+
+* The ```group_by``` function from **dplyr** converts a data frame to a grouped data frame, creating groups using one or more variables.
+* ```summarize``` and some other **dplyr** functions will behave differently on grouped data frames.
+* Using ```summarize``` on a grouped data frame computes the summary statistics for each of the separate groups.
+
+*Code*
+
+```{r}
+# compute separate average and standard deviation for male/female heights
+heights %>%
+    group_by(sex) %>%
+    summarize(average = mean(height), standard_deviation = sd(height))
+
+# compute median murder rate in 4 regions of country
+murders <- murders %>%
+    mutate(murder_rate = total/population * 100000)
+murders %>%
+    group_by(region) %>%
+    summarize(median_rate = median(murder_rate))
+```
+
+## Sorting Data Tables
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/tidyverse.html#sorting-data-frames)
+
+**Key points**
+
+* The ```arrange``` function from **dplyr** sorts a data frame by a given column.
+* By default, ```arrange``` sorts in ascending order (lowest to highest). To instead sort in descending order, use the function ```desc``` inside of ```arrange```.
+* You can ```arrange``` by multiple levels: within equivalent values of the first level, observations are sorted by the second level, and so on.
+* The ```top_n``` function shows the top results ranked by a given variable, but the results are not ordered. You can combine ```top_n``` with ```arrange``` to return the top results in order.
+
+*Code*
+
+```{r}
+# set up murders object
+murders <- murders %>%
+    mutate(murder_rate = total/population * 100000)
+
+# arrange by population column, smallest to largest
+murders %>% arrange(population) %>% head()
+
+# arrange by murder rate, smallest to largest
+murders %>% arrange(murder_rate) %>% head()
+
+# arrange by murder rate in descending order
+murders %>% arrange(desc(murder_rate)) %>% head()
+
+# arrange by region alphabetically, then by murder rate within each region
+murders %>% arrange(region, murder_rate) %>% head()
+
+# show the top 10 states with highest murder rate, not ordered by rate
+murders %>% top_n(10, murder_rate)
+
+# show the top 10 states with highest murder rate, ordered by rate
+murders %>% arrange(desc(murder_rate)) %>% top_n(10)
+```
+
+## Assessment - Summarizing with dplyr
 
 **Practice Exercise. National Center for Health Statistics**
 
