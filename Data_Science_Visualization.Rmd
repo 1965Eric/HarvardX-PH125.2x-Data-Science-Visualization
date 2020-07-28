@@ -4,6 +4,7 @@ output:
   pdf_document:
     latex_engine: xelatex
   html_document: default
+  urlcolor: blue
 ---
 
 ```{r setup, include=FALSE}
@@ -1136,124 +1137,126 @@ library(gridExtra)
 grid.arrange(p1, p2, p3, ncol = 3)
 ```
 
-## Assessment 6 (ggplot2)
+## Assessment - ggplot2
 
-Start by loading the dplyr and ggplot2 library as well as the murders and heights data.
-```
-if(!require(dplyr)) install.packages("dplyr")
+1. Start by loading the dplyr and ggplot2 libraries as well as the ```murders``` data.
 
+```{r, eval=FALSE, echo=TRUE}
 library(dplyr)
 library(ggplot2)
 library(dslabs)
-data(heights)
 data(murders)
 ```
-1. ggplot2 basics
+
+Note that you can load both dplyr and ggplot2, as well as other packages, by installing and loading the tidyverse package.
 
 With ggplot2 plots can be saved as objects. For example we can associate a dataset with a plot object like this
-```
+
+```{r, eval=FALSE, echo=TRUE}
 p <- ggplot(data = murders)
 ```
-Because data is the first argument we don’t need to spell it out
-```
+
+Because ```data``` is the first argument we don't need to spell it out. So we can write this instead:
+
+```{r, eval=FALSE, echo=TRUE}
 p <- ggplot(murders)
 ```
-or, if we load dplyr, we can also use the pipe:
-```
+
+or, if we load ```dplyr```, we can use the pipe:
+
+```{r, eval=FALSE, echo=TRUE}
 p <- murders %>% ggplot()
 ```
-Remember the pipe sends the object on the left of %>% to be the first argument for the function the right of %>%.
-What is class of the object p?
-```
+
+Remember the pipe sends the object on the left of ```%>%``` to be the first argument for the function the right of ```%>%```.
+
+Now let's get an introduction to ```ggplot```.
+
+```{r}
+if(!require(dplyr)) install.packages("dplyr")
+
+library(dplyr)
+p <- ggplot(murders)
 class(p)
 ```
-```
-## [1] "gg"     "ggplot"
-```
-2. Printing
 
-Remember that to print an object you can use the command print or simply type the object. For example
-```
+2. Remember that to print an object you can use the command ```print``` or simply type the object. For example, instead of
+
+```{r, eval=FALSE, echo=TRUE}
 x <- 2
-x
-```
-```
-## [1] 2
-```
-```
 print(x)
 ```
+you can simply type
+
+```{r, eval=FALSE, echo=TRUE}
+x <-2
+x
 ```
-## [1] 2
+
+Print the object ```p``` defined in exercise one 
+
+```{r, eval=FALSE, echo=TRUE}
+p <- ggplot(murders)
 ```
-Print the object p defined in exercise one and describe what you see.
+
+and describe what you see.
+
 - [ ] A. Nothing happens.
 - [X] B. A blank slate plot.
 - [ ] C. A scatter plot.
 - [ ] D. A histogram.
 
-3. Pipes
+3. Now we are going to review the use of pipes by seeing how they can be used with ```ggplot```.
 
-Using the pipe %>%, create an object p but this time associated with the heights dataset instead of the murders dataset.
-```
+```{r}
 # define ggplot object called p like in the previous exercise but using a pipe 
 p <- heights %>% ggplot()
+p # a blank slate plot
+```
 
-# What is the class of the object p you have just created?
-class(p)
-```
-```
-## [1] "gg"     "ggplot"
-```
-4. Layers
+4. Now we are going to add layers and the corresponding aesthetic mappings. For the murders data, we plotted total murders versus population sizes in the videos.
 
-Now we are going to add a layers and the corresponding aesthetic mappings. For the murders data we plotted total murders versus population sizes. Explore the murders data frame to remind yourself what are the names for these two variables and select the correct answer. Hint: Look at ?murders.
+Explore the ```murders``` data frame to remind yourself of the names for the two variables (total murders and population size) we want to plot and select the correct answer.
 
 - [ ] A. state and abb.
-- [ ] B. total_murers and population_size.
+- [ ] B. total_murders and population_size.
 - [X] C. total and population.
 - [ ] D. murders and size.
 
-5. geom_point 1
+5. To create a scatter plot, we add a layer with the function ```geom_point```.
 
-To create the scatter plot we add a layer with geom_point. The aesthetic mappings require us to define the x-axis and y-axis variables respectively. So the code looks like this:
+The aesthetic mappings require us to define the x-axis and y-axis variables respectively. So the code looks like this:
+
+```{r, eval=FALSE, echo=TRUE}
+murders %>% ggplot(aes(x = , y = )) +
+  geom_point()
 ```
-murders %>% ggplot(aes(x = , y = )) + geom_point()
-```
-except we have to define the two variables x and y. Fill this out with the correct variable names.
-```
+
+except we have to fill in the blanks to define the two variables ```x``` and ```y```.
+
+```{r}
 ## Fill in the blanks
 murders %>% ggplot(aes(x =population , y =total )) +
   geom_point()
 ```
 
-![index](https://user-images.githubusercontent.com/17474099/75776454-5c931300-5d54-11ea-8ec3-10c571a2459c.png)
+6. Note that if we don't use argument names, we can obtain the same plot by making sure we enter the variable names in the desired order.
 
-6. geom_point 1
-
-Note that if we don’t use argument names, we can obtain the same plot by making sure we enter the variable names in the right order like this:
-```
+```{r}
 murders %>% ggplot(aes(population, total)) +
   geom_point()
 ```
 
-![index](https://user-images.githubusercontent.com/17474099/75776655-a8de5300-5d54-11ea-909b-872e45a057d5.png)
+7. If instead of points we want to add text, we can use the geom_text() or geom_label() geometries. 
 
-Remake the plot but now with total in the x-axis and population in the y-axis.
-```
-murders %>% ggplot(aes(total,population)) +
-  geom_point()
+However, note that the following code
+
+```{r, eval=FALSE, echo=TRUE}
+murders %>% ggplot(aes(population, total)) +
+  geom_label()
 ```
 
-![index](https://user-images.githubusercontent.com/17474099/75776868-1f7b5080-5d55-11ea-8281-67e19557d262.png)
-
-7. geom_point text
-
-If instead of points we want to add text, we can use the geom_text() or geom_label() geometries. The following code
-```
-murders %>% ggplot(aes(population, total)) + geom_label()
-```
-will give us the error message: Error: geom_label requires the following missing aesthetics: label
+will give us the error message: ```Error: geom_label requires the following missing aesthetics: label```
 
 Why is this?
 
@@ -1262,221 +1265,211 @@ Why is this?
 - [ ] C. The geom_label geometry does not require x-axis and y-axis values.
 - [ ] D. geom_label is not a ggplot2 command.
 
-8. Rewrite the code from the previous exercise to add the state abbreviation as the label through aes.
-```
-library(dplyr)
-library(ggplot2)
-library(dslabs)
-data(murders)
-```
-```
+8. You can also add labels to the points on a plot.
+
+```{r}
 ## edit the next line to add the label
-murders %>% ggplot(aes(population, total, label=abb)) +
-  geom_point()+
+murders %>% ggplot(aes(population, total, label = abb)) + geom_label()
+```
+
+9. Now let's change the color of the labels to blue. How can we do this?
+
+- [ ] A. By adding a column called blue to murders
+- [ ] B. By mapping the colors through aes because each label needs a different color
+- [ ] C. By using the color argument in ggplot
+- [X] D. By using the color argument in geom_label because we want all colors to be blue so we do not need to map colors
+
+10. Now let's go ahead and make the labels blue. We previously wrote this code to add labels to our plot:
+
+```{r, eval=FALSE, echo=TRUE}
+murders %>% ggplot(aes(population, total, label= abb)) +
   geom_label()
 ```
 
-![index](https://user-images.githubusercontent.com/17474099/75777094-a03a4c80-5d55-11ea-991c-ca4a05ed2ea2.png)
+Now we will edit this code.
 
-9. geom_point colors
-
-Change the color of the labels through blue. How will we do this?
-
-- [ ] A. Adding a column called blue to murders
-- [ ] B. Because each label needs a different color we map the colors through aes
-- [ ] C. Use the color argument in ggplot
-- [X] D. Because we want all colors to be blue, we do not need to map colors, just use the color argument in geom_label
-
-10. Rewrite the code above to make the labels blue.
-```
+```{r}
 murders %>% ggplot(aes(population, total,label= abb)) +
-  geom_label(color='blue')
+  geom_label(color="blue")
 ```
 
-![index](https://user-images.githubusercontent.com/17474099/75777261-f14a4080-5d55-11ea-9ad7-1e4eb1af596a.png)
+11. Now suppose we want to use color to represent the different regions. 
 
-11. geom_labels by region
+So the states from the West will be one color, states from the Northeast another, and so on. 
 
-Now suppose we want to use color to represent the different regions. In this case which of the following is most appropriate:
+In this case, which of the following is most appropriate:
 
 - [ ] A. Adding a column called color to murders with the color we want to use
 - [X] B. Mapping the colors through the color argument of aes because each label needs a different color
 - [ ] C. Using the color argument in ggplot
 - [ ] D. Using the color argument in geom_label because we want all colors to be blue so we do not need to map colors
 
-12. geom_label colors
+12. We previously used this code to make a plot using the state abbreviations as labels:
 
-Rewrite the code above to make the label color correspond to the state’s region.
-```
-## edit this code
-murders %>% ggplot(aes(population, total, label = abb,color=region)) +
+```{r, eval=FALSE, echo=TRUE}
+murders %>% ggplot(aes(population, total, label = abb)) +
   geom_label()
 ```
 
-![index](https://user-images.githubusercontent.com/17474099/75777598-8816fd00-5d56-11ea-8c11-40a735fc9791.png)
+We are now going to add color to represent the region.
 
-13. Log-scale
+```{r}
+## edit this code
+murders %>% ggplot(aes(population, total, label = abb, color=region)) +
+  geom_label()
+```
 
-Now we are going to change the x-axis to a log scale to account for the fact the distribution of population is skewed. Let’s start by define an object p holding the plot we have made up to now
-```
-p <- murders %>% 
-  ggplot(aes(population, total, label = abb, color = region)) +
-  geom_label() 
-```
-To change the y-axis to a log scale we learned about the scale_x_log10() function. Add this layer to the object p to change the scale and render the plot.
-```
-p <- murders %>% ggplot(aes(population, total, label = abb, color = region)) + geom_label()
+13. Now we are going to change the axes to log scales to account for the fact that the population distribution is skewed. 
 
+Let's start by defining an object ```p``` that holds the plot we have made up to now:
+
+```{r, eval=FALSE, echo=TRUE}
+p <- murders %>% ggplot(aes(population, total, label = abb, color = region)) +
+  geom_label()
+```
+
+To change the x-axis to a log scale we learned about the ```scale_x_log10()``` function. We can change the axis by adding this layer to the object ```p``` to change the scale and render the plot using the following code:
+
+```{r, eval=FALSE, echo=TRUE}
 p + scale_x_log10()
 ```
 
-![Unknown](https://user-images.githubusercontent.com/17474099/75803699-24ed9080-5d7f-11ea-9054-fcb5966f97e2.png)
+```{r}
+p <- murders %>% ggplot(aes(population, total, label = abb, color = region)) + geom_label()
+## add layers to p here
+p + scale_x_log10() + scale_y_log10()
 ```
-#Repeat the previous exercise but now change both axes to be in the log scale.
+    
+14. In the previous exercises we created a plot using the following code:
+
+```{r, eval=FALSE, echo=TRUE}
+library(dplyr)
+library(ggplot2)
+library(dslabs)
+data(murders)
+p<- murders %>% ggplot(aes(population, total, label = abb, color = region)) +
+  geom_label()
 p + scale_x_log10() + scale_y_log10()
 ```
 
-![Unknown-2](https://user-images.githubusercontent.com/17474099/75803897-739b2a80-5d7f-11ea-9d5a-18ec9b41bf29.png)   
-    
-14. Titles
+We are now going to add a title to this plot. We will do this by adding yet another layer, this time with the function ```ggtitle```.
 
-Now edit the code above to add the title “Gun murder data” to the plot. Hint: use the ggtitle function.
-```
-p <- murders %>% ggplot(aes(population, total, label = abb, color = region)) +
-  geom_label()
+```{r}
+p <- murders %>% ggplot(aes(population, total, label = abb, color = region)) + geom_label()
 # add a layer to add title to the next line
-p + scale_x_log10() + 
-    scale_y_log10() + ggtitle("Gun murder data")
+p + scale_x_log10() + scale_y_log10() + ggtitle("Gun murder data")
 ```
 
-![Unknown](https://user-images.githubusercontent.com/17474099/75804082-c379f180-5d7f-11ea-8fe7-c12ca342f5d2.png)
+15. We are going to shift our focus from the ```murders``` dataset to explore the ```heights``` dataset.
 
-15. Histograms
+We use the ```geom_histogram``` function to make a histogram of the heights in the ```heights``` data frame. When reading the documentation for this function we see that it requires just one mapping, the values to be used for the histogram.
 
-We are going to shift our focus from the murders dataset to explore the heights dataset.
-
-We use the geom_histogram function to make a histogram of the heights in the heights data frame. When reading the documentation for this function we see that it requires just one mapping, the values to be used for the histogram.
-
-What is the variable containing the heights in inches in the heights data frame?
+What is the variable containing the heights in inches in the ```heights``` data frame?
 
 - [ ] A. sex
 - [ ] B. heights
 - [X] C. height
 - [ ] D. heights$height
 
-16. A second example
+16. We are now going to make a histogram of the heights so we will load the heights dataset. 
 
-We are now going to make a histogram of the heights so we will load the heights dataset. The following code has been pre-run for you to load the heights dataset:
+The following code has been pre-run for you to load the heights dataset:
 
-Create a ggplot object called p using the pipe to assign the heights data to a ggplot object. Assign height to the x values through the aes function.
+```{r, eval=FALSE, echo=TRUE}
+library(dplyr)
+library(ggplot2)
+library(dslabs)
+data(heights)
 ```
+
+```{r}
 # define p here
 p <- heights %>% ggplot(aes(height))
 ```
-17. Histograms 2
 
-Now we are ready to add a layer to actually make the histogram.
+17. Now we are ready to add a layer to actually make the histogram.
 
-Add a layer to the object p (created in the previous exercise) using the geom_histogram function to make the histogram.
-```
+```{r}
 p <- heights %>% 
   ggplot(aes(height))
 ## add a layer to p
 p + geom_histogram()
 ```
 
-![Unknown](https://user-images.githubusercontent.com/17474099/75804614-8f530080-5d80-11ea-9430-b5cb2cc7fc37.png)
+18. Note that when we run the code from the previous exercise we get the following warning:
 
-18. Histogram binwidth
-
-Note that when we run the code from the previous exercise we get the following warning:
-```
+```{r, eval=FALSE, echo=TRUE}
 stat_bin() using bins = 30. Pick better value with binwidth.
 ```
-Use the binwidth argument to change the histogram made in the previous exercise to use bins of size 1 inch.
-```
+
+```{r}
 p <- heights %>% 
   ggplot(aes(height))
 ## add the geom_histogram layer but with the requested argument
-p + geom_histogram(binwidth=1)
+p + geom_histogram(binwidth = 1)
 ```
 
-![Unknown](https://user-images.githubusercontent.com/17474099/75804938-2750ea00-5d81-11ea-8c2f-f873808711bf.png)
+19. Now instead of a histogram we are going to make a smooth density plot. 
 
-19. Smooth density plot
+In this case, we will not make an object ```p```. Instead we will render the plot using a single line of code. In the previous exercise, we could have created a histogram using one line of code like this:
 
-Now instead of a histogram we are going to make a smooth density plot. In this case, we will not make an object p. Instead we will render the plot using a single line of code. In the previous exercise, we could have created a histogram using one line of code like this:
-```
+```{r, eval=FALSE, echo=TRUE}
 heights %>% 
   ggplot(aes(height)) +
   geom_histogram()
 ```
 
-![Unknown](https://user-images.githubusercontent.com/17474099/75805458-2d939600-5d82-11ea-8986-d27f5aea89a1.png)
-
-Now instead of geom_histogram we will use geom_density to create a smooth density plot.
-Add the appropriate layer to create a smooth density plot of heights.
-```
+```{r}
 ## add the correct layer using +
 heights %>% 
-  ggplot(aes(height)) +
-  geom_density()
+  ggplot(aes(height)) + geom_density()
 ```
 
-![Unknown](https://user-images.githubusercontent.com/17474099/75805621-76e3e580-5d82-11ea-82a2-2e2dad7c669c.png)
+20. Now we are going to make density plots for males and females separately. 
 
-20. Two smooth density plots
+We can do this using the ```group``` argument within the ```aes``` mapping. Because each point will be assigned to a different density depending on a variable from the dataset, we need to map within ```aes```.
 
-Now we are going to make density plots for males and females separately. We can do this using the group argument within the aes mapping. Because each point will be assigned to a different density depending on a variable from the dataset, we need to map within aes. Create separte smooth density plots for males and females by defining group by sex.
-```
+```{r}
 ## add the group argument then a layer with +
 heights %>% 
-  ggplot(aes(height,group = sex)) + geom_density()
+  ggplot(aes(height, group = sex)) + geom_density()
 ```
 
-![index](https://user-images.githubusercontent.com/17474099/76071763-0d88f000-5f97-11ea-86dc-b3a21fd96141.png)
+21. In the previous exercise we made the two density plots, one for each sex, using:
 
-21. Two smooth density plots 2
-
-In the previous exercise we made the two density plots, one for each sex, using:
-```
+```{r, eval=FALSE, echo=TRUE}
 heights %>% 
   ggplot(aes(height, group = sex)) + 
   geom_density()
 ```
-![index](https://user-images.githubusercontent.com/17474099/76071763-0d88f000-5f97-11ea-86dc-b3a21fd96141.png)
 
-We can also assign groups through the color or fill argument. For example, if you type color = sex ggplot knows you want a different color for each sex. So two densities must be drawn. You can therefore skip the group = sex mapping. Using color has the added benefit that it uses color to distinguish the groups. Change the density plots from the previous exercise to add color.
-```
+We can also assign groups through the ```color``` or ```fill``` argument. For example, if you type ```color = sex``` ggplot knows you want a different color for each sex. So two densities must be drawn. You can therefore skip the ```group = sex``` mapping. Using ```color``` has the added benefit that it uses color to distinguish the groups. Change the density plots from the previous exercise to add color.
+
+```{r}
 ## edit the next line to use color instead of group then add a density layer
 heights %>% 
-  ggplot(aes(height, color = sex))+
+  ggplot(aes(height, color = sex)) + geom_density()
+```
+
+22. We can also assign groups using the ```fill``` argument. 
+
+When using the ```geom_density``` geometry, ```color``` creates a colored line for the smooth density plot while ```fill``` colors in the area under the curve.
+
+We can see what this looks like by running the following code:
+
+```{r, eval=FALSE, echo=TRUE}
+heights %>% 
+  ggplot(aes(height, fill = sex)) + 
   geom_density()
 ```
 
-![index](https://user-images.githubusercontent.com/17474099/76072011-7ec8a300-5f97-11ea-9e11-32a66d77f6a9.png)
+However, here the second density is drawn over the other. We can change this by using something called *alpha blending*.
 
-22. Two smooth density plots 3
-
-We can also assign groups using the fill argument. When using the geom_density geometry, color creates a colored line for the smooth density plot while fill colors in the area under the curve.
-
-We can see what this looks like by running the following code:
-```
-heights %>% 
-  ggplot(aes(height, fill = sex)) + 
-  geom_density() 
-```
-
-![index](https://user-images.githubusercontent.com/17474099/76072191-cea76a00-5f97-11ea-929e-2e6455293778.png)
-
-However, here the second density is drawn over the other. We can change this by using something called alpha blending. Set the alpha parameter to 0.2 in the geom_density function to make this change.
-```
+```{r}
 heights %>% 
   ggplot(aes(height, fill = sex)) + 
   geom_density(alpha=0.2) 
 ```
-
-![index](https://user-images.githubusercontent.com/17474099/76072317-09a99d80-5f98-11ea-977e-5e6881a81c21.png)
 
 ## Section 3 Overview
 
