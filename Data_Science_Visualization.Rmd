@@ -3,8 +3,8 @@ title: "Data Science Visualization"
 output:
   pdf_document:
     latex_engine: xelatex
-    urlcolor: blue
   html_document: default
+urlcolor: blue
 ---
 
 ```{r setup, include=FALSE}
