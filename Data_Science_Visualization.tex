@@ -1,6 +1,7 @@
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
 %
 \documentclass[
 ]{article}
@@ -37,7 +38,11 @@
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
   pdftitle={Data Science Visualization},
-  hidelinks,
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=blue,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
@@ -2720,55 +2725,70 @@ The textbook for this section is available:
 
 \includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-54-1.pdf}
 
-\hypertarget{assessment-6-ggplot2}{%
-\subsection{Assessment 6 (ggplot2)}\label{assessment-6-ggplot2}}
-
-Start by loading the dplyr and ggplot2 library as well as the murders
-and heights data.
-
-\begin{verbatim}
-if(!require(dplyr)) install.packages("dplyr")
-
-library(dplyr)
-library(ggplot2)
-library(dslabs)
-data(heights)
-data(murders)
-\end{verbatim}
+\hypertarget{assessment---ggplot2}{%
+\subsection{Assessment - ggplot2}\label{assessment---ggplot2}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  ggplot2 basics
+  Start by loading the dplyr and ggplot2 libraries as well as the
+  \texttt{murders} data.
 \end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(dslabs)}
+\KeywordTok{data}\NormalTok{(murders)}
+\end{Highlighting}
+\end{Shaded}
+
+Note that you can load both dplyr and ggplot2, as well as other
+packages, by installing and loading the tidyverse package.
 
 With ggplot2 plots can be saved as objects. For example we can associate
 a dataset with a plot object like this
 
-\begin{verbatim}
-p <- ggplot(data = murders)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ murders)}
+\end{Highlighting}
+\end{Shaded}
 
-Because data is the first argument we don't need to spell it out
+Because \texttt{data} is the first argument we don't need to spell it
+out. So we can write this instead:
 
-\begin{verbatim}
-p <- ggplot(murders)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(murders)}
+\end{Highlighting}
+\end{Shaded}
 
-or, if we load dplyr, we can also use the pipe:
+or, if we load \texttt{dplyr}, we can use the pipe:
 
-\begin{verbatim}
-p <- murders %>% ggplot()
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-Remember the pipe sends the object on the left of \%\textgreater\% to be
-the first argument for the function the right of \%\textgreater\%. What
-is class of the object p?
+Remember the pipe sends the object on the left of
+\texttt{\%\textgreater{}\%} to be the first argument for the function
+the right of \texttt{\%\textgreater{}\%}.
 
-\begin{verbatim}
-class(p)
-\end{verbatim}
+Now let's get an introduction to \texttt{ggplot}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(}\OperatorTok{!}\KeywordTok{require}\NormalTok{(dplyr)) }\KeywordTok{install.packages}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{)}
+
+\KeywordTok{library}\NormalTok{(dplyr)}
+\NormalTok{p <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(murders)}
+\KeywordTok{class}\NormalTok{(p)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] "gg"     "ggplot"
@@ -2779,76 +2799,87 @@ class(p)
 \setcounter{enumi}{1}
 \tightlist
 \item
-  Printing
+  Remember that to print an object you can use the command
+  \texttt{print} or simply type the object. For example, instead of
 \end{enumerate}
 
-Remember that to print an object you can use the command print or simply
-type the object. For example
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{2}
+\KeywordTok{print}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-x <- 2
-x
-\end{verbatim}
+you can simply type
 
-\begin{verbatim}
-## [1] 2
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\DecValTok{2}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-print(x)
-\end{verbatim}
+Print the object \texttt{p} defined in exercise one
 
-\begin{verbatim}
-## [1] 2
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(murders)}
+\end{Highlighting}
+\end{Shaded}
 
-Print the object p defined in exercise one and describe what you see. -
-{[} {]} A. Nothing happens. - {[}X{]} B. A blank slate plot. - {[} {]}
-C. A scatter plot. - {[} {]} D. A histogram.
+and describe what you see.
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  A. Nothing happens.
+\item[$\boxtimes$]
+  B. A blank slate plot.
+\item[$\square$]
+  C. A scatter plot.
+\item[$\square$]
+  D. A histogram.
+\end{itemize}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{2}
 \tightlist
 \item
-  Pipes
+  Now we are going to review the use of pipes by seeing how they can be
+  used with \texttt{ggplot}.
 \end{enumerate}
 
-Using the pipe \%\textgreater\%, create an object p but this time
-associated with the heights dataset instead of the murders dataset.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# define ggplot object called p like in the previous exercise but using a pipe }
+\NormalTok{p <-}\StringTok{ }\NormalTok{heights }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{()}
+\NormalTok{p }\CommentTok{# a blank slate plot}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-# define ggplot object called p like in the previous exercise but using a pipe 
-p <- heights %>% ggplot()
-
-# What is the class of the object p you have just created?
-class(p)
-\end{verbatim}
-
-\begin{verbatim}
-## [1] "gg"     "ggplot"
-\end{verbatim}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-63-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{3}
 \tightlist
 \item
-  Layers
+  Now we are going to add layers and the corresponding aesthetic
+  mappings. For the murders data, we plotted total murders versus
+  population sizes in the videos.
 \end{enumerate}
 
-Now we are going to add a layers and the corresponding aesthetic
-mappings. For the murders data we plotted total murders versus
-population sizes. Explore the murders data frame to remind yourself what
-are the names for these two variables and select the correct answer.
-Hint: Look at ?murders.
+Explore the \texttt{murders} data frame to remind yourself of the names
+for the two variables (total murders and population size) we want to
+plot and select the correct answer.
 
 \begin{itemize}
 \tightlist
 \item[$\square$]
   A. state and abb.
 \item[$\square$]
-  B. total\_murers and population\_size.
+  B. total\_murders and population\_size.
 \item[$\boxtimes$]
   C. total and population.
 \item[$\square$]
@@ -2860,85 +2891,71 @@ Hint: Look at ?murders.
 \setcounter{enumi}{4}
 \tightlist
 \item
-  geom\_point 1
+  To create a scatter plot, we add a layer with the function
+  \texttt{geom\_point}.
 \end{enumerate}
 
-To create the scatter plot we add a layer with geom\_point. The
-aesthetic mappings require us to define the x-axis and y-axis variables
-respectively. So the code looks like this:
+The aesthetic mappings require us to define the x-axis and y-axis
+variables respectively. So the code looks like this:
 
-\begin{verbatim}
-murders %>% ggplot(aes(x = , y = )) + geom_point()
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ , }\DataTypeTok{y =}\NormalTok{ )) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-except we have to define the two variables x and y. Fill this out with
-the correct variable names.
+except we have to fill in the blanks to define the two variables
+\texttt{x} and \texttt{y}.
 
-\begin{verbatim}
-## Fill in the blanks
-murders %>% ggplot(aes(x =population , y =total )) +
-  geom_point()
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## Fill in the blanks}
+\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{population , }\DataTypeTok{y =}\NormalTok{total )) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75776454-5c931300-5d54-11ea-8ec3-10c571a2459c.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-65-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{5}
 \tightlist
 \item
-  geom\_point 1
+  Note that if we don't use argument names, we can obtain the same plot
+  by making sure we enter the variable names in the desired order.
 \end{enumerate}
 
-Note that if we don't use argument names, we can obtain the same plot by
-making sure we enter the variable names in the right order like this:
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population, total)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-murders %>% ggplot(aes(population, total)) +
-  geom_point()
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75776655-a8de5300-5d54-11ea-909b-872e45a057d5.png}
-\caption{index}
-\end{figure}
-
-Remake the plot but now with total in the x-axis and population in the
-y-axis.
-
-\begin{verbatim}
-murders %>% ggplot(aes(total,population)) +
-  geom_point()
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75776868-1f7b5080-5d55-11ea-8281-67e19557d262.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-66-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{6}
 \tightlist
 \item
-  geom\_point text
+  If instead of points we want to add text, we can use the geom\_text()
+  or geom\_label() geometries.
 \end{enumerate}
 
-If instead of points we want to add text, we can use the geom\_text() or
-geom\_label() geometries. The following code
+However, note that the following code
 
-\begin{verbatim}
-murders %>% ggplot(aes(population, total)) + geom_label()
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population, total)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_label}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-will give us the error message: Error: geom\_label requires the
-following missing aesthetics: label
+will give us the error message:
+\texttt{Error:\ geom\_label\ requires\ the\ following\ missing\ aesthetics:\ label}
 
 Why is this?
 
@@ -2960,52 +2977,38 @@ Why is this?
 \setcounter{enumi}{7}
 \tightlist
 \item
-  Rewrite the code from the previous exercise to add the state
-  abbreviation as the label through aes.
+  You can also add labels to the points on a plot.
 \end{enumerate}
 
-\begin{verbatim}
-library(dplyr)
-library(ggplot2)
-library(dslabs)
-data(murders)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## edit the next line to add the label}
+\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population, total, }\DataTypeTok{label =}\NormalTok{ abb)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_label}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-## edit the next line to add the label
-murders %>% ggplot(aes(population, total, label=abb)) +
-  geom_point()+
-  geom_label()
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75777094-a03a4c80-5d55-11ea-991c-ca4a05ed2ea2.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-68-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{8}
 \tightlist
 \item
-  geom\_point colors
+  Now let's change the color of the labels to blue. How can we do this?
 \end{enumerate}
-
-Change the color of the labels through blue. How will we do this?
 
 \begin{itemize}
 \tightlist
 \item[$\square$]
-  A. Adding a column called blue to murders
+  A. By adding a column called blue to murders
 \item[$\square$]
-  B. Because each label needs a different color we map the colors
-  through aes
+  B. By mapping the colors through aes because each label needs a
+  different color
 \item[$\square$]
-  C. Use the color argument in ggplot
+  C. By using the color argument in ggplot
 \item[$\boxtimes$]
-  D. Because we want all colors to be blue, we do not need to map
-  colors, just use the color argument in geom\_label
+  D. By using the color argument in geom\_label because we want all
+  colors to be blue so we do not need to map colors
 \end{itemize}
 
 \begin{enumerate}
@@ -3013,30 +3016,40 @@ Change the color of the labels through blue. How will we do this?
 \setcounter{enumi}{9}
 \tightlist
 \item
-  Rewrite the code above to make the labels blue.
+  Now let's go ahead and make the labels blue. We previously wrote this
+  code to add labels to our plot:
 \end{enumerate}
 
-\begin{verbatim}
-murders %>% ggplot(aes(population, total,label= abb)) +
-  geom_label(color='blue')
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population, total, }\DataTypeTok{label=}\NormalTok{ abb)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_label}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75777261-f14a4080-5d55-11ea-9ad7-1e4eb1af596a.png}
-\caption{index}
-\end{figure}
+Now we will edit this code.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population, total,}\DataTypeTok{label=}\NormalTok{ abb)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_label}\NormalTok{(}\DataTypeTok{color=}\StringTok{"blue"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-70-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{10}
 \tightlist
 \item
-  geom\_labels by region
+  Now suppose we want to use color to represent the different regions.
 \end{enumerate}
 
-Now suppose we want to use color to represent the different regions. In
-this case which of the following is most appropriate:
+So the states from the West will be one color, states from the Northeast
+another, and so on.
+
+In this case, which of the following is most appropriate:
 
 \begin{itemize}
 \tightlist
@@ -3058,112 +3071,118 @@ this case which of the following is most appropriate:
 \setcounter{enumi}{11}
 \tightlist
 \item
-  geom\_label colors
+  We previously used this code to make a plot using the state
+  abbreviations as labels:
 \end{enumerate}
 
-Rewrite the code above to make the label color correspond to the state's
-region.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population, total, }\DataTypeTok{label =}\NormalTok{ abb)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_label}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-## edit this code
-murders %>% ggplot(aes(population, total, label = abb,color=region)) +
-  geom_label()
-\end{verbatim}
+We are now going to add color to represent the region.
 
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75777598-8816fd00-5d56-11ea-8c11-40a735fc9791.png}
-\caption{index}
-\end{figure}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## edit this code}
+\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population, total, }\DataTypeTok{label =}\NormalTok{ abb, }\DataTypeTok{color=}\NormalTok{region)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_label}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-72-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{12}
 \tightlist
 \item
-  Log-scale
+  Now we are going to change the axes to log scales to account for the
+  fact that the population distribution is skewed.
 \end{enumerate}
 
-Now we are going to change the x-axis to a log scale to account for the
-fact the distribution of population is skewed. Let's start by define an
-object p holding the plot we have made up to now
+Let's start by defining an object \texttt{p} that holds the plot we have
+made up to now:
 
-\begin{verbatim}
-p <- murders %>% 
-  ggplot(aes(population, total, label = abb, color = region)) +
-  geom_label() 
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population, total, }\DataTypeTok{label =}\NormalTok{ abb, }\DataTypeTok{color =}\NormalTok{ region)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_label}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-To change the y-axis to a log scale we learned about the
-scale\_x\_log10() function. Add this layer to the object p to change the
-scale and render the plot.
+To change the x-axis to a log scale we learned about the
+\texttt{scale\_x\_log10()} function. We can change the axis by adding
+this layer to the object \texttt{p} to change the scale and render the
+plot using the following code:
 
-\begin{verbatim}
-p <- murders %>% ggplot(aes(population, total, label = abb, color = region)) + geom_label()
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_x_log10}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-p + scale_x_log10()
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population, total, }\DataTypeTok{label =}\NormalTok{ abb, }\DataTypeTok{color =}\NormalTok{ region)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_label}\NormalTok{()}
+\CommentTok{## add layers to p here}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_x_log10}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_y_log10}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75803699-24ed9080-5d7f-11ea-9054-fcb5966f97e2.png}
-\caption{Unknown}
-\end{figure}
-
-\begin{verbatim}
-#Repeat the previous exercise but now change both axes to be in the log scale.
-p + scale_x_log10() + scale_y_log10()
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75803897-739b2a80-5d7f-11ea-9d5a-18ec9b41bf29.png}
-\caption{Unknown-2}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-75-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{13}
 \tightlist
 \item
-  Titles
+  In the previous exercises we created a plot using the following code:
 \end{enumerate}
 
-Now edit the code above to add the title ``Gun murder data'' to the
-plot. Hint: use the ggtitle function.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(dslabs)}
+\KeywordTok{data}\NormalTok{(murders)}
+\NormalTok{p<-}\StringTok{ }\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population, total, }\DataTypeTok{label =}\NormalTok{ abb, }\DataTypeTok{color =}\NormalTok{ region)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_label}\NormalTok{()}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_x_log10}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_y_log10}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-p <- murders %>% ggplot(aes(population, total, label = abb, color = region)) +
-  geom_label()
-# add a layer to add title to the next line
-p + scale_x_log10() + 
-    scale_y_log10() + ggtitle("Gun murder data")
-\end{verbatim}
+We are now going to add a title to this plot. We will do this by adding
+yet another layer, this time with the function \texttt{ggtitle}.
 
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75804082-c379f180-5d7f-11ea-8fe7-c12ca342f5d2.png}
-\caption{Unknown}
-\end{figure}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population, total, }\DataTypeTok{label =}\NormalTok{ abb, }\DataTypeTok{color =}\NormalTok{ region)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_label}\NormalTok{()}
+\CommentTok{# add a layer to add title to the next line}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_x_log10}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_y_log10}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Gun murder data"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-77-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{14}
 \tightlist
 \item
-  Histograms
+  We are going to shift our focus from the \texttt{murders} dataset to
+  explore the \texttt{heights} dataset.
 \end{enumerate}
 
-We are going to shift our focus from the murders dataset to explore the
-heights dataset.
+We use the \texttt{geom\_histogram} function to make a histogram of the
+heights in the \texttt{heights} data frame. When reading the
+documentation for this function we see that it requires just one
+mapping, the values to be used for the histogram.
 
-We use the geom\_histogram function to make a histogram of the heights
-in the heights data frame. When reading the documentation for this
-function we see that it requires just one mapping, the values to be used
-for the histogram.
-
-What is the variable containing the heights in inches in the heights
-data frame?
+What is the variable containing the heights in inches in the
+\texttt{heights} data frame?
 
 \begin{itemize}
 \tightlist
@@ -3182,231 +3201,200 @@ data frame?
 \setcounter{enumi}{15}
 \tightlist
 \item
-  A second example
+  We are now going to make a histogram of the heights so we will load
+  the heights dataset.
 \end{enumerate}
 
-We are now going to make a histogram of the heights so we will load the
-heights dataset. The following code has been pre-run for you to load the
-heights dataset:
+The following code has been pre-run for you to load the heights dataset:
 
-Create a ggplot object called p using the pipe to assign the heights
-data to a ggplot object. Assign height to the x values through the aes
-function.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(dslabs)}
+\KeywordTok{data}\NormalTok{(heights)}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-# define p here
-p <- heights %>% ggplot(aes(height))
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# define p here}
+\NormalTok{p <-}\StringTok{ }\NormalTok{heights }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(height))}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{16}
 \tightlist
 \item
-  Histograms 2
+  Now we are ready to add a layer to actually make the histogram.
 \end{enumerate}
 
-Now we are ready to add a layer to actually make the histogram.
-
-Add a layer to the object p (created in the previous exercise) using the
-geom\_histogram function to make the histogram.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\NormalTok{heights }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(height))}
+\CommentTok{## add a layer to p}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-p <- heights %>% 
-  ggplot(aes(height))
-## add a layer to p
-p + geom_histogram()
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 \end{verbatim}
 
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75804614-8f530080-5d80-11ea-9430-b5cb2cc7fc37.png}
-\caption{Unknown}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-80-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{17}
 \tightlist
 \item
-  Histogram binwidth
+  Note that when we run the code from the previous exercise we get the
+  following warning:
 \end{enumerate}
 
-Note that when we run the code from the previous exercise we get the
-following warning:
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{stat_bin}\NormalTok{() using bins =}\StringTok{ }\FloatTok{30.}\NormalTok{ Pick better value with binwidth.}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-stat_bin() using bins = 30. Pick better value with binwidth.
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\NormalTok{heights }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(height))}
+\CommentTok{## add the geom_histogram layer but with the requested argument}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-Use the binwidth argument to change the histogram made in the previous
-exercise to use bins of size 1 inch.
-
-\begin{verbatim}
-p <- heights %>% 
-  ggplot(aes(height))
-## add the geom_histogram layer but with the requested argument
-p + geom_histogram(binwidth=1)
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75804938-2750ea00-5d81-11ea-8c2f-f873808711bf.png}
-\caption{Unknown}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-82-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{18}
 \tightlist
 \item
-  Smooth density plot
+  Now instead of a histogram we are going to make a smooth density plot.
 \end{enumerate}
 
-Now instead of a histogram we are going to make a smooth density plot.
-In this case, we will not make an object p.~Instead we will render the
-plot using a single line of code. In the previous exercise, we could
-have created a histogram using one line of code like this:
+In this case, we will not make an object \texttt{p}. Instead we will
+render the plot using a single line of code. In the previous exercise,
+we could have created a histogram using one line of code like this:
 
-\begin{verbatim}
-heights %>% 
-  ggplot(aes(height)) +
-  geom_histogram()
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{heights }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(height)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75805458-2d939600-5d82-11ea-8986-d27f5aea89a1.png}
-\caption{Unknown}
-\end{figure}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## add the correct layer using +}
+\NormalTok{heights }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(height)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_density}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-Now instead of geom\_histogram we will use geom\_density to create a
-smooth density plot. Add the appropriate layer to create a smooth
-density plot of heights.
-
-\begin{verbatim}
-## add the correct layer using +
-heights %>% 
-  ggplot(aes(height)) +
-  geom_density()
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/75805621-76e3e580-5d82-11ea-82a2-2e2dad7c669c.png}
-\caption{Unknown}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-84-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{19}
 \tightlist
 \item
-  Two smooth density plots
+  Now we are going to make density plots for males and females
+  separately.
 \end{enumerate}
 
-Now we are going to make density plots for males and females separately.
-We can do this using the group argument within the aes mapping. Because
-each point will be assigned to a different density depending on a
-variable from the dataset, we need to map within aes. Create separte
-smooth density plots for males and females by defining group by sex.
+We can do this using the \texttt{group} argument within the \texttt{aes}
+mapping. Because each point will be assigned to a different density
+depending on a variable from the dataset, we need to map within
+\texttt{aes}.
 
-\begin{verbatim}
-## add the group argument then a layer with +
-heights %>% 
-  ggplot(aes(height,group = sex)) + geom_density()
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## add the group argument then a layer with +}
+\NormalTok{heights }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(height, }\DataTypeTok{group =}\NormalTok{ sex)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_density}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76071763-0d88f000-5f97-11ea-86dc-b3a21fd96141.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-85-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{20}
 \tightlist
 \item
-  Two smooth density plots 2
+  In the previous exercise we made the two density plots, one for each
+  sex, using:
 \end{enumerate}
 
-In the previous exercise we made the two density plots, one for each
-sex, using:
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{heights }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(height, }\DataTypeTok{group =}\NormalTok{ sex)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_density}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-heights %>% 
-  ggplot(aes(height, group = sex)) + 
-  geom_density()
-\end{verbatim}
+We can also assign groups through the \texttt{color} or \texttt{fill}
+argument. For example, if you type \texttt{color\ =\ sex} ggplot knows
+you want a different color for each sex. So two densities must be drawn.
+You can therefore skip the \texttt{group\ =\ sex} mapping. Using
+\texttt{color} has the added benefit that it uses color to distinguish
+the groups. Change the density plots from the previous exercise to add
+color.
 
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76071763-0d88f000-5f97-11ea-86dc-b3a21fd96141.png}
-\caption{index}
-\end{figure}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## edit the next line to use color instead of group then add a density layer}
+\NormalTok{heights }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(height, }\DataTypeTok{color =}\NormalTok{ sex)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_density}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-We can also assign groups through the color or fill argument. For
-example, if you type color = sex ggplot knows you want a different color
-for each sex. So two densities must be drawn. You can therefore skip the
-group = sex mapping. Using color has the added benefit that it uses
-color to distinguish the groups. Change the density plots from the
-previous exercise to add color.
-
-\begin{verbatim}
-## edit the next line to use color instead of group then add a density layer
-heights %>% 
-  ggplot(aes(height, color = sex))+
-  geom_density()
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76072011-7ec8a300-5f97-11ea-9e11-32a66d77f6a9.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-87-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{21}
 \tightlist
 \item
-  Two smooth density plots 3
+  We can also assign groups using the \texttt{fill} argument.
 \end{enumerate}
 
-We can also assign groups using the fill argument. When using the
-geom\_density geometry, color creates a colored line for the smooth
-density plot while fill colors in the area under the curve.
+When using the \texttt{geom\_density} geometry, \texttt{color} creates a
+colored line for the smooth density plot while \texttt{fill} colors in
+the area under the curve.
 
 We can see what this looks like by running the following code:
 
-\begin{verbatim}
-heights %>% 
-  ggplot(aes(height, fill = sex)) + 
-  geom_density() 
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76072191-cea76a00-5f97-11ea-929e-2e6455293778.png}
-\caption{index}
-\end{figure}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{heights }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(height, }\DataTypeTok{fill =}\NormalTok{ sex)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_density}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
 However, here the second density is drawn over the other. We can change
-this by using something called alpha blending. Set the alpha parameter
-to 0.2 in the geom\_density function to make this change.
+this by using something called \emph{alpha blending}.
 
-\begin{verbatim}
-heights %>% 
-  ggplot(aes(height, fill = sex)) + 
-  geom_density(alpha=0.2) 
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{heights }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(height, }\DataTypeTok{fill =}\NormalTok{ sex)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_density}\NormalTok{(}\DataTypeTok{alpha=}\FloatTok{0.2}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
 
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76072317-09a99d80-5f98-11ea-977e-5e6881a81c21.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-89-1.pdf}
 
 \hypertarget{section-3-overview}{%
 \subsection{Section 3 Overview}\label{section-3-overview}}
@@ -5125,7 +5113,7 @@ Make a density plot of the magnitude.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-57-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-92-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5146,7 +5134,7 @@ best characterizes the temperature distribution?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-58-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-93-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5169,7 +5157,7 @@ star.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-59-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-94-1.pdf}
 
 \textbf{Question 5}\\
 For various reasons, scientists do not always follow straight
@@ -5193,7 +5181,7 @@ The brighest, highest temperature stars are in the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-60-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-95-1.pdf}
 
 \textbf{Question 6}\\
 The trends you see allow scientists to learn about the evolution and
@@ -5236,7 +5224,7 @@ Fill in the blanks in the statements below:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-61-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-96-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5272,7 +5260,7 @@ amount of light produced at various wavelengths.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-62-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-97-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5442,7 +5430,7 @@ first available year to the last available year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-65-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-100-1.pdf}
 
 \textbf{Question 3}\\
 Inspect the difference in temperature in temp\_carbon from the first
@@ -5520,7 +5508,7 @@ mean temperature?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-67-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-102-1.pdf}
 
 \textbf{Question 5}\\
 Continue working with p, the plot created in the previous question.
@@ -5545,7 +5533,7 @@ and the text color should be blue.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-68-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-103-1.pdf}
 
 \textbf{Question 6}
 
@@ -5625,7 +5613,7 @@ Which region has the largest 2018 temperature anomaly relative to the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-72-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-107-1.pdf}
 
 \textbf{Question 8} A major determinant of Earth's temperature is the
 greenhouse effect. Many gases trap heat and reflect it towards the
@@ -5673,7 +5661,7 @@ ppm.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-74-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-109-1.pdf}
 
 \textbf{Question 10} Make a time series line plot of carbon emissions
 (carbon\_emissions) from the temp\_carbon dataset. The y-axis is metric
@@ -5688,7 +5676,7 @@ tons of carbon emitted per year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-75-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-110-1.pdf}
 
 \textbf{Question 11}\\
 We saw how greenhouse gases have changed over the course of human
@@ -5713,7 +5701,7 @@ measurement source (source). Save this plot as co2\_time for later use.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-76-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-111-1.pdf}
 
 \textbf{Question 12}\\
 One way to differentiate natural co2 oscillations from today's manmade
