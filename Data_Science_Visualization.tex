@@ -3401,19 +3401,413 @@ this by using something called \emph{alpha blending}.
 
 Section 3 introduces you to summarizing with dplyr.
 
-After completing Section 3, you will: - understand the importance of
-summarizing data in exploratory data analysis. - be able to use the
-``summarize'' verb in dplyr to facilitate summarizing data. - be able to
-use the ``group\_by'' verb in dplyr to facilitate summarizing data. - be
-able to access values using the dot placeholder. - be able to use
-``arrange'' to examine data after sorting.
+After completing Section 3, you will:
+
+\begin{itemize}
+\tightlist
+\item
+  understand the importance of summarizing data in exploratory data
+  analysis.
+\item
+  be able to use the ``summarize'' verb in dplyr to facilitate
+  summarizing data.
+\item
+  be able to use the ``group\_by'' verb in dplyr to facilitate
+  summarizing data.
+\item
+  be able to access values using the dot placeholder.
+\item
+  be able to use ``arrange'' to examine data after sorting.
+\end{itemize}
+
+\hypertarget{dplyr}{%
+\subsection{dplyr}\label{dplyr}}
 
 The textbook for this section is available
-\href{https://rafalab.github.io/dsbook/tidyverse.html\#tidy-data}{here}
+\href{https://rafalab.github.io/dsbook/tidyverse.html\#summarizing-data}{here}
 
-\hypertarget{assessment-7-summarizing-with-dplyr}{%
-\subsection{Assessment 7 (Summarizing with
-dplyr)}\label{assessment-7-summarizing-with-dplyr}}
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{summarize} from the dplyr/tidyverse package computes summary
+  statistics from the data frame. It returns a data frame whose column
+  names are defined within the function call.
+\item
+  \texttt{summarize} can compute any summary function that operates on
+  vectors and returns a single value, but it cannot operate on functions
+  that return multiple values.
+\item
+  Like most dplyr functions, \texttt{summarize} is aware of variable
+  names within data frames and can use them directly.
+\end{itemize}
+
+\emph{Code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute average and standard deviation for males}
+\NormalTok{s <-}\StringTok{ }\NormalTok{heights }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(sex }\OperatorTok{==}\StringTok{ "Male"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{average =} \KeywordTok{mean}\NormalTok{(height), }\DataTypeTok{standard_deviation =} \KeywordTok{sd}\NormalTok{(height))}
+    
+\CommentTok{# access average and standard deviation from summary table}
+\NormalTok{s}\OperatorTok{$}\NormalTok{average}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 69.31475
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{s}\OperatorTok{$}\NormalTok{standard_deviation}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.611024
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute median, min and max}
+\NormalTok{heights }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(sex }\OperatorTok{==}\StringTok{ "Male"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{median =} \KeywordTok{median}\NormalTok{(height),}
+                       \DataTypeTok{minimum =} \KeywordTok{min}\NormalTok{(height),}
+                       \DataTypeTok{maximum =} \KeywordTok{max}\NormalTok{(height))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   median minimum  maximum
+## 1     69      50 82.67717
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# alternative way to get min, median, max in base R}
+\KeywordTok{quantile}\NormalTok{(heights}\OperatorTok{$}\NormalTok{height, }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       0%      50%     100% 
+## 50.00000 68.50000 82.67717
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# generates an error: summarize can only take functions that return a single value}
+\NormalTok{heights }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(sex }\OperatorTok{==}\StringTok{ "Male"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{range =} \KeywordTok{quantile}\NormalTok{(height, }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\DecValTok{1}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{the-dot-placeholder}{%
+\subsection{The Dot Placeholder}\label{the-dot-placeholder}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/tidyverse.html\#the-dot-operator}{here}
+
+Note that a common replacement for the dot operator is the pull
+function. Here is the
+\href{https://rafalab.github.io/dsbook/tidyverse.html\#pull}{textbook
+section on the pull function}.
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  The dot operator allows you to access values stored in data that is
+  being piped in using the \texttt{\%\textgreater{}\%} character. The
+  dot is a placeholder for the data being passed in through the pipe.
+\item
+  The dot operator allows \texttt{dplyr} functions to return single
+  vectors or numbers instead of only data frames.
+\item
+  \texttt{us\_murder\_rate\ \%\textgreater{}\%\ .\$rate} is equivalent
+  to \texttt{us\_murder\_rate\$rate}.
+\item
+  Note that an equivalent way to extract a single column using the pipe
+  is \texttt{us\_murder\_rate\ \%\textgreater{}\%\ pull(rate)}. The pull
+  function will be used in later course material.
+\end{itemize}
+
+\emph{Code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{murders <-}\StringTok{ }\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{murder_rate =}\NormalTok{ total}\OperatorTok{/}\NormalTok{population}\OperatorTok{*}\DecValTok{100000}\NormalTok{)}
+\KeywordTok{summarize}\NormalTok{(murders, }\KeywordTok{mean}\NormalTok{(murder_rate))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   mean(murder_rate)
+## 1          2.779125
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate US murder rate, generating a data frame}
+\NormalTok{us_murder_rate <-}\StringTok{ }\NormalTok{murders }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{rate =} \KeywordTok{sum}\NormalTok{(total) }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(population) }\OperatorTok{*}\StringTok{ }\DecValTok{100000}\NormalTok{)}
+\NormalTok{us_murder_rate}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       rate
+## 1 3.034555
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# extract the numeric US murder rate with the dot operator}
+\NormalTok{us_murder_rate }\OperatorTok{%>%}\StringTok{ }\NormalTok{.}\OperatorTok{$}\NormalTok{rate}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.034555
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate and extract the murder rate with one pipe}
+\NormalTok{us_murder_rate <-}\StringTok{ }\NormalTok{murders }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{rate =} \KeywordTok{sum}\NormalTok{(total) }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(population }\OperatorTok{*}\StringTok{ }\DecValTok{100000}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{.}\OperatorTok{$}\NormalTok{rate}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{group-by}{%
+\subsection{Group By}\label{group-by}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/tidyverse.html\#group-by}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  The \texttt{group\_by} function from \textbf{dplyr} converts a data
+  frame to a grouped data frame, creating groups using one or more
+  variables.
+\item
+  \texttt{summarize} and some other \textbf{dplyr} functions will behave
+  differently on grouped data frames.
+\item
+  Using \texttt{summarize} on a grouped data frame computes the summary
+  statistics for each of the separate groups.
+\end{itemize}
+
+\emph{Code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute separate average and standard deviation for male/female heights}
+\NormalTok{heights }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(sex) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{average =} \KeywordTok{mean}\NormalTok{(height), }\DataTypeTok{standard_deviation =} \KeywordTok{sd}\NormalTok{(height))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` ungrouping output (override with `.groups` argument)
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 2 x 3
+##   sex    average standard_deviation
+##   <fct>    <dbl>              <dbl>
+## 1 Female    64.9               3.76
+## 2 Male      69.3               3.61
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute median murder rate in 4 regions of country}
+\NormalTok{murders <-}\StringTok{ }\NormalTok{murders }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{murder_rate =}\NormalTok{ total}\OperatorTok{/}\NormalTok{population }\OperatorTok{*}\StringTok{ }\DecValTok{100000}\NormalTok{)}
+\NormalTok{murders }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(region) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{median_rate =} \KeywordTok{median}\NormalTok{(murder_rate))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` ungrouping output (override with `.groups` argument)
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 4 x 2
+##   region        median_rate
+##   <fct>               <dbl>
+## 1 Northeast            1.80
+## 2 South                3.40
+## 3 North Central        1.97
+## 4 West                 1.29
+\end{verbatim}
+
+\hypertarget{sorting-data-tables}{%
+\subsection{Sorting Data Tables}\label{sorting-data-tables}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/tidyverse.html\#sorting-data-frames}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  The \texttt{arrange} function from \textbf{dplyr} sorts a data frame
+  by a given column.
+\item
+  By default, \texttt{arrange} sorts in ascending order (lowest to
+  highest). To instead sort in descending order, use the function
+  \texttt{desc} inside of \texttt{arrange}.
+\item
+  You can \texttt{arrange} by multiple levels: within equivalent values
+  of the first level, observations are sorted by the second level, and
+  so on.
+\item
+  The \texttt{top\_n} function shows the top results ranked by a given
+  variable, but the results are not ordered. You can combine
+  \texttt{top\_n} with \texttt{arrange} to return the top results in
+  order.
+\end{itemize}
+
+\emph{Code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# set up murders object}
+\NormalTok{murders <-}\StringTok{ }\NormalTok{murders }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{murder_rate =}\NormalTok{ total}\OperatorTok{/}\NormalTok{population }\OperatorTok{*}\StringTok{ }\DecValTok{100000}\NormalTok{)}
+
+\CommentTok{# arrange by population column, smallest to largest}
+\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{arrange}\NormalTok{(population) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                  state abb        region population total murder_rate
+## 1              Wyoming  WY          West     563626     5   0.8871131
+## 2 District of Columbia  DC         South     601723    99  16.4527532
+## 3              Vermont  VT     Northeast     625741     2   0.3196211
+## 4         North Dakota  ND North Central     672591     4   0.5947151
+## 5               Alaska  AK          West     710231    19   2.6751860
+## 6         South Dakota  SD North Central     814180     8   0.9825837
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# arrange by murder rate, smallest to largest}
+\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{arrange}\NormalTok{(murder_rate) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           state abb        region population total murder_rate
+## 1       Vermont  VT     Northeast     625741     2   0.3196211
+## 2 New Hampshire  NH     Northeast    1316470     5   0.3798036
+## 3        Hawaii  HI          West    1360301     7   0.5145920
+## 4  North Dakota  ND North Central     672591     4   0.5947151
+## 5          Iowa  IA North Central    3046355    21   0.6893484
+## 6         Idaho  ID          West    1567582    12   0.7655102
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# arrange by murder rate in descending order}
+\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(murder_rate)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                  state abb        region population total murder_rate
+## 1 District of Columbia  DC         South     601723    99   16.452753
+## 2            Louisiana  LA         South    4533372   351    7.742581
+## 3             Missouri  MO North Central    5988927   321    5.359892
+## 4             Maryland  MD         South    5773552   293    5.074866
+## 5       South Carolina  SC         South    4625364   207    4.475323
+## 6             Delaware  DE         South     897934    38    4.231937
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# arrange by region alphabetically, then by murder rate within each region}
+\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{arrange}\NormalTok{(region, murder_rate) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           state abb    region population total murder_rate
+## 1       Vermont  VT Northeast     625741     2   0.3196211
+## 2 New Hampshire  NH Northeast    1316470     5   0.3798036
+## 3         Maine  ME Northeast    1328361    11   0.8280881
+## 4  Rhode Island  RI Northeast    1052567    16   1.5200933
+## 5 Massachusetts  MA Northeast    6547629   118   1.8021791
+## 6      New York  NY Northeast   19378102   517   2.6679599
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# show the top 10 states with highest murder rate, not ordered by rate}
+\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{top_n}\NormalTok{(}\DecValTok{10}\NormalTok{, murder_rate)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                   state abb        region population total murder_rate
+## 1               Arizona  AZ          West    6392017   232    3.629527
+## 2              Delaware  DE         South     897934    38    4.231937
+## 3  District of Columbia  DC         South     601723    99   16.452753
+## 4               Georgia  GA         South    9920000   376    3.790323
+## 5             Louisiana  LA         South    4533372   351    7.742581
+## 6              Maryland  MD         South    5773552   293    5.074866
+## 7              Michigan  MI North Central    9883640   413    4.178622
+## 8           Mississippi  MS         South    2967297   120    4.044085
+## 9              Missouri  MO North Central    5988927   321    5.359892
+## 10       South Carolina  SC         South    4625364   207    4.475323
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# show the top 10 states with highest murder rate, ordered by rate}
+\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(murder_rate)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{top_n}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Selecting by murder_rate
+\end{verbatim}
+
+\begin{verbatim}
+##                   state abb        region population total murder_rate
+## 1  District of Columbia  DC         South     601723    99   16.452753
+## 2             Louisiana  LA         South    4533372   351    7.742581
+## 3              Missouri  MO North Central    5988927   321    5.359892
+## 4              Maryland  MD         South    5773552   293    5.074866
+## 5        South Carolina  SC         South    4625364   207    4.475323
+## 6              Delaware  DE         South     897934    38    4.231937
+## 7              Michigan  MI North Central    9883640   413    4.178622
+## 8           Mississippi  MS         South    2967297   120    4.044085
+## 9               Georgia  GA         South    9920000   376    3.790323
+## 10              Arizona  AZ          West    6392017   232    3.629527
+\end{verbatim}
+
+\hypertarget{assessment---summarizing-with-dplyr}{%
+\subsection{Assessment - Summarizing with
+dplyr}\label{assessment---summarizing-with-dplyr}}
 
 \textbf{Practice Exercise. National Center for Health Statistics}
 
@@ -5113,7 +5507,7 @@ Make a density plot of the magnitude.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-92-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-97-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5134,7 +5528,7 @@ best characterizes the temperature distribution?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-93-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-98-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5157,7 +5551,7 @@ star.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-94-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-99-1.pdf}
 
 \textbf{Question 5}\\
 For various reasons, scientists do not always follow straight
@@ -5181,7 +5575,7 @@ The brighest, highest temperature stars are in the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-95-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-100-1.pdf}
 
 \textbf{Question 6}\\
 The trends you see allow scientists to learn about the evolution and
@@ -5224,7 +5618,7 @@ Fill in the blanks in the statements below:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-96-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-101-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5260,7 +5654,7 @@ amount of light produced at various wavelengths.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-97-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-102-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5430,7 +5824,7 @@ first available year to the last available year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-100-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-105-1.pdf}
 
 \textbf{Question 3}\\
 Inspect the difference in temperature in temp\_carbon from the first
@@ -5508,7 +5902,7 @@ mean temperature?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-102-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-107-1.pdf}
 
 \textbf{Question 5}\\
 Continue working with p, the plot created in the previous question.
@@ -5533,7 +5927,7 @@ and the text color should be blue.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-103-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-108-1.pdf}
 
 \textbf{Question 6}
 
@@ -5613,7 +6007,7 @@ Which region has the largest 2018 temperature anomaly relative to the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-107-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-112-1.pdf}
 
 \textbf{Question 8} A major determinant of Earth's temperature is the
 greenhouse effect. Many gases trap heat and reflect it towards the
@@ -5661,7 +6055,7 @@ ppm.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-109-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-114-1.pdf}
 
 \textbf{Question 10} Make a time series line plot of carbon emissions
 (carbon\_emissions) from the temp\_carbon dataset. The y-axis is metric
@@ -5676,7 +6070,7 @@ tons of carbon emitted per year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-110-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-115-1.pdf}
 
 \textbf{Question 11}\\
 We saw how greenhouse gases have changed over the course of human
@@ -5701,7 +6095,7 @@ measurement source (source). Save this plot as co2\_time for later use.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-111-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-116-1.pdf}
 
 \textbf{Question 12}\\
 One way to differentiate natural co2 oscillations from today's manmade
