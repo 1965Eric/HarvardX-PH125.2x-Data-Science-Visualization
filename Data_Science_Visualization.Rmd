@@ -665,6 +665,8 @@ x <- Galton$child
 ```
 
 ```{r}
+if(!require(HistData)) install.packages("HistData")
+
 library(HistData)
 data(Galton)
 x <- Galton$child
@@ -815,17 +817,27 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 *Code*
 
-```{r}
+```{r,eval=FALSE, echo=TRUE}
 ggplot(data = murders)
-murders %>% ggplot
+
+murders %>% ggplot()
+```
+
+```{r}
 p <- ggplot(data = murders)
 class(p)
+```
+
+```{r,eval=FALSE, echo=TRUE}
 print(p)    # this is equivalent to simply typing p
 ```
+
+The functions above render a plot, in this case a blank slate since no geometry has been defined. The only style choice we see is a grey background.
 
 ## Layers
 
 The textbook for this section is available:
+
 * [Geometries](https://rafalab.github.io/dsbook/ggplot2.html#geometries)
 * [Aesthetic mappings](https://rafalab.github.io/dsbook/ggplot2.html#aesthetic-mappings)
 * [Layers](https://rafalab.github.io/dsbook/ggplot2.html#layers)
@@ -862,7 +874,9 @@ p + geom_point(aes(population/10^6, total)) +
 ```{r}
 # no error from this call
 p_test <- p + geom_text(aes(population/10^6, total, label = abb))
+```
 
+```{r, eval=FALSE, echo=TRUE}
 # error - "abb" is not a globally defined variable and cannot be found outside of aes
 p_test <- p + geom_text(aes(population/10^6, total), label = abb)
 ```
@@ -901,6 +915,7 @@ p + geom_point(size = 3) +
 ## Scales, Labels, and Colors
 
 The textbook for this section is available:
+
 * [Scales](https://rafalab.github.io/dsbook/ggplot2.html#scales)
 * [Labels and titles](https://rafalab.github.io/dsbook/ggplot2.html#labels-and-titles)
 * [Categories as colors](https://rafalab.github.io/dsbook/ggplot2.html#categories-as-colors)
@@ -1003,6 +1018,8 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 *Code: Adding themes*
 
 ```{r}
+if(!require(ggthemes)) install.packages("ggthemes")
+
 # theme used for graphs in the textbook and course
 ds_theme_set()
 
@@ -1015,6 +1032,8 @@ p + theme_fivethirtyeight()    # style of the FiveThirtyEight website
 *Code: Putting it all together to assemble the plot*
 
 ```{r}
+if(!require(ggrepel)) install.packages("ggrepel")
+
 # load libraries
 library(ggrepel)
 
@@ -1041,6 +1060,7 @@ murders %>%
 ## Other Examples
 
 The textbook for this section is available:
+
 * [Histograms](https://rafalab.github.io/dsbook/distributions.html#histograms-1)
 * [Density plots](https://rafalab.github.io/dsbook/distributions.html#density-plots)
 * [QQ-plots](https://rafalab.github.io/dsbook/distributions.html#qq-plots)
@@ -1095,7 +1115,7 @@ p + geom_qq(dparams = params) +
     
 # QQ-plot of scaled data against the standard normal distribution
 heights %>%
-    ggplot(aes(sample = scale(height)) +
+    ggplot(aes(sample = scale(height))) +
     geom_qq() +
     geom_abline()
 ```
@@ -1103,6 +1123,8 @@ heights %>%
 *Code: Grids of plots with the grid.extra package*
 
 ```{r}
+if(!require(gridExtra)) install.packages("gridExtra")
+
 # define plots p1, p2, p3
 p <- heights %>% filter(sex == "Male") %>% ggplot(aes(x = height))
 p1 <- p + geom_histogram(binwidth = 1, fill = "blue", col = "black")
@@ -1118,6 +1140,8 @@ grid.arrange(p1, p2, p3, ncol = 3)
 
 Start by loading the dplyr and ggplot2 library as well as the murders and heights data.
 ```
+if(!require(dplyr)) install.packages("dplyr")
+
 library(dplyr)
 library(ggplot2)
 library(dslabs)
@@ -1475,6 +1499,8 @@ To practice our dplyr skills we will be working with data from the survey collec
 
 Starting in 1999, about 5,000 individuals of all ages have been interviewed every year and then they complete the health examination component of the survey. Part of this dataset is made available via the NHANES package which can be loaded this way:
 ```
+if(!require(NHANES)) install.packages("NHANES")
+
 library(NHANES)
 data(NHANES)
 ```
@@ -2293,6 +2319,8 @@ murders %>% mutate(rate = total/population*100000) %>%
 
 The sample code given creates a tile plot showing the rate of measles cases per population. We are going to modify the tile plot to look at smallpox cases instead.
 ```
+if(!require(RColorBrewer)) install.packages("RColorBrewer")
+
 library(dplyr)
 library(ggplot2)
 library(RColorBrewer)

@@ -214,6 +214,16 @@ The textbook for this section is available
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(}\OperatorTok{!}\KeywordTok{require}\NormalTok{(dslabs)) }\KeywordTok{install.packages}\NormalTok{(}\StringTok{"dslabs"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: dslabs
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(dslabs)}
 \KeywordTok{data}\NormalTok{(murders)}
 \KeywordTok{head}\NormalTok{(murders)}
@@ -942,10 +952,13 @@ formula for any mean \(\mu\) and standard deviation \(\sigma\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# define x as vector of male heights}
-\KeywordTok{library}\NormalTok{(tidyverse)}
+\ControlFlowTok{if}\NormalTok{(}\OperatorTok{!}\KeywordTok{require}\NormalTok{(tidyverse)) }\KeywordTok{install.packages}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Loading required package: tidyverse
+\end{verbatim}
 
 \begin{verbatim}
 ## -- Attaching packages --------------------------------------------------------------------------------------------------------------------------------------------- tidyverse 1.3.0 --
@@ -966,6 +979,8 @@ formula for any mean \(\mu\) and standard deviation \(\sigma\):
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{# define x as vector of male heights}
+\KeywordTok{library}\NormalTok{(tidyverse)}
 \NormalTok{index <-}\StringTok{ }\NormalTok{heights}\OperatorTok{$}\NormalTok{sex}\OperatorTok{==}\StringTok{"Male"}
 \NormalTok{x <-}\StringTok{ }\NormalTok{heights}\OperatorTok{$}\NormalTok{height[index]}
 
@@ -1694,9 +1709,13 @@ Outliers}\label{assessment---robust-summaries-with-outliers}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(HistData)}
+\ControlFlowTok{if}\NormalTok{(}\OperatorTok{!}\KeywordTok{require}\NormalTok{(HistData)) }\KeywordTok{install.packages}\NormalTok{(}\StringTok{"HistData"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Loading required package: HistData
+\end{verbatim}
 
 \begin{verbatim}
 ## Warning: package 'HistData' was built under R version 4.0.2
@@ -1704,6 +1723,7 @@ Outliers}\label{assessment---robust-summaries-with-outliers}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(HistData)}
 \KeywordTok{data}\NormalTok{(Galton)}
 \NormalTok{x <-}\StringTok{ }\NormalTok{Galton}\OperatorTok{$}\NormalTok{child}
 \KeywordTok{mean}\NormalTok{(x)}
@@ -1992,6 +2012,714 @@ The textbook for this section is available
   observations and columns are variables).
 \end{itemize}
 
+\hypertarget{graph-components}{%
+\subsection{Graph Components}\label{graph-components}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/ggplot2.html\#the-components-of-a-graph}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  Plots in ggplot2 consist of 3 main components:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Data: The dataset being summarized
+  \item
+    Geometry: The type of plot (scatterplot, boxplot, barplot,
+    histogram, qqplot, smooth density, etc.)
+  \item
+    Aesthetic mapping: Variables mapped to visual cues, such as x-axis
+    and y-axis values and color
+  \end{itemize}
+\item
+  There are additional components:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Scale
+  \item
+    Labels, Title, Legend
+  \item
+    Theme/Style
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{creating-a-new-plot}{%
+\subsection{Creating a New Plot}\label{creating-a-new-plot}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/ggplot2.html\#ggplot-objects}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  You can associate a dataset x with a ggplot object with any of the 3
+  commands:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{ggplot(data\ =\ x)}
+  \item
+    \texttt{ggplot(x)}
+  \item
+    \texttt{x\ \%\textgreater{}\%\ ggplot()}
+  \end{itemize}
+\item
+  You can assign a ggplot object to a variable. If the object is not
+  assigned to a variable, it will automatically be displayed.
+\item
+  You can display a ggplot object assigned to a variable by printing
+  that variable.
+\end{itemize}
+
+\emph{Code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ murders)}
+
+\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ murders)}
+\KeywordTok{class}\NormalTok{(p)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "gg"     "ggplot"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(p)    }\CommentTok{# this is equivalent to simply typing p}
+\end{Highlighting}
+\end{Shaded}
+
+The functions above render a plot, in this case a blank slate since no
+geometry has been defined. The only style choice we see is a grey
+background.
+
+\hypertarget{layers}{%
+\subsection{Layers}\label{layers}}
+
+The textbook for this section is available:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://rafalab.github.io/dsbook/ggplot2.html\#geometries}{Geometries}
+\item
+  \href{https://rafalab.github.io/dsbook/ggplot2.html\#aesthetic-mappings}{Aesthetic
+  mappings}
+\item
+  \href{https://rafalab.github.io/dsbook/ggplot2.html\#layers}{Layers}
+\end{itemize}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  In ggplot2, graphs are created by adding \emph{layers} to the ggplot
+  object:
+  \texttt{DATA\ \%\textgreater{}\%\ ggplot()\ +\ LAYER\_1\ +\ LAYER\_2\ +\ ...\ +\ LAYER\_N}
+\item
+  The \emph{geometry layer} defines the plot type and takes the format
+  \texttt{geom\_X} where X is the plot type.
+\item
+  \emph{Aesthetic mappings} describe how properties of the data connect
+  with features of the graph (axis position, color, size, etc.) Define
+  aesthetic mappings with the \texttt{aes} function.
+\item
+  aes uses variable names from the object component (for example,
+  \texttt{total} rather than \texttt{murders\$total}).
+\item
+  \texttt{geom\_point} creates a scatterplot and requires x and y
+  aesthetic mappings.
+\item
+  \texttt{geom\_text} and \texttt{geom\_label} add text to a scatterplot
+  and require x, y, and label aesthetic mappings.
+\item
+  To determine which aesthetic mappings are required for a geometry,
+  read the help file for that geometry.
+\item
+  You can add layers with different aesthetic mappings to the same
+  graph.
+\end{itemize}
+
+\emph{Code: Adding layers to a plot}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ population}\OperatorTok{/}\DecValTok{10}\OperatorTok{^}\DecValTok{6}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ total))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-40-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# add points layer to predefined ggplot object}
+\NormalTok{p <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ murders)}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population}\OperatorTok{/}\DecValTok{10}\OperatorTok{^}\DecValTok{6}\NormalTok{, total))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-40-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# add text layer to scatterplot}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population}\OperatorTok{/}\DecValTok{10}\OperatorTok{^}\DecValTok{6}\NormalTok{, total)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population}\OperatorTok{/}\DecValTok{10}\OperatorTok{^}\DecValTok{6}\NormalTok{, total, }\DataTypeTok{label =}\NormalTok{ abb))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-40-3.pdf}
+
+\emph{Code: Example of \textbf{aes} behavior}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# no error from this call}
+\NormalTok{p_test <-}\StringTok{ }\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population}\OperatorTok{/}\DecValTok{10}\OperatorTok{^}\DecValTok{6}\NormalTok{, total, }\DataTypeTok{label =}\NormalTok{ abb))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# error - "abb" is not a globally defined variable and cannot be found outside of aes}
+\NormalTok{p_test <-}\StringTok{ }\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population}\OperatorTok{/}\DecValTok{10}\OperatorTok{^}\DecValTok{6}\NormalTok{, total), }\DataTypeTok{label =}\NormalTok{ abb)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{tinkering}{%
+\subsection{Tinkering}\label{tinkering}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/ggplot2.html\#tinkering-with-arguments}{here}
+and
+\href{https://rafalab.github.io/dsbook/ggplot2.html\#global-versus-local-aesthetic-mappings}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  You can modify arguments to geometry functions other than aes and the
+  data. Additional arguments can be found in the documentation for each
+  geometry.
+\item
+  These arguments are not aesthetic mappings: they affect all data
+  points the same way.
+\item
+  \emph{Global aesthetic mappings} apply to all geometries and can be
+  defined when you initially call \texttt{ggplot}. All the geometries
+  added as layers will default to this mapping. Local aesthetic mappings
+  add additional information or override the default mappings.
+\end{itemize}
+
+\emph{Code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# change the size of the points}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population}\OperatorTok{/}\DecValTok{10}\OperatorTok{^}\DecValTok{6}\NormalTok{, total), }\DataTypeTok{size =} \DecValTok{3}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population}\OperatorTok{/}\DecValTok{10}\OperatorTok{^}\DecValTok{6}\NormalTok{, total, }\DataTypeTok{label =}\NormalTok{ abb))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-43-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# move text labels slightly to the right}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population}\OperatorTok{/}\DecValTok{10}\OperatorTok{^}\DecValTok{6}\NormalTok{, total), }\DataTypeTok{size =} \DecValTok{3}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population}\OperatorTok{/}\DecValTok{10}\OperatorTok{^}\DecValTok{6}\NormalTok{, total, }\DataTypeTok{label =}\NormalTok{ abb), }\DataTypeTok{nudge_x =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-43-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# simplify code by adding global aesthetic}
+\NormalTok{p <-}\StringTok{ }\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population}\OperatorTok{/}\DecValTok{10}\OperatorTok{^}\DecValTok{6}\NormalTok{, total, }\DataTypeTok{label =}\NormalTok{ abb))}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{size =} \DecValTok{3}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text}\NormalTok{(}\DataTypeTok{nudge_x =} \FloatTok{1.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-43-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# local aesthetics override global aesthetics}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{size =} \DecValTok{3}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \DecValTok{10}\NormalTok{, }\DataTypeTok{y =} \DecValTok{800}\NormalTok{, }\DataTypeTok{label =} \StringTok{"Hello there!"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-43-4.pdf}
+
+\hypertarget{scales-labels-and-colors}{%
+\subsection{Scales, Labels, and Colors}\label{scales-labels-and-colors}}
+
+The textbook for this section is available:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://rafalab.github.io/dsbook/ggplot2.html\#scales}{Scales}
+\item
+  \href{https://rafalab.github.io/dsbook/ggplot2.html\#labels-and-titles}{Labels
+  and titles}
+\item
+  \href{https://rafalab.github.io/dsbook/ggplot2.html\#categories-as-colors}{Categories
+  as colors}
+\item
+  \href{https://rafalab.github.io/dsbook/ggplot2.html\#annotation-shapes-and-adjustments}{Annotation,
+  shapes and adjustments}
+\end{itemize}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  Convert the x-axis to log scale with
+  \texttt{scale\_x\_continuous(trans\ =\ "log10")} or
+  \texttt{scale\_x\_log10}. Similar functions exist for the y-axis.
+\item
+  Add axis titles with \texttt{xlab} and \texttt{ylab} functions. Add a
+  plot title with the \texttt{ggtitle} function.
+\item
+  Add a color mapping that colors points by a variable by defining the
+  \texttt{col} argument within \texttt{aes}. To color all points the
+  same way, define \texttt{col} outside of \texttt{aes}.
+\item
+  Add a line with the \texttt{geom\_abline} geometry.
+  \texttt{geom\_abline} takes arguments \texttt{slope} (default = 1) and
+  \texttt{intercept} (default = 0). Change the color with \texttt{col}
+  or \texttt{color} and line type with \texttt{lty}.
+\item
+  Placing the line layer after the point layer will overlay the line on
+  top of the points. To overlay points on the line, place the line layer
+  before the point layer.
+\item
+  There are many additional ways to tweak your graph that can be found
+  in the ggplot2 documentation, cheat sheet, or on the internet. For
+  example, you can change the legend title with
+  \texttt{scale\_color\_discrete}.
+\end{itemize}
+
+\emph{Code: Log-scale the x- and y-axis}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# define p}
+\NormalTok{p <-}\StringTok{ }\NormalTok{murders }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population}\OperatorTok{/}\DecValTok{10}\OperatorTok{^}\DecValTok{6}\NormalTok{, total, }\DataTypeTok{label =}\NormalTok{ abb))}
+
+\CommentTok{# log base 10 scale the x-axis and y-axis}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{size =} \DecValTok{3}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text}\NormalTok{(}\DataTypeTok{nudge_x =} \FloatTok{0.05}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log10"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log10"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-44-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# efficient log scaling of the axes}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{size =} \DecValTok{3}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text}\NormalTok{(}\DataTypeTok{nudge_x =} \FloatTok{0.075}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_x_log10}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_y_log10}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-44-2.pdf}
+
+\emph{Code: Add labels and title}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{size =} \DecValTok{3}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text}\NormalTok{(}\DataTypeTok{nudge_x =} \FloatTok{0.075}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_x_log10}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_y_log10}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Population in millions (log scale)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total number of murders (log scale)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"US Gun Murders in 2010"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-45-1.pdf}
+
+\emph{Code: Change color of the points}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# redefine p to be everything except the points layer}
+\NormalTok{p <-}\StringTok{ }\NormalTok{murders }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population}\OperatorTok{/}\DecValTok{10}\OperatorTok{^}\DecValTok{6}\NormalTok{, total, }\DataTypeTok{label =}\NormalTok{ abb)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text}\NormalTok{(}\DataTypeTok{nudge_x =} \FloatTok{0.075}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_x_log10}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_y_log10}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Population in millions (log scale)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total number of murders (log scale)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"US Gun Murders in 2010"}\NormalTok{)}
+
+\CommentTok{# make all points blue}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{color =} \StringTok{"blue"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-46-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# color points by region}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{col =}\NormalTok{ region), }\DataTypeTok{size =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-46-2.pdf}
+
+\emph{Code: Add a line with average murder rate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# define average murder rate}
+\NormalTok{r <-}\StringTok{ }\NormalTok{murders }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{rate =} \KeywordTok{sum}\NormalTok{(total) }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(population) }\OperatorTok{*}\StringTok{ }\DecValTok{10}\OperatorTok{^}\DecValTok{6}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{pull}\NormalTok{(rate)}
+    
+\CommentTok{# basic line with average murder rate for the country}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{col =}\NormalTok{ region), }\DataTypeTok{size =} \DecValTok{3}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_abline}\NormalTok{(}\DataTypeTok{intercept =} \KeywordTok{log10}\NormalTok{(r))    }\CommentTok{# slope is default of 1}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-47-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# change line to dashed and dark grey, line under points}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_abline}\NormalTok{(}\DataTypeTok{intercept =} \KeywordTok{log10}\NormalTok{(r), }\DataTypeTok{lty =} \DecValTok{2}\NormalTok{, }\DataTypeTok{color =} \StringTok{"darkgrey"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{col =}\NormalTok{ region), }\DataTypeTok{size =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-47-2.pdf}
+
+\emph{Code: Change legend title}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_color_discrete}\NormalTok{(}\DataTypeTok{name =} \StringTok{"Region"}\NormalTok{)    }\CommentTok{# capitalize legend title}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{add-on-packages}{%
+\subsection{Add-on Packages}\label{add-on-packages}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/ggplot2.html\#add-on-packages}{here}
+and
+\href{https://rafalab.github.io/dsbook/ggplot2.html\#putting-it-all-together}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  The style of a ggplot graph can be changed using the \texttt{theme}
+  function.
+\item
+  The \textbf{ggthemes} package adds additional themes.
+\item
+  The \textbf{ggrepel} package includes a geometry that repels text
+  labels, ensuring they do not overlap with each other:
+  \texttt{geom\_text\_repel}.
+\end{itemize}
+
+\emph{Code: Adding themes}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(}\OperatorTok{!}\KeywordTok{require}\NormalTok{(ggthemes)) }\KeywordTok{install.packages}\NormalTok{(}\StringTok{"ggthemes"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: ggthemes
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'ggthemes' was built under R version 4.0.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# theme used for graphs in the textbook and course}
+\KeywordTok{ds_theme_set}\NormalTok{()}
+
+\CommentTok{# themes from ggthemes}
+\KeywordTok{library}\NormalTok{(ggthemes)}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{theme_economist}\NormalTok{()    }\CommentTok{# style of the Economist magazine}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-49-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{theme_fivethirtyeight}\NormalTok{()    }\CommentTok{# style of the FiveThirtyEight website}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-49-2.pdf}
+
+\emph{Code: Putting it all together to assemble the plot}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(}\OperatorTok{!}\KeywordTok{require}\NormalTok{(ggrepel)) }\KeywordTok{install.packages}\NormalTok{(}\StringTok{"ggrepel"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: ggrepel
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'ggrepel' was built under R version 4.0.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# load libraries}
+\KeywordTok{library}\NormalTok{(ggrepel)}
+
+\CommentTok{# define the intercept}
+\NormalTok{r <-}\StringTok{ }\NormalTok{murders }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{rate =} \KeywordTok{sum}\NormalTok{(total) }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(population) }\OperatorTok{*}\StringTok{ }\DecValTok{10}\OperatorTok{^}\DecValTok{6}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{.}\OperatorTok{$}\NormalTok{rate}
+    
+\CommentTok{# make the plot, combining all elements}
+\NormalTok{murders }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(population}\OperatorTok{/}\DecValTok{10}\OperatorTok{^}\DecValTok{6}\NormalTok{, total, }\DataTypeTok{label =}\NormalTok{ abb)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_abline}\NormalTok{(}\DataTypeTok{intercept =} \KeywordTok{log10}\NormalTok{(r), }\DataTypeTok{lty =} \DecValTok{2}\NormalTok{, }\DataTypeTok{color =} \StringTok{"darkgrey"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{col =}\NormalTok{ region), }\DataTypeTok{size =} \DecValTok{3}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text_repel}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_x_log10}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_y_log10}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Population in millions (log scale)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total number of murders (log scale)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"US Gun Murders in 2010"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_color_discrete}\NormalTok{(}\DataTypeTok{name =} \StringTok{"Region"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{theme_economist}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-50-1.pdf}
+
+\hypertarget{other-examples}{%
+\subsection{Other Examples}\label{other-examples}}
+
+The textbook for this section is available:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://rafalab.github.io/dsbook/distributions.html\#histograms-1}{Histograms}
+\item
+  \href{https://rafalab.github.io/dsbook/distributions.html\#density-plots}{Density
+  plots}
+\item
+  \href{https://rafalab.github.io/dsbook/distributions.html\#qq-plots}{QQ-plots}
+\item
+  \href{https://rafalab.github.io/dsbook/ggplot2.html\#grids-of-plots}{Grids
+  of plots}
+\end{itemize}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{geom\_histogram} creates a histogram. Use the
+  \texttt{binwidth} argument to change the width of bins, the
+  \texttt{fill} argument to change the bar fill color, and the
+  \texttt{col} argument to change bar outline color.
+\item
+  \texttt{geom\_density} creates smooth density plots. Change the fill
+  color of the plot with the \texttt{fill} argument.
+\item
+  \texttt{geom\_qq} creates a quantile-quantile plot. This geometry
+  requires the \texttt{sample} argument. By default, the data are
+  compared to a standard normal distribution with a mean of 0 and
+  standard deviation of 1. This can be changed with the \texttt{dparams}
+  argument, or the sample data can be scaled.
+\item
+  Plots can be arranged adjacent to each other using the
+  \texttt{grid.arrange} function from the \texttt{gridExtra} package.
+  First, create the plots and save them to objects (p1, p2, \ldots).
+  Then pass the plot objects to \texttt{grid.arrange}.
+\end{itemize}
+
+\emph{Code: Histograms in ggplot2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# define p}
+\NormalTok{p <-}\StringTok{ }\NormalTok{heights }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(sex }\OperatorTok{==}\StringTok{ "Male"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ height))}
+    
+\CommentTok{# basic histograms}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-51-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-51-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# histogram with blue fill, black outline, labels and title}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"blue"}\NormalTok{, }\DataTypeTok{col =} \StringTok{"black"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Male heights in inches"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Histogram"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-51-3.pdf}
+
+\emph{Code: Smooth density plots in ggplot2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_density}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-52-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_density}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"blue"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-52-2.pdf}
+
+\emph{Code: Quantile-quantile plots in ggplot2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# basic QQ-plot}
+\NormalTok{p <-}\StringTok{ }\NormalTok{heights }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(sex }\OperatorTok{==}\StringTok{ "Male"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{sample =}\NormalTok{ height))}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_qq}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-53-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# QQ-plot against a normal distribution with same mean/sd as data}
+\NormalTok{params <-}\StringTok{ }\NormalTok{heights }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(sex }\OperatorTok{==}\StringTok{ "Male"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{mean =} \KeywordTok{mean}\NormalTok{(height), }\DataTypeTok{sd =} \KeywordTok{sd}\NormalTok{(height))}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_qq}\NormalTok{(}\DataTypeTok{dparams =}\NormalTok{ params) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_abline}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-53-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# QQ-plot of scaled data against the standard normal distribution}
+\NormalTok{heights }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{sample =} \KeywordTok{scale}\NormalTok{(height))) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_qq}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_abline}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-53-3.pdf}
+
+\emph{Code: Grids of plots with the grid.extra package}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(}\OperatorTok{!}\KeywordTok{require}\NormalTok{(gridExtra)) }\KeywordTok{install.packages}\NormalTok{(}\StringTok{"gridExtra"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: gridExtra
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'gridExtra'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     combine
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# define plots p1, p2, p3}
+\NormalTok{p <-}\StringTok{ }\NormalTok{heights }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(sex }\OperatorTok{==}\StringTok{ "Male"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ height))}
+\NormalTok{p1 <-}\StringTok{ }\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"blue"}\NormalTok{, }\DataTypeTok{col =} \StringTok{"black"}\NormalTok{)}
+\NormalTok{p2 <-}\StringTok{ }\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{2}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"blue"}\NormalTok{, }\DataTypeTok{col =} \StringTok{"black"}\NormalTok{)}
+\NormalTok{p3 <-}\StringTok{ }\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{3}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"blue"}\NormalTok{, }\DataTypeTok{col =} \StringTok{"black"}\NormalTok{)}
+
+\CommentTok{# arrange plots next to each other in 1 row, 3 columns}
+\KeywordTok{library}\NormalTok{(gridExtra)}
+\KeywordTok{grid.arrange}\NormalTok{(p1, p2, p3, }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-54-1.pdf}
+
 \hypertarget{assessment-6-ggplot2}{%
 \subsection{Assessment 6 (ggplot2)}\label{assessment-6-ggplot2}}
 
@@ -1999,6 +2727,8 @@ Start by loading the dplyr and ggplot2 library as well as the murders
 and heights data.
 
 \begin{verbatim}
+if(!require(dplyr)) install.packages("dplyr")
+
 library(dplyr)
 library(ggplot2)
 library(dslabs)
@@ -2710,6 +3440,8 @@ component of the survey. Part of this dataset is made available via the
 NHANES package which can be loaded this way:
 
 \begin{verbatim}
+if(!require(NHANES)) install.packages("NHANES")
+
 library(NHANES)
 data(NHANES)
 \end{verbatim}
@@ -4006,6 +4738,8 @@ cases per population. We are going to modify the tile plot to look at
 smallpox cases instead.
 
 \begin{verbatim}
+if(!require(RColorBrewer)) install.packages("RColorBrewer")
+
 library(dplyr)
 library(ggplot2)
 library(RColorBrewer)
@@ -4391,7 +5125,7 @@ Make a density plot of the magnitude.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-39-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-57-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4412,7 +5146,7 @@ best characterizes the temperature distribution?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-40-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-58-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4435,7 +5169,7 @@ star.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-41-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-59-1.pdf}
 
 \textbf{Question 5}\\
 For various reasons, scientists do not always follow straight
@@ -4459,7 +5193,7 @@ The brighest, highest temperature stars are in the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-42-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-60-1.pdf}
 
 \textbf{Question 6}\\
 The trends you see allow scientists to learn about the evolution and
@@ -4492,15 +5226,6 @@ Fill in the blanks in the statements below:
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(ggrepel)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Warning: package 'ggrepel' was built under R version 4.0.2
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{stars }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\KeywordTok{log10}\NormalTok{(temp), }\DataTypeTok{y=}\NormalTok{magnitude, }\DataTypeTok{label=}\NormalTok{star)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{scale_y_reverse}\NormalTok{() }\OperatorTok{+}
@@ -4511,7 +5236,7 @@ Fill in the blanks in the statements below:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-43-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-61-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4547,7 +5272,7 @@ amount of light produced at various wavelengths.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-44-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-62-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4717,7 +5442,7 @@ first available year to the last available year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-47-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-65-1.pdf}
 
 \textbf{Question 3}\\
 Inspect the difference in temperature in temp\_carbon from the first
@@ -4795,7 +5520,7 @@ mean temperature?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-49-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-67-1.pdf}
 
 \textbf{Question 5}\\
 Continue working with p, the plot created in the previous question.
@@ -4820,7 +5545,7 @@ and the text color should be blue.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-50-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-68-1.pdf}
 
 \textbf{Question 6}
 
@@ -4900,7 +5625,7 @@ Which region has the largest 2018 temperature anomaly relative to the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-54-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-72-1.pdf}
 
 \textbf{Question 8} A major determinant of Earth's temperature is the
 greenhouse effect. Many gases trap heat and reflect it towards the
@@ -4948,7 +5673,7 @@ ppm.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-56-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-74-1.pdf}
 
 \textbf{Question 10} Make a time series line plot of carbon emissions
 (carbon\_emissions) from the temp\_carbon dataset. The y-axis is metric
@@ -4963,7 +5688,7 @@ tons of carbon emitted per year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-57-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-75-1.pdf}
 
 \textbf{Question 11}\\
 We saw how greenhouse gases have changed over the course of human
@@ -4988,7 +5713,7 @@ measurement source (source). Save this plot as co2\_time for later use.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-58-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-76-1.pdf}
 
 \textbf{Question 12}\\
 One way to differentiate natural co2 oscillations from today's manmade
