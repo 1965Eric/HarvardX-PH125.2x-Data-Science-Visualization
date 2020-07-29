@@ -2,9 +2,9 @@
 title: "Data Science Visualization"
 output:
   word_document: default
-  html_document: default
   pdf_document:
     latex_engine: xelatex
+  html_document: default
 urlcolor: blue
 ---
 
@@ -2923,6 +2923,7 @@ titanic %>%
 ```
 
 Which age group is the only group more likely to survive than die?
+
 - [X] A. 0-8
 - [ ] B. 10-18
 - [ ] C. 18-30
@@ -2931,6 +2932,7 @@ Which age group is the only group more likely to survive than die?
 - [ ] F. 70-80
 
 Which age group had the most deaths?
+
 - [ ] A. 0-8
 - [ ] B. 10-18
 - [X] C. 18-30
@@ -2939,6 +2941,7 @@ Which age group had the most deaths?
 - [ ] F. 70-80
 
 Which age group had the highest proportion of deaths?
+
 - [ ] A. 0-8
 - [ ] B. 10-18
 - [ ] C. 18-30
