@@ -1,9 +1,9 @@
 ---
 title: "Data Science Visualization"
 output:
-  html_document: default
   pdf_document:
     latex_engine: xelatex
+  html_document: default
 urlcolor: blue
 ---
 
@@ -1692,7 +1692,7 @@ Again we will do it for the ```BPSysAve``` variable and the group of 20-29 year 
 ## complete the line
 NHANES %>%
       filter(AgeDecade == " 20-29"  & Gender == "female") %>% summarize(minbp = min(BPSysAve, na.rm = TRUE), 
-            maxbp = max(BPSysAve, na.rm=TRUE)
+            maxbp = max(BPSysAve, na.rm=TRUE))
 ```
 
 5. Now let's practice using the ```group_by``` function.

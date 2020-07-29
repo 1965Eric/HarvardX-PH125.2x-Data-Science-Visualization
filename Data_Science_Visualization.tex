@@ -3809,8 +3809,6 @@ The textbook for this section is available
 \subsection{Assessment - Summarizing with
 dplyr}\label{assessment---summarizing-with-dplyr}}
 
-\textbf{Practice Exercise. National Center for Health Statistics}
-
 To practice our dplyr skills we will be working with data from the
 survey collected by the United States National Center for Health
 Statistics (NCHS). This center has conducted a series of health and
@@ -3821,83 +3819,129 @@ interviewed every year and then they complete the health examination
 component of the survey. Part of this dataset is made available via the
 NHANES package which can be loaded this way:
 
-\begin{verbatim}
-if(!require(NHANES)) install.packages("NHANES")
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(}\OperatorTok{!}\KeywordTok{require}\NormalTok{(NHANES)) }\KeywordTok{install.packages}\NormalTok{(}\StringTok{"NHANES"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-library(NHANES)
-data(NHANES)
+\begin{verbatim}
+## Loading required package: NHANES
 \end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'NHANES' was built under R version 4.0.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(NHANES)}
+\KeywordTok{data}\NormalTok{(NHANES)}
+\end{Highlighting}
+\end{Shaded}
 
 The NHANES data has many missing values. Remember that the main
-summarization function in R will return NA if any of the entries of the
-input vector is an NA. Here is an example:
+summarization function in R will return \texttt{NA} if any of the
+entries of the input vector is an \texttt{NA}. Here is an example:
 
-\begin{verbatim}
-library(dslabs)
-data(na_example)
-mean(na_example)
-\end{verbatim}
-
-\begin{verbatim}
-## [1] NA
-\end{verbatim}
-
-\begin{verbatim}
-sd(na_example)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(na_example)}
+\KeywordTok{mean}\NormalTok{(na_example)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] NA
 \end{verbatim}
 
-To ignore the NAs, we can use the na.rm argument:
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sd}\NormalTok{(na_example)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-mean(na_example, na.rm = TRUE)
+## [1] NA
 \end{verbatim}
+
+To ignore the \texttt{NA}s, we can use the \texttt{na.rm} argument:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(na_example, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 2.301754
 \end{verbatim}
 
-\begin{verbatim}
-sd(na_example, na.rm = TRUE)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sd}\NormalTok{(na_example, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## [1] 1.22338
 \end{verbatim}
 
+Try running this code, then let us know you are ready to proceed with
+the analysis.
+
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Blood pressure 1
+  Let's explore the \texttt{NHANES} data. We will be exploring blood
+  pressure in this dataset.
 \end{enumerate}
 
-Let's explore the NHANES data. We will be exploring blood pressure in
-this dataset.
-
 First let's select a group to set the standard. We will use 20-29 year
-old females. Note that the category is coded with 20-29, with a space in
-front of the 20! The AgeDecade is a categorical variable with these
-ages.
+old females. Note that the category is coded with \texttt{20-29}, with a
+space in front of the \texttt{20}! The \texttt{AgeDecade} is a
+categorical variable with these ages.
 
-To know if someone is female, you can look at the Gender variable.
+To know if someone is female, you can look at the \texttt{Gender}
+variable.
 
-Filter the NHANES dataset so that only 20-29 year old females are
-included and assign this new data frame to the object tab. Use the pipe
-to apply the function filter, with the appropriate logicals, to NHANES.
-Remember that this age group is coded with 20-29, which includes a
-space. You can use head to explore the NHANES table to construct the
-correct call to filter.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## fill in what is needed}
+\NormalTok{tab <-}\StringTok{ }\NormalTok{NHANES }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(AgeDecade }\OperatorTok{==}\StringTok{ " 20-29"} \OperatorTok{&}\StringTok{ }\NormalTok{Gender }\OperatorTok{==}\StringTok{ "female"}\NormalTok{)}
+\KeywordTok{head}\NormalTok{(tab)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-library(dplyr)
-library(NHANES)
-data(NHANES)
-## fill in what is needed
-tab <- NHANES %>% filter(AgeDecade==" 20-29" & Gender=="female")
+## # A tibble: 6 x 76
+##      ID SurveyYr Gender   Age AgeDecade AgeMonths Race1 Race3 Education
+##   <int> <fct>    <fct>  <int> <fct>         <int> <fct> <fct> <fct>    
+## 1 51710 2009_10  female    26 " 20-29"        319 White <NA>  College ~
+## 2 51731 2009_10  female    28 " 20-29"        346 Black <NA>  High Sch~
+## 3 51741 2009_10  female    21 " 20-29"        253 Black <NA>  Some Col~
+## 4 51741 2009_10  female    21 " 20-29"        253 Black <NA>  Some Col~
+## 5 51760 2009_10  female    27 " 20-29"        334 Hisp~ <NA>  9 - 11th~
+## 6 51764 2009_10  female    29 " 20-29"        357 White <NA>  College ~
+## # ... with 67 more variables: MaritalStatus <fct>, HHIncome <fct>,
+## #   HHIncomeMid <int>, Poverty <dbl>, HomeRooms <int>, HomeOwn <fct>,
+## #   Work <fct>, Weight <dbl>, Length <dbl>, HeadCirc <dbl>, Height <dbl>,
+## #   BMI <dbl>, BMICatUnder20yrs <fct>, BMI_WHO <fct>, Pulse <int>,
+## #   BPSysAve <int>, BPDiaAve <int>, BPSys1 <int>, BPDia1 <int>, BPSys2 <int>,
+## #   BPDia2 <int>, BPSys3 <int>, BPDia3 <int>, Testosterone <dbl>,
+## #   DirectChol <dbl>, TotChol <dbl>, UrineVol1 <int>, UrineFlow1 <dbl>,
+## #   UrineVol2 <int>, UrineFlow2 <dbl>, Diabetes <fct>, DiabetesAge <int>,
+## #   HealthGen <fct>, DaysPhysHlthBad <int>, DaysMentHlthBad <int>,
+## #   LittleInterest <fct>, Depressed <fct>, nPregnancies <int>, nBabies <int>,
+## #   Age1stBaby <int>, SleepHrsNight <int>, SleepTrouble <fct>,
+## #   PhysActive <fct>, PhysActiveDays <int>, TVHrsDay <fct>, CompHrsDay <fct>,
+## #   TVHrsDayChild <int>, CompHrsDayChild <int>, Alcohol12PlusYr <fct>,
+## #   AlcoholDay <int>, AlcoholYear <int>, SmokeNow <fct>, Smoke100 <fct>,
+## #   Smoke100n <fct>, SmokeAge <int>, Marijuana <fct>, AgeFirstMarij <int>,
+## #   RegularMarij <fct>, AgeRegMarij <int>, HardDrugs <fct>, SexEver <fct>,
+## #   SexAge <int>, SexNumPartnLife <int>, SexNumPartYear <int>, SameSex <fct>,
+## #   SexOrientation <fct>, PregnantNow <fct>
 \end{verbatim}
 
 \begin{enumerate}
@@ -3905,32 +3949,28 @@ tab <- NHANES %>% filter(AgeDecade==" 20-29" & Gender=="female")
 \setcounter{enumi}{1}
 \tightlist
 \item
-  Blood pressure 2
+  Now we will compute the average and standard deviation for the
+  subgroup we defined in the previous exercise (20-29 year old females),
+  which we will use reference for what is typical.
 \end{enumerate}
 
-Now we will compute the average and standard deviation for the subgroup
-we defined in the previous exercise (20-29 year old females), which we
-will use reference for what is typical.
-
 You will determine the average and standard deviation of systolic blood
-pressure, which are stored in the BPSysAve variable in the NHANES
-dataset.
+pressure, which are stored in the \texttt{BPSysAve} variable in the
+NHANES dataset.
 
-Complete the line of code to save the average and standard deviation of
-systolic blood pressure as average and standard\_deviation to a variable
-called ref. Use the summarize function after filtering for 20-29 year
-old females and connect the results using the pipe \%\textgreater\%.
-When doing this remember there are NAs in the data!
-
-\begin{verbatim}
-library(dplyr)
-library(NHANES)
-data(NHANES)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## complete this line of code.}
+\NormalTok{ref <-}\StringTok{ }\NormalTok{NHANES }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(AgeDecade }\OperatorTok{==}\StringTok{ " 20-29"} \OperatorTok{&}\StringTok{ }\NormalTok{Gender }\OperatorTok{==}\StringTok{ "female"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{average =} \KeywordTok{mean}\NormalTok{(BPSysAve, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{), }\DataTypeTok{standard_deviation =} \KeywordTok{sd}\NormalTok{(BPSysAve, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{))}
+\NormalTok{ref}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-## complete this line of code.
-ref <- NHANES %>% filter(AgeDecade == " 20-29" & Gender == "female") %>% summarize(average=mean(BPSysAve,na.rm=TRUE), standard_deviation=sd(BPSysAve,na.rm=TRUE))
+## # A tibble: 1 x 2
+##   average standard_deviation
+##     <dbl>              <dbl>
+## 1    108.               10.1
 \end{verbatim}
 
 \begin{enumerate}
@@ -3938,28 +3978,26 @@ ref <- NHANES %>% filter(AgeDecade == " 20-29" & Gender == "female") %>% summari
 \setcounter{enumi}{2}
 \tightlist
 \item
-  Summarizing averages
+  Now we will repeat the exercise and generate only the average blood
+  pressure for 20-29 year old females.
 \end{enumerate}
 
-Now we will repeat the exercise and generate only the average blood
-pressure for 20-29 year old females. For this exercise, you should
-review how to use the place holder . in dplyr.
+For this exercise, you should review how to use the place holder
+\texttt{.} in dplyr or the \texttt{pull} function.
 
-Modify the line of sample code to assign the average to a numeric
-variable called ref\_avg.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## modify the code we wrote for previous exercise.}
+\NormalTok{ref_avg <-}\StringTok{ }\NormalTok{NHANES }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(AgeDecade }\OperatorTok{==}\StringTok{ " 20-29"} \OperatorTok{&}\StringTok{ }\NormalTok{Gender }\OperatorTok{==}\StringTok{ "female"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{average =} \KeywordTok{mean}\NormalTok{(BPSysAve, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{), }
+            \DataTypeTok{standard_deviation =} \KeywordTok{sd}\NormalTok{(BPSysAve, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }\NormalTok{.}\OperatorTok{$}\NormalTok{average}
+\NormalTok{ref_avg}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-library(dplyr)
-library(NHANES)
-data(NHANES)
-\end{verbatim}
-
-\begin{verbatim}
-## modify the code we wrote for previous exercise.
-ref_avg <- NHANES %>%
-  filter(AgeDecade == " 20-29" & Gender == "female") %>%
-  summarize(average = mean(BPSysAve, na.rm = TRUE), 
-            standard_deviation = sd(BPSysAve, na.rm=TRUE)) %>% .$average
+## [1] 108.4224
 \end{verbatim}
 
 \begin{enumerate}
@@ -3967,38 +4005,27 @@ ref_avg <- NHANES %>%
 \setcounter{enumi}{3}
 \tightlist
 \item
-  Min and max
+  Let's continue practicing by calculating two other data summaries: the
+  minimum and the maximum.
 \end{enumerate}
 
-Let's continue practicing by calculating two other data summaries: the
-minimum and the maximum.
+Again we will do it for the \texttt{BPSysAve} variable and the group of
+20-29 year old females.
 
-Again we will do it for the BPSysAve variable and the group of 20-29
-year old females.
-
-Report the min and max values for the same group as in the previous
-exercises. Use filter and summarize connected by the pipe
-\%\textgreater\% again. The functions min and max can be used to get the
-values you want. Within summarize, save the min and max of systolic
-blood pressure as min and max.
-
-\begin{verbatim}
-library(dplyr)
-library(NHANES)
-data(NHANES)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## complete the line}
+\NormalTok{NHANES }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{filter}\NormalTok{(AgeDecade }\OperatorTok{==}\StringTok{ " 20-29"}  \OperatorTok{&}\StringTok{ }\NormalTok{Gender }\OperatorTok{==}\StringTok{ "female"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{minbp =} \KeywordTok{min}\NormalTok{(BPSysAve, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{), }
+            \DataTypeTok{maxbp =} \KeywordTok{max}\NormalTok{(BPSysAve, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-## complete the line
-NHANES %>%
-      filter(AgeDecade == " 20-29"  & Gender == "female") %>% summarize(min=min(BPSysAve,na.rm=TRUE),max=max(BPSysAve,na.rm=TRUE))
-\end{verbatim}
-
-\begin{verbatim}
-min     max
-<int>   <int>
-84  179
-1 row
+## # A tibble: 1 x 2
+##   minbp maxbp
+##   <int> <int>
+## 1    84   179
 \end{verbatim}
 
 \begin{enumerate}
@@ -4006,10 +4033,8 @@ min     max
 \setcounter{enumi}{4}
 \tightlist
 \item
-  group\_by
+  Now let's practice using the \texttt{group\_by} function.
 \end{enumerate}
-
-Now let's practice using the group\_by function.
 
 What we are about to do is a very common operation in data science: you
 will split a data table into groups and then compute summary statistics
@@ -4017,40 +4042,34 @@ for each group.
 
 We will compute the average and standard deviation of systolic blood
 pressure for females for each age group separately. Remember that the
-age groups are contained in AgeDecade.
+age groups are contained in \texttt{AgeDecade}.
 
-Use the functions filter, group\_by, summarize, and the pipe
-\%\textgreater\% to compute the average and standard deviation of
-systolic blood pressure for females for each age group separately.
-
-Within summarize, save the average and standard deviation of systolic
-blood pressure (BPSysAve) as average and standard\_deviation.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{##complete the line with group_by and summarize}
+\NormalTok{NHANES }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{filter}\NormalTok{(Gender }\OperatorTok{==}\StringTok{ "female"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(AgeDecade) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{average =} \KeywordTok{mean}\NormalTok{(BPSysAve, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{), }
+            \DataTypeTok{standard_deviation =} \KeywordTok{sd}\NormalTok{(BPSysAve, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-library(dplyr)
-library(NHANES)
-data(NHANES)
+## `summarise()` ungrouping output (override with `.groups` argument)
 \end{verbatim}
 
 \begin{verbatim}
-##complete the line with group_by and summarize
-NHANES %>%
-      filter(Gender == "female") %>% group_by(AgeDecade) %>% summarize(average=mean(BPSysAve,na.rm=TRUE),standard_deviation = sd(BPSysAve,na.rm=TRUE))
-\end{verbatim}
-
-\begin{verbatim}
-AgeDecade       average      standard_deviation
-<fctr>          <dbl>        <dbl>
-0-9         99.95041     9.071798
-10-19           104.27466    9.461431
-20-29           108.42243    10.146681
-30-39           111.25512    12.314790
-40-49           115.49385    14.530054
-50-59           121.84245    16.179333
-60-69           127.17787    17.125713
-70+         133.51652    19.841781
-NA          141.54839    22.908521
-9 rows
+## # A tibble: 9 x 3
+##   AgeDecade average standard_deviation
+##   <fct>       <dbl>              <dbl>
+## 1 " 0-9"       100.               9.07
+## 2 " 10-19"     104.               9.46
+## 3 " 20-29"     108.              10.1 
+## 4 " 30-39"     111.              12.3 
+## 5 " 40-49"     115.              14.5 
+## 6 " 50-59"     122.              16.2 
+## 7 " 60-69"     127.              17.1 
+## 8 " 70+"       134.              19.8 
+## 9  <NA>        142.              22.9
 \end{verbatim}
 
 \begin{enumerate}
@@ -4058,43 +4077,40 @@ NA          141.54839    22.908521
 \setcounter{enumi}{5}
 \tightlist
 \item
-  group\_by example 2
+  Now let's practice using \texttt{group\_by} some more.
 \end{enumerate}
 
-Now let's practice using group\_by some more. We are going to repeat the
-previous exercise of calculating the average and standard deviation of
-systolic blood pressure, but for males instead of females.
+We are going to repeat the previous exercise of calculating the average
+and standard deviation of systolic blood pressure, but for males instead
+of females.
 
 This time we will not provide much sample code. You are on your own!
 
-Calculate the average and standard deviation of systolic blood pressure
-for males for each age group separately using the same methods as in the
-previous exercise.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NHANES }\OperatorTok{%>%}
+\StringTok{      }\KeywordTok{filter}\NormalTok{(Gender }\OperatorTok{==}\StringTok{ "male"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(AgeDecade) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{average =} \KeywordTok{mean}\NormalTok{(BPSysAve, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{), }
+            \DataTypeTok{standard_deviation =} \KeywordTok{sd}\NormalTok{(BPSysAve, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-library(dplyr)
-library(NHANES)
-data(NHANES)
+## `summarise()` ungrouping output (override with `.groups` argument)
 \end{verbatim}
 
 \begin{verbatim}
-NHANES %>%
-      filter(Gender == "male") %>% group_by(AgeDecade) %>% summarize(average=mean(BPSysAve,na.rm=TRUE),standard_deviation = sd(BPSysAve,na.rm=TRUE))
-\end{verbatim}
-
-\begin{verbatim}
-AgeDecade       average      standard_deviation
-<fctr>          <dbl>        <dbl>
-0-9         97.41912     8.317367
-10-19           109.59789    11.227769
-20-29           117.85084    11.274795
-30-39           119.40063    12.306656
-40-49           120.78390    13.968338
-50-59           125.75000    17.760536
-60-69           126.88578    17.478117
-70+         130.20172    18.657475
-NA          136.40000    23.534731
-9 rows
+## # A tibble: 9 x 3
+##   AgeDecade average standard_deviation
+##   <fct>       <dbl>              <dbl>
+## 1 " 0-9"       97.4               8.32
+## 2 " 10-19"    110.               11.2 
+## 3 " 20-29"    118.               11.3 
+## 4 " 30-39"    119.               12.3 
+## 5 " 40-49"    121.               14.0 
+## 6 " 50-59"    126.               17.8 
+## 7 " 60-69"    127.               17.5 
+## 8 " 70+"      130.               18.7 
+## 9  <NA>       136.               23.5
 \end{verbatim}
 
 \begin{enumerate}
@@ -4102,47 +4118,50 @@ NA          136.40000    23.534731
 \setcounter{enumi}{6}
 \tightlist
 \item
-  group\_by example 3
+  We can actually combine both of these summaries into a single line of
+  code.
 \end{enumerate}
 
-We can actually combine both of these summaries into a single line of
-code. This is because group\_by permits us to group by more than one
+This is because \texttt{group\_by} permits us to group by more than one
 variable.
 
-We can use group\_by(AgeDecade, Gender) to group by both age decades and
-gender.
+We can use \texttt{group\_by(AgeDecade,\ Gender)} to group by both age
+decades and gender.
 
-Create a single summary table for the average and standard deviation of
-systolic blood pressure using group\_by(AgeDecade, Gender).
-
-Note that we no longer have to filter!
-
-Your code within summarize should remain the same as in the previous
-exercises.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NHANES }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(AgeDecade, Gender) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{average =} \KeywordTok{mean}\NormalTok{(BPSysAve, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{), }
+            \DataTypeTok{standard_deviation =} \KeywordTok{sd}\NormalTok{(BPSysAve, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-library(NHANES)
-data(NHANES)
+## `summarise()` regrouping output by 'AgeDecade' (override with `.groups` argument)
 \end{verbatim}
 
 \begin{verbatim}
-NHANES %>% group_by(AgeDecade, Gender) %>% summarize(average=mean(BPSysAve,na.rm=TRUE),standard_deviation = sd(BPSysAve,na.rm=TRUE))
-\end{verbatim}
-
-\begin{verbatim}
-AgeDecade    Gender     average      standard_deviation
-<fctr>       <fctr>     <dbl>        <dbl>
-0-9      female 99.95041     9.071798
-0-9      male   97.41912     8.317367
-10-19        female 104.27466    9.461431
-10-19        male   109.59789    11.227769
-20-29        female 108.42243    10.146681
-20-29        male   117.85084    11.274795
-30-39        female 111.25512    12.314790
-30-39        male   119.40063    12.306656
-40-49        female 115.49385    14.530054
-40-49        male   120.78390    13.968338
-1-10 of 18 rows
+## # A tibble: 18 x 4
+## # Groups:   AgeDecade [9]
+##    AgeDecade Gender average standard_deviation
+##    <fct>     <fct>    <dbl>              <dbl>
+##  1 " 0-9"    female   100.                9.07
+##  2 " 0-9"    male      97.4               8.32
+##  3 " 10-19"  female   104.                9.46
+##  4 " 10-19"  male     110.               11.2 
+##  5 " 20-29"  female   108.               10.1 
+##  6 " 20-29"  male     118.               11.3 
+##  7 " 30-39"  female   111.               12.3 
+##  8 " 30-39"  male     119.               12.3 
+##  9 " 40-49"  female   115.               14.5 
+## 10 " 40-49"  male     121.               14.0 
+## 11 " 50-59"  female   122.               16.2 
+## 12 " 50-59"  male     126.               17.8 
+## 13 " 60-69"  female   127.               17.1 
+## 14 " 60-69"  male     127.               17.5 
+## 15 " 70+"    female   134.               19.8 
+## 16 " 70+"    male     130.               18.7 
+## 17  <NA>     female   142.               22.9 
+## 18  <NA>     male     136.               23.5
 \end{verbatim}
 
 \begin{enumerate}
@@ -4150,93 +4169,53 @@ AgeDecade    Gender     average      standard_deviation
 \setcounter{enumi}{7}
 \tightlist
 \item
-  Arrange
+  Now we are going to explore differences in systolic blood pressure
+  across races, as reported in the \texttt{Race1} variable.
 \end{enumerate}
 
-Now we are going to explore differences in systolic blood pressure
-across races, as reported in the Race1 variable.
-
-We will learn to use the arrange function to order the outcome acording
-to one variable.
+We will learn to use the \texttt{arrange} function to order the outcome
+acording to one variable.
 
 Note that this function can be used to order any table by a given
 outcome. Here is an example that arranges by systolic blood pressure.
 
-\begin{verbatim}
-NHANES %>% arrange(BPSysAve)
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NHANES }\OperatorTok{%>%}\StringTok{ }\KeywordTok{arrange}\NormalTok{(BPSysAve)}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-ID        SurveyYr    Gender     Age        AgeDecade     AgeMonths    Race1      Race3       Education
-<int>     <fctr>      <fctr>     <int>      <fctr>        <int>        <fctr>     <fctr>      <fctr>
-53661     2009_10     male   12     10-19     145          Mexican    NA          NA    
-58821     2009_10     female     51     50-59     613          White      NA          9 - 11th Grade    
-67253     2011_12     female     10     10-19     NA           White      White       NA    
-51893     2009_10     female     70     70+           843          White      NA          9 - 11th Grade    
-54375     2009_10     male   76     70+           912          White      NA          High School   
-54375     2009_10     male   76     70+           912          White      NA          High School   
-58941     2009_10     male   8      0-9           104          Mexican    NA          NA    
-67616     2011_12     male   63     60-69     NA           White      White       9 - 11th Grade    
-67616     2011_12     male   63     60-69     NA           White      White       9 - 11th Grade    
-67616     2011_12     male   63     60-69     NA           White      White       9 - 11th Grade    
-...
-1-10 of 10,000 rows | 1-9 of 76 columns
-\end{verbatim}
+If we want it in descending order we can use the \texttt{desc} function
+like this:
 
-If we want it in descending order we can use the desc function like
-this:
-
-\begin{verbatim}
-NHANES %>% arrange(desc(BPSysAve))
-\end{verbatim}
-
-\begin{verbatim}
-ID        SurveyYr    Gender     Age        AgeDecade     AgeMonths    Race1      Race3       Education
-<int>     <fctr>      <fctr>     <int>      <fctr>        <int>        <fctr>     <fctr>      <fctr>
-55311     2009_10     female     55     50-59     671          Hispanic   NA          Some College  
-67957     2011_12     male   50     50-59     NA           Black      Black       9 - 11th Grade    
-67957     2011_12     male   50     50-59     NA           Black      Black       9 - 11th Grade    
-62727     2011_12     female     80     NA            NA           White      White       Some College  
-62727     2011_12     female     80     NA            NA           White      White       Some College  
-53371     2009_10     male   68     60-69     817          White      NA          9 - 11th Grade    
-58276     2009_10     female     80     NA            NA           White      NA          College Grad  
-65475     2011_12     female     44     40-49     NA           Black      Black       High School   
-60848     2009_10     male   80     NA            NA           Other      NA          College Grad  
-68301     2011_12     male   59     50-59     NA           White      White       High School   
-...
-1-10 of 10,000 rows | 1-9 of 76 columns
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NHANES }\OperatorTok{%>%}\StringTok{ }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(BPSysAve))}
+\end{Highlighting}
+\end{Shaded}
 
 In this example, we will compare systolic blood pressure across values
-of the Race1 variable for males between the ages of 40-49.
+of the \texttt{Race1} variable for males between the ages of 40-49.
 
-Compute the average and standard deviation for each value of Race1 for
-males in the age decade 40-49. Order the resulting table from lowest to
-highest average systolic blood pressure. Use the functions filter,
-group\_by, summarize, arrange, and the pipe \%\textgreater\% to do this
-in one line of code. Within summarize, save the average and standard
-deviation of systolic blood pressure as average and standard\_deviation.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NHANES }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(AgeDecade }\OperatorTok{==}\StringTok{ " 40-49"} \OperatorTok{&}\StringTok{ }\NormalTok{Gender }\OperatorTok{==}\StringTok{ "male"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(Race1) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{average =} \KeywordTok{mean}\NormalTok{(BPSysAve, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{), }\DataTypeTok{standard_deviation =} \KeywordTok{sd}\NormalTok{(BPSysAve, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{arrange}\NormalTok{(average)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-library(dplyr)
-library(NHANES)
-data(NHANES)
+## `summarise()` ungrouping output (override with `.groups` argument)
 \end{verbatim}
 
 \begin{verbatim}
-NHANES %>%
-      filter(AgeDecade ==" 40-49" & Gender == "male")  %>% group_by(Race1) %>% summarize(average=mean(BPSysAve,na.rm=TRUE),standard_deviation = sd(BPSysAve,na.rm=TRUE))%>% arrange(average)
-\end{verbatim}
-
-\begin{verbatim}
-Race1       average        standard_deviation
-<fctr>      <dbl>          <dbl>
-White       119.9188       13.42355
-Other       120.4000       16.20241
-Hispanic    121.6098       11.06770
-Mexican     121.8500       13.93756
-Black       125.8387       17.06707
-5 rows
+## # A tibble: 5 x 3
+##   Race1    average standard_deviation
+##   <fct>      <dbl>              <dbl>
+## 1 White       120.               13.4
+## 2 Other       120.               16.2
+## 3 Hispanic    122.               11.1
+## 4 Mexican     122.               13.9
+## 5 Black       126.               17.1
 \end{verbatim}
 
 \hypertarget{section-4-overview}{%
@@ -5507,7 +5486,7 @@ Make a density plot of the magnitude.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-97-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-110-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5528,7 +5507,7 @@ best characterizes the temperature distribution?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-98-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-111-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5551,7 +5530,7 @@ star.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-99-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-112-1.pdf}
 
 \textbf{Question 5}\\
 For various reasons, scientists do not always follow straight
@@ -5575,7 +5554,7 @@ The brighest, highest temperature stars are in the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-100-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-113-1.pdf}
 
 \textbf{Question 6}\\
 The trends you see allow scientists to learn about the evolution and
@@ -5618,7 +5597,7 @@ Fill in the blanks in the statements below:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-101-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-114-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5654,7 +5633,7 @@ amount of light produced at various wavelengths.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-102-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-115-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5824,7 +5803,7 @@ first available year to the last available year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-105-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-118-1.pdf}
 
 \textbf{Question 3}\\
 Inspect the difference in temperature in temp\_carbon from the first
@@ -5902,7 +5881,7 @@ mean temperature?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-107-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-120-1.pdf}
 
 \textbf{Question 5}\\
 Continue working with p, the plot created in the previous question.
@@ -5927,7 +5906,7 @@ and the text color should be blue.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-108-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-121-1.pdf}
 
 \textbf{Question 6}
 
@@ -6007,7 +5986,7 @@ Which region has the largest 2018 temperature anomaly relative to the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-112-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-125-1.pdf}
 
 \textbf{Question 8} A major determinant of Earth's temperature is the
 greenhouse effect. Many gases trap heat and reflect it towards the
@@ -6055,7 +6034,7 @@ ppm.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-114-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-127-1.pdf}
 
 \textbf{Question 10} Make a time series line plot of carbon emissions
 (carbon\_emissions) from the temp\_carbon dataset. The y-axis is metric
@@ -6070,7 +6049,7 @@ tons of carbon emitted per year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-115-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-128-1.pdf}
 
 \textbf{Question 11}\\
 We saw how greenhouse gases have changed over the course of human
@@ -6095,7 +6074,7 @@ measurement source (source). Save this plot as co2\_time for later use.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-116-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-129-1.pdf}
 
 \textbf{Question 12}\\
 One way to differentiate natural co2 oscillations from today's manmade
