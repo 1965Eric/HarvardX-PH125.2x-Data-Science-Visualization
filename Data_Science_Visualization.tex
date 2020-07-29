@@ -4615,7 +4615,7 @@ The textbook for this section is available
 The textbook for this section is available
 \href{https://rafalab.github.io/dsbook/gapminder.html\#data-transformations}{here}
 and
-{[}here(\url{https://rafalab.github.io/dsbook/gapminder.html\#visualizing-multimodal-distributions})
+\href{https://rafalab.github.io/dsbook/gapminder.html\#visualizing-multimodal-distributions}{here}
 
 \textbf{Key points}
 
@@ -5161,155 +5161,79 @@ The textbook for this section is available
 
 \includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-125-1.pdf}
 
-\hypertarget{assessment-8-exploring-the-gapminder-dataset}{%
-\subsection{Assessment 8 (Exploring the Gapminder
-Dataset)}\label{assessment-8-exploring-the-gapminder-dataset}}
+\hypertarget{assessment---exploring-the-gapminder-dataset}{%
+\subsection{Assessment - Exploring the Gapminder
+Dataset}\label{assessment---exploring-the-gapminder-dataset}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Life expectancy vs fertility - part 1
+  The \href{https://www.gapminder.org}{Gapminder Foundation} is a
+  non-profit organization based in Sweden that promotes global
+  development through the use of statistics that can help reduce
+  misconceptions about global development.
 \end{enumerate}
 
-The \href{https://www.gapminder.org/}{Gapminder Foundation} is a
-non-profit organization based in Sweden that promotes global development
-through the use of statistics that can help reduce misconceptions about
-global development.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## fill out the missing parts in filter and aes}
+\NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ }\DecValTok{2012} \OperatorTok{&}\StringTok{ }\NormalTok{continent }\OperatorTok{==}\StringTok{ "Africa"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(fertility, life_expectancy)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{itemize}
-\tightlist
-\item
-  Using ggplot and the points layer, create a scatter plot of life
-  expectancy versus fertility for the African continent in 2012.
-\item
-  Remember that you can use the R console to explore the gapminder
-  dataset to figure out the names of the columns in the dataframe.
-\item
-  In this exercise we provide parts of code to get you going. You need
-  to fill out what is missing. But note that going forward, in the next
-  exercises, you will be required to write most of the code.
-\end{itemize}
-
-\begin{verbatim}
-library(dplyr)
-library(ggplot2)
-library(dslabs)
-\end{verbatim}
-
-\begin{verbatim}
-data(gapminder)
-head(gapminder)
-\end{verbatim}
-
-\begin{verbatim}
-   country             year       infant_mortality      life_expectancy     fertility     population
-   <fctr>              <int>      <dbl>                 <dbl>               <dbl>         <dbl>
-1  Albania         1960   115.40            62.87               6.19      1636054   
-2  Algeria         1960   148.20            47.50               7.65      11124892  
-3  Angola          1960   208.00            35.98               7.32      5270844   
-4  Antigua and Barbuda 1960   NA                    62.97               4.43      54681 
-5  Argentina           1960   59.87                 65.39               3.11      20619075  
-6  Armenia         1960   NA                    66.86               4.55      1867396   
-6 rows | 1-7 of 10 columns
-\end{verbatim}
-
-\begin{verbatim}
-## fill out the missing parts in filter and aes
-gapminder %>% filter(continent=="Africa" & year=="2012") %>%
-  ggplot(aes(fertility,life_expectancy)) +
-  geom_point()
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76077478-1252a180-5fa1-11ea-8a6f-ab77face26e4.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-126-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{1}
 \tightlist
 \item
-  Life expectancy vs fertility - part 2 - coloring your plot
+  Note that there is quite a bit of variability in life expectancy and
+  fertility with some African countries having very high life
+  expectancies.
 \end{enumerate}
 
-Note that there is quite a bit of variability in life expectancy and
-fertility with some African countries having very high life
-expectancies. There also appear to be three clusters in the plot.
+There also appear to be three clusters in the plot.
 
-Remake the plot from the previous exercises but this time use color to
-dinstinguish the different regions of Africa to see if this explains the
-clusters. Remember that you can explore the gapminder data to see how
-the regions of Africa are labeled in the dataframe!
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ }\DecValTok{2012} \OperatorTok{&}\StringTok{ }\NormalTok{continent }\OperatorTok{==}\StringTok{ "Africa"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(fertility, life_expectancy, }\DataTypeTok{color =}\NormalTok{ region)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-library(dplyr)
-library(ggplot2)
-library(dslabs)
-\end{verbatim}
-
-\begin{verbatim}
-data(gapminder)
-
-gapminder %>% filter(continent=="Africa" & year=="2012") %>%
-  ggplot(aes(fertility,life_expectancy, color=region)) +
-  geom_point()
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76077664-6e1d2a80-5fa1-11ea-8fb1-256ad41ec093.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-127-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{2}
 \tightlist
 \item
-  Life expectancy vs fertility - part 3 - selecting country and region
+  While many of the countries in the high life expectancy/low fertility
+  cluster are from Northern Africa, three countries are not.
 \end{enumerate}
 
-While many of the countries in the high life expectancy/low fertility
-cluster are from Northern Africa, three countries are not.
-
-\begin{itemize}
-\tightlist
-\item
-  Create a table showing the country and region for the African
-  countries (use select) that in 2012 had fertility rates of 3 or less
-  and life expectancies of at least 70.
-\item
-  Assign your result to a data frame called df.
-\end{itemize}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ }\DecValTok{2012} \OperatorTok{&}\StringTok{ }\NormalTok{continent }\OperatorTok{==}\StringTok{ "Africa"}\NormalTok{, fertility }\OperatorTok{<=}\StringTok{ }\DecValTok{3} \OperatorTok{&}\StringTok{ }\NormalTok{life_expectancy }\OperatorTok{>=}\StringTok{ }\DecValTok{70}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(country, region)}
+\NormalTok{df}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-library(dplyr)
-library(dslabs)
-\end{verbatim}
-
-\begin{verbatim}
-data(gapminder)
-head(gapminder)
-\end{verbatim}
-
-\begin{verbatim}
-   country             year       infant_mortality      life_expectancy     fertility     population
-   <fctr>              <int>      <dbl>                 <dbl>               <dbl>         <dbl>
-1  Albania         1960   115.40            62.87               6.19      1636054   
-2  Algeria         1960   148.20            47.50               7.65      11124892  
-3  Angola          1960   208.00            35.98               7.32      5270844   
-4  Antigua and Barbuda 1960   NA                    62.97               4.43      54681 
-5  Argentina           1960   59.87                 65.39               3.11      20619075  
-6  Armenia         1960   NA                    66.86               4.55      1867396   
-6 rows | 1-7 of 10 columns
-\end{verbatim}
-
-\begin{verbatim}
-df <- gapminder %>% filter(continent=="Africa" & year=="2012" & fertility <=3 & life_expectancy>=70) %>%
-  select(country,region)
+##      country          region
+## 1    Algeria Northern Africa
+## 2 Cape Verde  Western Africa
+## 3      Egypt Northern Africa
+## 4      Libya Northern Africa
+## 5  Mauritius  Eastern Africa
+## 6    Morocco Northern Africa
+## 7 Seychelles  Eastern Africa
+## 8    Tunisia Northern Africa
 \end{verbatim}
 
 \begin{enumerate}
@@ -5317,49 +5241,229 @@ df <- gapminder %>% filter(continent=="Africa" & year=="2012" & fertility <=3 & 
 \setcounter{enumi}{3}
 \tightlist
 \item
-  Life expectancy and the Vietnam War - part 1
+  The Vietnam War lasted from 1955 to 1975.
 \end{enumerate}
 
-The Vietnam War lasted from 1955 to 1975. Do the data support war having
-a negative effect on life expectancy? We will create a time series plot
-that covers the period from 1960 to 2010 of life expectancy for Vietnam
-and the United States, using color to distinguish the two countries. In
-this start we start the analysis by generating a table.
+Do the data support war having a negative effect on life expectancy? We
+will create a time series plot that covers the period from 1960 to 2010
+of life expectancy for Vietnam and the United States, using color to
+distinguish the two countries. In this start we start the analysis by
+generating a table.
 
-\begin{itemize}
-\tightlist
-\item
-  Use filter to create a table with data for the years from 1960 to 2010
-  in Vietnam and the United States.
-\item
-  Save the table in an object called tab.
-\end{itemize}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tab <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{>=}\StringTok{ }\DecValTok{1960} \OperatorTok{&}\StringTok{ }\NormalTok{year }\OperatorTok{<=}\StringTok{ }\DecValTok{2010} \OperatorTok{&}\StringTok{ }\NormalTok{country}\OperatorTok{%in%}\KeywordTok{c}\NormalTok{(}\StringTok{"Vietnam"}\NormalTok{, }\StringTok{"United States"}\NormalTok{))}
+\NormalTok{tab}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-library(dplyr)
-library(dslabs)
-\end{verbatim}
-
-\begin{verbatim}
-data(gapminder)
-
-head(gapminder)
-\end{verbatim}
-
-\begin{verbatim}
-   country             year       infant_mortality      life_expectancy     fertility     population
-   <fctr>              <int>      <dbl>                 <dbl>               <dbl>         <dbl>
-1  Albania         1960   115.40            62.87               6.19      1636054   
-2  Algeria         1960   148.20            47.50               7.65      11124892  
-3  Angola          1960   208.00            35.98               7.32      5270844   
-4  Antigua and Barbuda 1960   NA                    62.97               4.43      54681 
-5  Argentina           1960   59.87                 65.39               3.11      20619075  
-6  Armenia         1960   NA                    66.86               4.55      1867396   
-6 rows | 1-7 of 10 columns
-\end{verbatim}
-
-\begin{verbatim}
-tab <- gapminder %>% filter(year>=1960 & year<=2010 & country%in%c("Vietnam","United States"))
+##           country year infant_mortality life_expectancy fertility population
+## 1   United States 1960             25.9           69.91      3.67  186176524
+## 2         Vietnam 1960             75.6           58.52      6.35   32670623
+## 3   United States 1961             25.4           70.32      3.63  189077076
+## 4         Vietnam 1961             72.6           59.17      6.39   33666768
+## 5   United States 1962             24.9           70.21      3.48  191860710
+## 6         Vietnam 1962             69.9           59.82      6.43   34684164
+## 7   United States 1963             24.4           70.04      3.35  194513911
+## 8         Vietnam 1963             67.3           60.42      6.45   35722092
+## 9   United States 1964             23.8           70.33      3.22  197028908
+## 10        Vietnam 1964             61.7           60.95      6.46   36780984
+## 11  United States 1965             23.3           70.41      2.93  199403532
+## 12        Vietnam 1965             60.7           61.32      6.48   37860014
+## 13  United States 1966             22.7           70.43      2.71  201629471
+## 14        Vietnam 1966             59.9           61.36      6.49   38959335
+## 15  United States 1967             22.0           70.76      2.56  203713082
+## 16        Vietnam 1967             59.0           61.06      6.49   40074695
+## 17  United States 1968             21.3           70.42      2.47  205687611
+## 18        Vietnam 1968             58.2           60.45      6.49   41195833
+## 19  United States 1969             20.6           70.66      2.46  207599308
+## 20        Vietnam 1969             57.3           59.63      6.49   42309662
+## 21  United States 1970             19.9           70.92      2.46  209485807
+## 22        Vietnam 1970             56.4           58.78      6.47   43407291
+## 23  United States 1971             19.1           71.24      2.27  211357912
+## 24        Vietnam 1971             55.5           58.17      6.42   44485910
+## 25  United States 1972             18.3           71.34      2.01  213219515
+## 26        Vietnam 1972             54.7           58.00      6.35   45549487
+## 27  United States 1973             17.5           71.54      1.87  215092900
+## 28        Vietnam 1973             53.8           58.35      6.25   46604726
+## 29  United States 1974             16.7           72.08      1.83  217001865
+## 30        Vietnam 1974             52.8           59.23      6.13   47661770
+## 31  United States 1975             16.0           72.68      1.77  218963561
+## 32        Vietnam 1975             51.8           60.54      5.97   48729397
+## 33  United States 1976             15.2           72.99      1.74  220993166
+## 34        Vietnam 1976             50.9           62.07      5.80   49808071
+## 35  United States 1977             14.5           73.38      1.78  223090871
+## 36        Vietnam 1977             49.8           63.58      5.61   50899504
+## 37  United States 1978             13.8           73.58      1.75  225239456
+## 38        Vietnam 1978             48.8           64.86      5.42   52015279
+## 39  United States 1979             13.2           74.03      1.80  227411604
+## 40        Vietnam 1979             47.8           65.84      5.23   53169674
+## 41  United States 1980             12.6           73.93      1.82  229588208
+## 42        Vietnam 1980             46.8           66.49      5.05   54372518
+## 43  United States 1981             12.1           74.36      1.81  231765783
+## 44        Vietnam 1981             45.8           66.86      4.87   55627743
+## 45  United States 1982             11.7           74.65      1.81  233953874
+## 46        Vietnam 1982             44.8           67.10      4.69   56931822
+## 47  United States 1983             11.2           74.71      1.78  236161961
+## 48        Vietnam 1983             43.9           67.30      4.52   58277391
+## 49  United States 1984             10.9           74.81      1.79  238404223
+## 50        Vietnam 1984             43.0           67.51      4.36   59653092
+## 51  United States 1985             10.6           74.79      1.84  240691557
+## 52        Vietnam 1985             42.0           67.77      4.21   61049370
+## 53  United States 1986             10.4           74.87      1.84  243032017
+## 54        Vietnam 1986             41.0           68.07      4.06   62459557
+## 55  United States 1987             10.2           75.01      1.87  245425409
+## 56        Vietnam 1987             40.0           68.38      3.93   63881296
+## 57  United States 1988             10.0           75.02      1.92  247865202
+## 58        Vietnam 1988             38.9           68.68      3.81   65313709
+## 59  United States 1989              9.7           75.10      2.00  250340795
+## 60        Vietnam 1989             37.7           69.00      3.68   66757401
+## 61  United States 1990              9.4           75.40      2.07  252847810
+## 62        Vietnam 1990             36.6           69.30      3.56   68209604
+## 63  United States 1991              9.1           75.50      2.06  255367160
+## 64        Vietnam 1991             35.4           69.60      3.42   69670620
+## 65  United States 1992              8.8           75.80      2.04  257908206
+## 66        Vietnam 1992             34.3           69.80      3.26   71129537
+## 67  United States 1993              8.5           75.70      2.02  260527420
+## 68        Vietnam 1993             33.1           70.10      3.07   72558986
+## 69  United States 1994              8.2           75.80      2.00  263301323
+## 70        Vietnam 1994             32.0           70.30      2.88   73923849
+## 71  United States 1995              8.0           75.90      1.98  266275528
+## 72        Vietnam 1995             30.9           70.60      2.68   75198975
+## 73  United States 1996              7.7           76.30      1.98  269483224
+## 74        Vietnam 1996             29.9           70.90      2.48   76375677
+## 75  United States 1997              7.5           76.60      1.97  272882865
+## 76        Vietnam 1997             28.9           71.10      2.31   77460429
+## 77  United States 1998              7.3           76.80      2.00  276354096
+## 78        Vietnam 1998             27.9           71.50      2.17   78462888
+## 79  United States 1999              7.2           76.90      2.01  279730801
+## 80        Vietnam 1999             27.0           71.70      2.06   79399708
+## 81  United States 2000              7.1           76.90      2.05  282895741
+## 82        Vietnam 2000             26.1           72.00      1.98   80285563
+## 83  United States 2001              7.0           76.90      2.03  285796198
+## 84        Vietnam 2001             25.3           72.20      1.94   81123685
+## 85  United States 2002              6.9           77.10      2.02  288470847
+## 86        Vietnam 2002             24.6           72.50      1.92   81917488
+## 87  United States 2003              6.8           77.30      2.05  291005482
+## 88        Vietnam 2003             23.9           72.80      1.91   82683039
+## 89  United States 2004              6.9           77.60      2.06  293530886
+## 90        Vietnam 2004             23.2           73.00      1.90   83439812
+## 91  United States 2005              6.8           77.60      2.06  296139635
+## 92        Vietnam 2005             22.6           73.30      1.90   84203817
+## 93  United States 2006              6.7           77.80      2.11  298860519
+## 94        Vietnam 2006             22.0           73.50      1.89   84979667
+## 95  United States 2007              6.6           78.10      2.12  301655953
+## 96        Vietnam 2007             21.4           73.80      1.88   85770717
+## 97  United States 2008              6.5           78.30      2.07  304473143
+## 98        Vietnam 2008             20.8           74.10      1.86   86589342
+## 99  United States 2009              6.4           78.50      2.00  307231961
+## 100       Vietnam 2009             20.3           74.30      1.84   87449021
+## 101 United States 2010              6.3           78.80      1.93  309876170
+## 102       Vietnam 2010             19.8           74.50      1.82   88357775
+##              gdp continent             region dollars_per_day     group
+## 1   2.479391e+12  Americas   Northern America      36.4860841  The West
+## 2             NA      Asia South-Eastern Asia              NA East Asia
+## 3   2.536417e+12  Americas   Northern America      36.7526728  The West
+## 4             NA      Asia South-Eastern Asia              NA East Asia
+## 5   2.691139e+12  Americas   Northern America      38.4288283  The West
+## 6             NA      Asia South-Eastern Asia              NA East Asia
+## 7   2.809549e+12  Americas   Northern America      39.5724576  The West
+## 8             NA      Asia South-Eastern Asia              NA East Asia
+## 9   2.972502e+12  Americas   Northern America      41.3332358  The West
+## 10            NA      Asia South-Eastern Asia              NA East Asia
+## 11  3.162743e+12  Americas   Northern America      43.4548382  The West
+## 12            NA      Asia South-Eastern Asia              NA East Asia
+## 13  3.368321e+12  Americas   Northern America      45.7684897  The West
+## 14            NA      Asia South-Eastern Asia              NA East Asia
+## 15  3.452529e+12  Americas   Northern America      46.4328711  The West
+## 16            NA      Asia South-Eastern Asia              NA East Asia
+## 17  3.618250e+12  Americas   Northern America      48.1945141  The West
+## 18            NA      Asia South-Eastern Asia              NA East Asia
+## 19  3.730416e+12  Americas   Northern America      49.2309826  The West
+## 20            NA      Asia South-Eastern Asia              NA East Asia
+## 21  3.737877e+12  Americas   Northern America      48.8852142  The West
+## 22            NA      Asia South-Eastern Asia              NA East Asia
+## 23  3.867133e+12  Americas   Northern America      50.1276977  The West
+## 24            NA      Asia South-Eastern Asia              NA East Asia
+## 25  4.080668e+12  Americas   Northern America      52.4338121  The West
+## 26            NA      Asia South-Eastern Asia              NA East Asia
+## 27  4.321881e+12  Americas   Northern America      55.0495657  The West
+## 28            NA      Asia South-Eastern Asia              NA East Asia
+## 29  4.299437e+12  Americas   Northern America      54.2819231  The West
+## 30            NA      Asia South-Eastern Asia              NA East Asia
+## 31  4.291009e+12  Americas   Northern America      53.6901599  The West
+## 32            NA      Asia South-Eastern Asia              NA East Asia
+## 33  4.523528e+12  Americas   Northern America      56.0796900  The West
+## 34            NA      Asia South-Eastern Asia              NA East Asia
+## 35  4.733337e+12  Americas   Northern America      58.1289879  The West
+## 36            NA      Asia South-Eastern Asia              NA East Asia
+## 37  4.999656e+12  Americas   Northern America      60.8138968  The West
+## 38            NA      Asia South-Eastern Asia              NA East Asia
+## 39  5.157035e+12  Americas   Northern America      62.1290351  The West
+## 40            NA      Asia South-Eastern Asia              NA East Asia
+## 41  5.142220e+12  Americas   Northern America      61.3632291  The West
+## 42            NA      Asia South-Eastern Asia              NA East Asia
+## 43  5.272896e+12  Americas   Northern America      62.3314167  The West
+## 44            NA      Asia South-Eastern Asia              NA East Asia
+## 45  5.168479e+12  Americas   Northern America      60.5256797  The West
+## 46            NA      Asia South-Eastern Asia              NA East Asia
+## 47  5.401886e+12  Americas   Northern America      62.6675327  The West
+## 48            NA      Asia South-Eastern Asia              NA East Asia
+## 49  5.790542e+12  Americas   Northern America      66.5445377  The West
+## 50  1.145347e+10      Asia South-Eastern Asia       0.5260311 East Asia
+## 51  6.028651e+12  Americas   Northern America      68.6224765  The West
+## 52  1.188938e+10      Asia South-Eastern Asia       0.5335622 East Asia
+## 53  6.235265e+12  Americas   Northern America      70.2908174  The West
+## 54  1.222101e+10      Asia South-Eastern Asia       0.5360622 East Asia
+## 55  6.432743e+12  Americas   Northern America      71.8098149  The West
+## 56  1.265894e+10      Asia South-Eastern Asia       0.5429137 East Asia
+## 57  6.696490e+12  Americas   Northern America      74.0182447  The West
+## 58  1.330898e+10      Asia South-Eastern Asia       0.5582742 East Asia
+## 59  6.935219e+12  Americas   Northern America      75.8989379  The West
+## 60  1.428912e+10      Asia South-Eastern Asia       0.5864260 East Asia
+## 61  7.063943e+12  Americas   Northern America      76.5411775  The West
+## 62  1.501800e+10      Asia South-Eastern Asia       0.6032171 East Asia
+## 63  7.045491e+12  Americas   Northern America      75.5880837  The West
+## 64  1.591320e+10      Asia South-Eastern Asia       0.6257703 East Asia
+## 65  7.285373e+12  Americas   Northern America      77.3915942  The West
+## 66  1.728906e+10      Asia South-Eastern Asia       0.6659299 East Asia
+## 67  7.494650e+12  Americas   Northern America      78.8143037  The West
+## 68  1.868476e+10      Asia South-Eastern Asia       0.7055104 East Asia
+## 69  7.803020e+12  Americas   Northern America      81.1926662  The West
+## 70  2.033630e+10      Asia South-Eastern Asia       0.7536931 East Asia
+## 71  8.001917e+12  Americas   Northern America      82.3322348  The West
+## 72  2.227648e+10      Asia South-Eastern Asia       0.8115996 East Asia
+## 73  8.304875e+12  Americas   Northern America      84.4322774  The West
+## 74  2.435711e+10      Asia South-Eastern Asia       0.8737312 East Asia
+## 75  8.679071e+12  Americas   Northern America      87.1373006  The West
+## 76  2.634272e+10      Asia South-Eastern Asia       0.9317253 East Asia
+## 77  9.061073e+12  Americas   Northern America      89.8298924  The West
+## 78  2.786124e+10      Asia South-Eastern Asia       0.9728441 East Asia
+## 79  9.502248e+12  Americas   Northern America      93.0664656  The West
+## 80  2.919122e+10      Asia South-Eastern Asia       1.0072573 East Asia
+## 81  9.898800e+12  Americas   Northern America      95.8657062  The West
+## 82  3.117252e+10      Asia South-Eastern Asia       1.0637548 East Asia
+## 83  1.000703e+13  Americas   Northern America      95.9303301  The West
+## 84  3.332183e+10      Asia South-Eastern Asia       1.1253518 East Asia
+## 85  1.018996e+13  Americas   Northern America      96.7782269  The West
+## 86  3.568108e+10      Asia South-Eastern Asia       1.1933517 East Asia
+## 87  1.045007e+13  Americas   Northern America      98.3841464  The West
+## 88  3.830049e+10      Asia South-Eastern Asia       1.2690975 East Asia
+## 89  1.081371e+13  Americas   Northern America     100.9317862  The West
+## 90  4.128394e+10      Asia South-Eastern Asia       1.3555482 East Asia
+## 91  1.114630e+13  Americas   Northern America     103.1195945  The West
+## 92  4.476905e+10      Asia South-Eastern Asia       1.4566432 East Asia
+## 93  1.144269e+13  Americas   Northern America     104.8978847  The West
+## 94  4.845303e+10      Asia South-Eastern Asia       1.5621152 East Asia
+## 95  1.166093e+13  Americas   Northern America     105.9078868  The West
+## 96  5.255039e+10      Asia South-Eastern Asia       1.6785876 East Asia
+## 97  1.161905e+13  Americas   Northern America     104.5511719  The West
+## 98  5.586668e+10      Asia South-Eastern Asia       1.7676470 East Asia
+## 99  1.120919e+13  Americas   Northern America      99.9574489  The West
+## 100 5.884079e+10      Asia South-Eastern Asia       1.8434472 East Asia
+## 101 1.154791e+13  Americas   Northern America     102.0991582  The West
+## 102 6.283222e+10      Asia South-Eastern Asia       1.9482502 East Asia
 \end{verbatim}
 
 \begin{enumerate}
@@ -5367,91 +5471,212 @@ tab <- gapminder %>% filter(year>=1960 & year<=2010 & country%in%c("Vietnam","Un
 \setcounter{enumi}{4}
 \tightlist
 \item
-  Life expectancy and the Vietnam War - part 2
+  Now that you have created the data table in Exercise 4, it is time to
+  plot the data for the two countries.
 \end{enumerate}
 
-Now that you have created the data table in Exercise 4, it is time to
-plot the data for the two countries.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\NormalTok{tab }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(year,life_expectancy,}\DataTypeTok{color=}\NormalTok{country)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_line}\NormalTok{()}
+\NormalTok{p}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{itemize}
-\tightlist
-\item
-  Use geom\_line to plot life expectancy vs year for Vietnam and the
-  United States. The data table is stored in tab.
-\item
-  Use color to distinguish the two countries.
-\end{itemize}
-
-\begin{verbatim}
-p <- tab %>% ggplot(aes(year,life_expectancy,color=country)) + geom_line()
-p
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76078449-ffd96780-5fa2-11ea-8f57-93389b4435bf.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-130-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{5}
 \tightlist
 \item
-  Life expectancy in Cambodia
+  Cambodia was also involved in this conflict and, after the war, Pol
+  Pot and his communist Khmer Rouge took control and ruled Cambodia from
+  1975 to 1979.
 \end{enumerate}
 
-Cambodia was also involved in this conflict and, after the war, Pol Pot
-and his communist Khmer Rouge took control and ruled Cambodia from 1975
-to 1979. He is considered one of the most brutal dictators in history.
-Do the data support this claim?
+He is considered one of the most brutal dictators in history. Do the
+data support this claim?
 
-Use a single line of code to create a time series plot from 1960 to 2010
-of life expectancy vs year for Cambodia.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{>=}\StringTok{ }\DecValTok{1960} \OperatorTok{&}\StringTok{ }\NormalTok{year }\OperatorTok{<=}\StringTok{ }\DecValTok{2010} \OperatorTok{&}\StringTok{ }\NormalTok{country }\OperatorTok{==}\StringTok{ "Cambodia"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(year, life_expectancy)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_line}\NormalTok{()}
+\NormalTok{p}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-library(dplyr)
-library(ggplot2)
-library(dslabs)
-\end{verbatim}
-
-\begin{verbatim}
-data(gapminder)
-
-gapminder %>% filter(year>=1960 & year <= 2010 & country=="Cambodia") %>% ggplot(aes(year,life_expectancy)) + geom_line()
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76078812-b50c1f80-5fa3-11ea-8301-e3f67e12470b.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-131-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{6}
 \tightlist
 \item
-  Dollars per day - part 1
+  Now we are going to calculate and plot dollars per day for African
+  countries in 2010 using GDP data.
 \end{enumerate}
 
-Now we are going to calculate and plot dollars per day for African
-countries in 2010 using GDP data.
-
 In the first part of this analysis, we will create the dollars per day
-variable. - Use mutate to create a dollars\_per\_day variable, which is
-defined as gdp/population/365. - Create the dollars\_per\_day variable
-for African countries for the year 2010. - Remove any NA values. - Save
-the mutated dataset as daydollars.
+variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{daydollars <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{dollars_per_day =}\NormalTok{ gdp}\OperatorTok{/}\NormalTok{population}\OperatorTok{/}\DecValTok{365}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(continent }\OperatorTok{==}\StringTok{ "Africa"} \OperatorTok{&}\StringTok{ }\NormalTok{year }\OperatorTok{==}\StringTok{ }\DecValTok{2010} \OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(gdp))}
+\NormalTok{daydollars}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-library(dplyr)
-library(dslabs)
-\end{verbatim}
-
-\begin{verbatim}
-data(gapminder)
-daydollars <- gapminder %>% mutate(dollars_per_day=gdp/population/365)%>% filter(year==2010 & continent=="Africa" & !is.na(dollars_per_day))
+##                     country year infant_mortality life_expectancy fertility
+## 1                   Algeria 2010             23.5            76.0      2.82
+## 2                    Angola 2010            109.6            57.6      6.22
+## 3                     Benin 2010             71.0            60.8      5.10
+## 4                  Botswana 2010             39.8            55.6      2.76
+## 5              Burkina Faso 2010             69.7            59.0      5.87
+## 6                   Burundi 2010             63.8            60.4      6.30
+## 7                  Cameroon 2010             66.2            57.8      5.02
+## 8                Cape Verde 2010             23.3            71.1      2.43
+## 9  Central African Republic 2010            101.7            47.9      4.63
+## 10                     Chad 2010             93.6            55.8      6.60
+## 11                  Comoros 2010             63.1            67.7      4.92
+## 12         Congo, Dem. Rep. 2010             84.8            58.4      6.25
+## 13              Congo, Rep. 2010             42.2            60.4      5.07
+## 14            Cote d'Ivoire 2010             76.9            56.6      4.91
+## 15                    Egypt 2010             24.3            70.1      2.88
+## 16        Equatorial Guinea 2010             78.9            58.6      5.14
+## 17                  Eritrea 2010             39.4            60.1      4.97
+## 18                 Ethiopia 2010             50.8            62.1      4.90
+## 19                    Gabon 2010             42.8            63.0      4.21
+## 20                   Gambia 2010             51.7            66.5      5.80
+## 21                    Ghana 2010             50.2            62.9      4.05
+## 22                   Guinea 2010             71.2            57.9      5.17
+## 23            Guinea-Bissau 2010             73.4            54.3      5.12
+## 24                    Kenya 2010             42.4            62.9      4.62
+## 25                  Lesotho 2010             75.2            46.4      3.21
+## 26                  Liberia 2010             65.2            60.8      5.02
+## 27               Madagascar 2010             42.1            62.4      4.65
+## 28                   Malawi 2010             57.5            55.4      5.64
+## 29                     Mali 2010             82.9            59.2      6.84
+## 30               Mauritania 2010             70.1            68.6      4.84
+## 31                Mauritius 2010             13.3            73.4      1.52
+## 32                  Morocco 2010             28.5            73.7      2.58
+## 33               Mozambique 2010             71.9            54.4      5.41
+## 34                  Namibia 2010             37.5            61.4      3.23
+## 35                    Niger 2010             66.1            59.2      7.58
+## 36                  Nigeria 2010             81.5            61.2      6.02
+## 37                   Rwanda 2010             43.8            65.1      4.84
+## 38                  Senegal 2010             46.7            64.2      5.05
+## 39               Seychelles 2010             12.2            73.1      2.26
+## 40             Sierra Leone 2010            107.0            55.0      4.94
+## 41             South Africa 2010             38.2            54.9      2.47
+## 42                    Sudan 2010             53.3            66.1      4.64
+## 43                Swaziland 2010             59.1            46.4      3.56
+## 44                 Tanzania 2010             42.4            61.4      5.43
+## 45                     Togo 2010             59.3            58.7      4.79
+## 46                  Tunisia 2010             14.9            77.1      2.04
+## 47                   Uganda 2010             49.5            57.8      6.16
+## 48                   Zambia 2010             52.9            53.1      5.81
+## 49                 Zimbabwe 2010             55.8            49.1      3.72
+##    population          gdp continent          region dollars_per_day
+## 1    36036159  79164339611    Africa Northern Africa       6.0186382
+## 2    21219954  26125663270    Africa   Middle Africa       3.3731063
+## 3     9509798   3336801340    Africa  Western Africa       0.9613161
+## 4     2047831   8408166868    Africa Southern Africa      11.2490111
+## 5    15632066   4655655008    Africa  Western Africa       0.8159650
+## 6     9461117   1158914103    Africa  Eastern Africa       0.3355954
+## 7    20590666  13986616694    Africa   Middle Africa       1.8610130
+## 8      490379    971606715    Africa  Western Africa       5.4283242
+## 9     4444973   1054122016    Africa   Middle Africa       0.6497240
+## 10   11896380   3369354207    Africa   Middle Africa       0.7759594
+## 11     698695    247231031    Africa  Eastern Africa       0.9694434
+## 12   65938712   6961485000    Africa   Middle Africa       0.2892468
+## 13    4066078   5067059617    Africa   Middle Africa       3.4141881
+## 14   20131707  11603002049    Africa  Western Africa       1.5790537
+## 15   82040994 160258746162    Africa Northern Africa       5.3517764
+## 16     728710   5979285835    Africa   Middle Africa      22.4802803
+## 17    4689664    771116883    Africa  Eastern Africa       0.4504905
+## 18   87561814  18291486355    Africa  Eastern Africa       0.5723232
+## 19    1541936   6343809583    Africa   Middle Africa      11.2717391
+## 20    1693002   1217357172    Africa  Western Africa       1.9700066
+## 21   24317734   8779397392    Africa  Western Africa       0.9891194
+## 22   11012406   5493989673    Africa  Western Africa       1.3668245
+## 23    1634196    244395463    Africa  Western Africa       0.4097285
+## 24   40328313  18988282813    Africa  Eastern Africa       1.2899794
+## 25    2010586   1076239050    Africa Southern Africa       1.4665377
+## 26    3957990   1040653199    Africa  Western Africa       0.7203416
+## 27   21079532   5026822443    Africa  Eastern Africa       0.6533407
+## 28   14769824   2758392725    Africa  Eastern Africa       0.5116676
+## 29   15167286   4199858651    Africa  Western Africa       0.7586368
+## 30    3591400   2107593972    Africa  Western Africa       1.6077936
+## 31    1247951   6636426093    Africa  Eastern Africa      14.5694737
+## 32   32107739  59908047776    Africa Northern Africa       5.1119027
+## 33   24321457   8972305823    Africa  Eastern Africa       1.0106985
+## 34    2193643   6155469329    Africa Southern Africa       7.6878050
+## 35   16291990   2781188119    Africa  Western Africa       0.4676957
+## 36  159424742  85581744176    Africa  Western Africa       1.4707286
+## 37   10293669   3583713093    Africa  Eastern Africa       0.9538282
+## 38   12956791   6984284544    Africa  Western Africa       1.4768337
+## 39      93081    760361490    Africa  Eastern Africa      22.3803157
+## 40    5775902   1574302614    Africa  Western Africa       0.7467505
+## 41   51621594 187639624489    Africa Southern Africa       9.9586457
+## 42   36114885  22819076998    Africa Northern Africa       1.7310873
+## 43    1193148   1911603442    Africa Southern Africa       4.3894552
+## 44   45648525  19965679449    Africa  Eastern Africa       1.1982970
+## 45    6390851   1595792895    Africa  Western Africa       0.6841085
+## 46   10639194  33161453137    Africa Northern Africa       8.5394905
+## 47   33149417  12701095116    Africa  Eastern Africa       1.0497174
+## 48   13917439   5587389858    Africa  Eastern Africa       1.0999091
+## 49   13973897   4032423429    Africa  Eastern Africa       0.7905980
+##                 group
+## 1     Northern Africa
+## 2  Sub-Saharan Africa
+## 3  Sub-Saharan Africa
+## 4  Sub-Saharan Africa
+## 5  Sub-Saharan Africa
+## 6  Sub-Saharan Africa
+## 7  Sub-Saharan Africa
+## 8  Sub-Saharan Africa
+## 9  Sub-Saharan Africa
+## 10 Sub-Saharan Africa
+## 11 Sub-Saharan Africa
+## 12 Sub-Saharan Africa
+## 13 Sub-Saharan Africa
+## 14 Sub-Saharan Africa
+## 15    Northern Africa
+## 16 Sub-Saharan Africa
+## 17 Sub-Saharan Africa
+## 18 Sub-Saharan Africa
+## 19 Sub-Saharan Africa
+## 20 Sub-Saharan Africa
+## 21 Sub-Saharan Africa
+## 22 Sub-Saharan Africa
+## 23 Sub-Saharan Africa
+## 24 Sub-Saharan Africa
+## 25 Sub-Saharan Africa
+## 26 Sub-Saharan Africa
+## 27 Sub-Saharan Africa
+## 28 Sub-Saharan Africa
+## 29 Sub-Saharan Africa
+## 30 Sub-Saharan Africa
+## 31 Sub-Saharan Africa
+## 32    Northern Africa
+## 33 Sub-Saharan Africa
+## 34 Sub-Saharan Africa
+## 35 Sub-Saharan Africa
+## 36 Sub-Saharan Africa
+## 37 Sub-Saharan Africa
+## 38 Sub-Saharan Africa
+## 39 Sub-Saharan Africa
+## 40 Sub-Saharan Africa
+## 41 Sub-Saharan Africa
+## 42    Northern Africa
+## 43 Sub-Saharan Africa
+## 44 Sub-Saharan Africa
+## 45 Sub-Saharan Africa
+## 46    Northern Africa
+## 47 Sub-Saharan Africa
+## 48 Sub-Saharan Africa
+## 49 Sub-Saharan Africa
 \end{verbatim}
 
 \begin{enumerate}
@@ -5459,246 +5684,683 @@ daydollars <- gapminder %>% mutate(dollars_per_day=gdp/population/365)%>% filter
 \setcounter{enumi}{7}
 \tightlist
 \item
-  Dollars per day - part 2
+  Now we are going to calculate and plot dollars per day for African
+  countries in 2010 using GDP data.
 \end{enumerate}
 
-Now we are going to calculate and plot dollars per day for African
-countries in 2010 using GDP data.
-
 In the second part of this analysis, we will plot the smooth density
-plot using a log (base 2) x axis. - The dataset including the
-dollars\_per\_day variable is preloaded as daydollars. - Create a smooth
-density plot of dollars per day from daydollars. - Use a log (base 2)
-scale for the x axis.
+plot using a log (base 2) x axis.
 
-\begin{verbatim}
-daydollars %>% ggplot(aes(dollars_per_day)) + geom_density() + scale_x_continuous(trans="log2")
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\NormalTok{daydollars }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(dollars_per_day)) }\OperatorTok{+}
+\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_density}\NormalTok{()}
+\NormalTok{p}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76079001-16cc8980-5fa4-11ea-87da-614f4318ae88.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-133-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{8}
 \tightlist
 \item
-  Dollars per day - part 3 - multiple density plots
+  Now we are going to combine the plotting tools we have used in the
+  past two exercises to create density plots for multiple years.
 \end{enumerate}
 
-Now we are going to combine the plotting tools we have used in the past
-two exercises to create density plots for multiple years. - Create the
-dollars\_per\_day variable as in Exercise 7, but for African countries
-in the years 1970 and 2010 this time. - Make sure you remove any NA
-values. - Create a smooth density plot of dollars per day for 1970 and
-2010 using a log (base 2) scale for the x axis. - Use facet\_grid to
-show a different density plot for 1970 and 2010.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{daydollars <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{dollars_per_day =}\NormalTok{ gdp}\OperatorTok{/}\NormalTok{population}\OperatorTok{/}\DecValTok{365}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(continent }\OperatorTok{==}\StringTok{ "Africa"} \OperatorTok{&}\StringTok{ }\NormalTok{year}\OperatorTok{%in%}\KeywordTok{c}\NormalTok{(}\DecValTok{1970}\NormalTok{,}\DecValTok{2010}\NormalTok{) }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(gdp))}
+\NormalTok{daydollars}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-library(dplyr)
-library(ggplot2)
-library(dslabs)
+##                     country year infant_mortality life_expectancy fertility
+## 1                   Algeria 1970            146.0           52.41      7.64
+## 2                     Benin 1970            157.1           43.93      6.75
+## 3                  Botswana 1970             85.3           54.30      6.64
+## 4              Burkina Faso 1970            149.3           40.27      6.62
+## 5                   Burundi 1970            146.4           42.76      7.31
+## 6                  Cameroon 1970            126.2           48.97      6.21
+## 7  Central African Republic 1970            137.0           43.36      5.95
+## 8                      Chad 1970            135.9           45.72      6.53
+## 9          Congo, Dem. Rep. 1970            149.0           48.13      6.21
+## 10              Congo, Rep. 1970             88.5           52.85      6.26
+## 11            Cote d'Ivoire 1970            161.0           45.38      7.91
+## 12                    Egypt 1970            162.0           52.54      5.94
+## 13                    Gabon 1970               NA           45.55      5.08
+## 14                   Gambia 1970            126.0           43.31      6.09
+## 15                    Ghana 1970            120.1           50.08      6.95
+## 16            Guinea-Bissau 1970               NA           45.50      6.07
+## 17                    Kenya 1970             91.3           53.83      8.08
+## 18                  Lesotho 1970            131.6           49.67      5.81
+## 19                  Liberia 1970            191.3           40.10      6.70
+## 20               Madagascar 1970             93.2           47.77      7.33
+## 21                   Malawi 1970            207.7           41.62      7.30
+## 22                     Mali 1970            195.7           34.51      6.90
+## 23               Mauritania 1970            108.5           49.77      6.78
+## 24                  Morocco 1970            120.8           54.34      6.69
+## 25                    Niger 1970            137.6           38.24      7.42
+## 26                  Nigeria 1970            168.9           41.79      6.47
+## 27                   Rwanda 1970            129.4           45.58      8.23
+## 28                  Senegal 1970            121.7           39.59      7.34
+## 29               Seychelles 1970             54.1           64.62      5.76
+## 30             Sierra Leone 1970            191.0           43.15      6.70
+## 31             South Africa 1970               NA           52.77      5.59
+## 32                    Sudan 1970             94.7           54.26      6.89
+## 33                Swaziland 1970            119.3           48.79      6.88
+## 34                     Togo 1970            132.8           47.72      7.08
+## 35                  Tunisia 1970            122.2           52.94      6.44
+## 36                   Zambia 1970            109.3           53.88      7.44
+## 37                 Zimbabwe 1970             72.4           57.22      7.42
+## 38                  Algeria 2010             23.5           76.00      2.82
+## 39                   Angola 2010            109.6           57.60      6.22
+## 40                    Benin 2010             71.0           60.80      5.10
+## 41                 Botswana 2010             39.8           55.60      2.76
+## 42             Burkina Faso 2010             69.7           59.00      5.87
+## 43                  Burundi 2010             63.8           60.40      6.30
+## 44                 Cameroon 2010             66.2           57.80      5.02
+## 45               Cape Verde 2010             23.3           71.10      2.43
+## 46 Central African Republic 2010            101.7           47.90      4.63
+## 47                     Chad 2010             93.6           55.80      6.60
+## 48                  Comoros 2010             63.1           67.70      4.92
+## 49         Congo, Dem. Rep. 2010             84.8           58.40      6.25
+## 50              Congo, Rep. 2010             42.2           60.40      5.07
+## 51            Cote d'Ivoire 2010             76.9           56.60      4.91
+## 52                    Egypt 2010             24.3           70.10      2.88
+## 53        Equatorial Guinea 2010             78.9           58.60      5.14
+## 54                  Eritrea 2010             39.4           60.10      4.97
+## 55                 Ethiopia 2010             50.8           62.10      4.90
+## 56                    Gabon 2010             42.8           63.00      4.21
+## 57                   Gambia 2010             51.7           66.50      5.80
+## 58                    Ghana 2010             50.2           62.90      4.05
+## 59                   Guinea 2010             71.2           57.90      5.17
+## 60            Guinea-Bissau 2010             73.4           54.30      5.12
+## 61                    Kenya 2010             42.4           62.90      4.62
+## 62                  Lesotho 2010             75.2           46.40      3.21
+## 63                  Liberia 2010             65.2           60.80      5.02
+## 64               Madagascar 2010             42.1           62.40      4.65
+## 65                   Malawi 2010             57.5           55.40      5.64
+## 66                     Mali 2010             82.9           59.20      6.84
+## 67               Mauritania 2010             70.1           68.60      4.84
+## 68                Mauritius 2010             13.3           73.40      1.52
+## 69                  Morocco 2010             28.5           73.70      2.58
+## 70               Mozambique 2010             71.9           54.40      5.41
+## 71                  Namibia 2010             37.5           61.40      3.23
+## 72                    Niger 2010             66.1           59.20      7.58
+## 73                  Nigeria 2010             81.5           61.20      6.02
+## 74                   Rwanda 2010             43.8           65.10      4.84
+## 75                  Senegal 2010             46.7           64.20      5.05
+## 76               Seychelles 2010             12.2           73.10      2.26
+## 77             Sierra Leone 2010            107.0           55.00      4.94
+## 78             South Africa 2010             38.2           54.90      2.47
+## 79                    Sudan 2010             53.3           66.10      4.64
+## 80                Swaziland 2010             59.1           46.40      3.56
+## 81                 Tanzania 2010             42.4           61.40      5.43
+## 82                     Togo 2010             59.3           58.70      4.79
+## 83                  Tunisia 2010             14.9           77.10      2.04
+## 84                   Uganda 2010             49.5           57.80      6.16
+## 85                   Zambia 2010             52.9           53.10      5.81
+## 86                 Zimbabwe 2010             55.8           49.10      3.72
+##    population          gdp continent          region dollars_per_day
+## 1    14550033  19741305571    Africa Northern Africa       3.7172265
+## 2     2907769    831774871    Africa  Western Africa       0.7837057
+## 3      693021    283867117    Africa Southern Africa       1.1222144
+## 4     5624597    795164207    Africa  Western Africa       0.3873223
+## 5     3457113    524049198    Africa  Eastern Africa       0.4153035
+## 6     6770967   3372153343    Africa   Middle Africa       1.3644693
+## 7     1828710    647622869    Africa   Middle Africa       0.9702518
+## 8     3644911    829387598    Africa   Middle Africa       0.6234157
+## 9    20009902   6728080745    Africa   Middle Africa       0.9211988
+## 10    1335090    939633199    Africa   Middle Africa       1.9282127
+## 11    5241914   4619775632    Africa  Western Africa       2.4145607
+## 12   34808599  20331718433    Africa Northern Africa       1.6002752
+## 13     590119   1722664256    Africa   Middle Africa       7.9977566
+## 14     447283    247459869    Africa  Western Africa       1.5157568
+## 15    8596977   2549677064    Africa  Western Africa       0.8125434
+## 16     711828    104038537    Africa  Western Africa       0.4004297
+## 17   11252466   3276361787    Africa  Eastern Africa       0.7977215
+## 18    1032240    184783955    Africa Southern Africa       0.4904454
+## 19    1419728   1094083642    Africa  Western Africa       2.1113125
+## 20    6576301   2807129955    Africa  Eastern Africa       1.1694670
+## 21    4603739    549382768    Africa  Eastern Africa       0.3269426
+## 22    5949043   1038617256    Africa  Western Africa       0.4783167
+## 23    1148908    700627427    Africa  Western Africa       1.6707406
+## 24   16039600  12097898528    Africa Northern Africa       2.0664435
+## 25    4497355   1343819364    Africa  Western Africa       0.8186360
+## 26   56131844  19793025795    Africa  Western Africa       0.9660732
+## 27    3754546    809941587    Africa  Eastern Africa       0.5910217
+## 28    4217754   2266115562    Africa  Western Africa       1.4720005
+## 29      52364    141888524    Africa  Eastern Africa       7.4237202
+## 30    2514151    739785784    Africa  Western Africa       0.8061610
+## 31   22502502  68558449204    Africa Southern Africa       8.3471326
+## 32   10232758   3901968151    Africa Northern Africa       1.0447158
+## 33     445844    257078586    Africa Southern Africa       1.5797564
+## 34    2115521    618863063    Africa  Western Africa       0.8014646
+## 35    5060393   4688590613    Africa Northern Africa       2.5384301
+## 36    4185378   2384401746    Africa  Eastern Africa       1.5608166
+## 37    5206311   2682438620    Africa  Eastern Africa       1.4115843
+## 38   36036159  79164339611    Africa Northern Africa       6.0186382
+## 39   21219954  26125663270    Africa   Middle Africa       3.3731063
+## 40    9509798   3336801340    Africa  Western Africa       0.9613161
+## 41    2047831   8408166868    Africa Southern Africa      11.2490111
+## 42   15632066   4655655008    Africa  Western Africa       0.8159650
+## 43    9461117   1158914103    Africa  Eastern Africa       0.3355954
+## 44   20590666  13986616694    Africa   Middle Africa       1.8610130
+## 45     490379    971606715    Africa  Western Africa       5.4283242
+## 46    4444973   1054122016    Africa   Middle Africa       0.6497240
+## 47   11896380   3369354207    Africa   Middle Africa       0.7759594
+## 48     698695    247231031    Africa  Eastern Africa       0.9694434
+## 49   65938712   6961485000    Africa   Middle Africa       0.2892468
+## 50    4066078   5067059617    Africa   Middle Africa       3.4141881
+## 51   20131707  11603002049    Africa  Western Africa       1.5790537
+## 52   82040994 160258746162    Africa Northern Africa       5.3517764
+## 53     728710   5979285835    Africa   Middle Africa      22.4802803
+## 54    4689664    771116883    Africa  Eastern Africa       0.4504905
+## 55   87561814  18291486355    Africa  Eastern Africa       0.5723232
+## 56    1541936   6343809583    Africa   Middle Africa      11.2717391
+## 57    1693002   1217357172    Africa  Western Africa       1.9700066
+## 58   24317734   8779397392    Africa  Western Africa       0.9891194
+## 59   11012406   5493989673    Africa  Western Africa       1.3668245
+## 60    1634196    244395463    Africa  Western Africa       0.4097285
+## 61   40328313  18988282813    Africa  Eastern Africa       1.2899794
+## 62    2010586   1076239050    Africa Southern Africa       1.4665377
+## 63    3957990   1040653199    Africa  Western Africa       0.7203416
+## 64   21079532   5026822443    Africa  Eastern Africa       0.6533407
+## 65   14769824   2758392725    Africa  Eastern Africa       0.5116676
+## 66   15167286   4199858651    Africa  Western Africa       0.7586368
+## 67    3591400   2107593972    Africa  Western Africa       1.6077936
+## 68    1247951   6636426093    Africa  Eastern Africa      14.5694737
+## 69   32107739  59908047776    Africa Northern Africa       5.1119027
+## 70   24321457   8972305823    Africa  Eastern Africa       1.0106985
+## 71    2193643   6155469329    Africa Southern Africa       7.6878050
+## 72   16291990   2781188119    Africa  Western Africa       0.4676957
+## 73  159424742  85581744176    Africa  Western Africa       1.4707286
+## 74   10293669   3583713093    Africa  Eastern Africa       0.9538282
+## 75   12956791   6984284544    Africa  Western Africa       1.4768337
+## 76      93081    760361490    Africa  Eastern Africa      22.3803157
+## 77    5775902   1574302614    Africa  Western Africa       0.7467505
+## 78   51621594 187639624489    Africa Southern Africa       9.9586457
+## 79   36114885  22819076998    Africa Northern Africa       1.7310873
+## 80    1193148   1911603442    Africa Southern Africa       4.3894552
+## 81   45648525  19965679449    Africa  Eastern Africa       1.1982970
+## 82    6390851   1595792895    Africa  Western Africa       0.6841085
+## 83   10639194  33161453137    Africa Northern Africa       8.5394905
+## 84   33149417  12701095116    Africa  Eastern Africa       1.0497174
+## 85   13917439   5587389858    Africa  Eastern Africa       1.0999091
+## 86   13973897   4032423429    Africa  Eastern Africa       0.7905980
+##                 group
+## 1     Northern Africa
+## 2  Sub-Saharan Africa
+## 3  Sub-Saharan Africa
+## 4  Sub-Saharan Africa
+## 5  Sub-Saharan Africa
+## 6  Sub-Saharan Africa
+## 7  Sub-Saharan Africa
+## 8  Sub-Saharan Africa
+## 9  Sub-Saharan Africa
+## 10 Sub-Saharan Africa
+## 11 Sub-Saharan Africa
+## 12    Northern Africa
+## 13 Sub-Saharan Africa
+## 14 Sub-Saharan Africa
+## 15 Sub-Saharan Africa
+## 16 Sub-Saharan Africa
+## 17 Sub-Saharan Africa
+## 18 Sub-Saharan Africa
+## 19 Sub-Saharan Africa
+## 20 Sub-Saharan Africa
+## 21 Sub-Saharan Africa
+## 22 Sub-Saharan Africa
+## 23 Sub-Saharan Africa
+## 24    Northern Africa
+## 25 Sub-Saharan Africa
+## 26 Sub-Saharan Africa
+## 27 Sub-Saharan Africa
+## 28 Sub-Saharan Africa
+## 29 Sub-Saharan Africa
+## 30 Sub-Saharan Africa
+## 31 Sub-Saharan Africa
+## 32    Northern Africa
+## 33 Sub-Saharan Africa
+## 34 Sub-Saharan Africa
+## 35    Northern Africa
+## 36 Sub-Saharan Africa
+## 37 Sub-Saharan Africa
+## 38    Northern Africa
+## 39 Sub-Saharan Africa
+## 40 Sub-Saharan Africa
+## 41 Sub-Saharan Africa
+## 42 Sub-Saharan Africa
+## 43 Sub-Saharan Africa
+## 44 Sub-Saharan Africa
+## 45 Sub-Saharan Africa
+## 46 Sub-Saharan Africa
+## 47 Sub-Saharan Africa
+## 48 Sub-Saharan Africa
+## 49 Sub-Saharan Africa
+## 50 Sub-Saharan Africa
+## 51 Sub-Saharan Africa
+## 52    Northern Africa
+## 53 Sub-Saharan Africa
+## 54 Sub-Saharan Africa
+## 55 Sub-Saharan Africa
+## 56 Sub-Saharan Africa
+## 57 Sub-Saharan Africa
+## 58 Sub-Saharan Africa
+## 59 Sub-Saharan Africa
+## 60 Sub-Saharan Africa
+## 61 Sub-Saharan Africa
+## 62 Sub-Saharan Africa
+## 63 Sub-Saharan Africa
+## 64 Sub-Saharan Africa
+## 65 Sub-Saharan Africa
+## 66 Sub-Saharan Africa
+## 67 Sub-Saharan Africa
+## 68 Sub-Saharan Africa
+## 69    Northern Africa
+## 70 Sub-Saharan Africa
+## 71 Sub-Saharan Africa
+## 72 Sub-Saharan Africa
+## 73 Sub-Saharan Africa
+## 74 Sub-Saharan Africa
+## 75 Sub-Saharan Africa
+## 76 Sub-Saharan Africa
+## 77 Sub-Saharan Africa
+## 78 Sub-Saharan Africa
+## 79    Northern Africa
+## 80 Sub-Saharan Africa
+## 81 Sub-Saharan Africa
+## 82 Sub-Saharan Africa
+## 83    Northern Africa
+## 84 Sub-Saharan Africa
+## 85 Sub-Saharan Africa
+## 86 Sub-Saharan Africa
 \end{verbatim}
 
-\begin{verbatim}
-data(gapminder)
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\NormalTok{daydollars }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(dollars_per_day)) }\OperatorTok{+}
+\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_density}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{facet_grid}\NormalTok{(.}\OperatorTok{~}\NormalTok{year)}
+\NormalTok{p}
+\end{Highlighting}
+\end{Shaded}
 
-daydollars <- gapminder %>% mutate(dollars_per_day=gdp/population/365)%>% filter(year %in% c(1970,2010) & continent=="Africa" & !is.na(dollars_per_day))
-
-daydollars %>% ggplot(aes(dollars_per_day)) + geom_density() + scale_x_continuous(trans='log2') + facet_grid(.~year)
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76079192-74f96c80-5fa4-11ea-8fcf-1ccb1aa19636.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-134-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{9}
 \tightlist
 \item
-  Dollars per day - part 4 - stacked histograms
+  Now we are going to edit the code from Exercise 9 to show stacked
+  histograms of each region in Africa.
 \end{enumerate}
 
-Now we are going to edit the code from Exercise 9 to show stacked
-histograms of each region in Africa.
-
-Much of the code will be the same as in Exercise 9: - Create the
-dollars\_per\_day variable as in Exercise 7, but for African countries
-in the years 1970 and 2010 this time. - Make sure you remove any NA
-values. - Create a smooth density plot of dollars per day for 1970 and
-2010 using a log (base 2) scale for the x axis. - Use facet\_grid to
-show a different density plot for 1970 and 2010. - Make sure the
-densities are smooth by using bw = 0.5. - Use the fill and position
-arguments where appropriate to create the stacked histograms of each
-region.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{daydollars <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{dollars_per_day =}\NormalTok{ gdp}\OperatorTok{/}\NormalTok{population}\OperatorTok{/}\DecValTok{365}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(continent }\OperatorTok{==}\StringTok{ "Africa"} \OperatorTok{&}\StringTok{ }\NormalTok{year}\OperatorTok{%in%}\KeywordTok{c}\NormalTok{(}\DecValTok{1970}\NormalTok{,}\DecValTok{2010}\NormalTok{) }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(gdp))}
+\NormalTok{daydollars}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-library(dplyr)
-library(ggplot2)
-library(dslabs)
+##                     country year infant_mortality life_expectancy fertility
+## 1                   Algeria 1970            146.0           52.41      7.64
+## 2                     Benin 1970            157.1           43.93      6.75
+## 3                  Botswana 1970             85.3           54.30      6.64
+## 4              Burkina Faso 1970            149.3           40.27      6.62
+## 5                   Burundi 1970            146.4           42.76      7.31
+## 6                  Cameroon 1970            126.2           48.97      6.21
+## 7  Central African Republic 1970            137.0           43.36      5.95
+## 8                      Chad 1970            135.9           45.72      6.53
+## 9          Congo, Dem. Rep. 1970            149.0           48.13      6.21
+## 10              Congo, Rep. 1970             88.5           52.85      6.26
+## 11            Cote d'Ivoire 1970            161.0           45.38      7.91
+## 12                    Egypt 1970            162.0           52.54      5.94
+## 13                    Gabon 1970               NA           45.55      5.08
+## 14                   Gambia 1970            126.0           43.31      6.09
+## 15                    Ghana 1970            120.1           50.08      6.95
+## 16            Guinea-Bissau 1970               NA           45.50      6.07
+## 17                    Kenya 1970             91.3           53.83      8.08
+## 18                  Lesotho 1970            131.6           49.67      5.81
+## 19                  Liberia 1970            191.3           40.10      6.70
+## 20               Madagascar 1970             93.2           47.77      7.33
+## 21                   Malawi 1970            207.7           41.62      7.30
+## 22                     Mali 1970            195.7           34.51      6.90
+## 23               Mauritania 1970            108.5           49.77      6.78
+## 24                  Morocco 1970            120.8           54.34      6.69
+## 25                    Niger 1970            137.6           38.24      7.42
+## 26                  Nigeria 1970            168.9           41.79      6.47
+## 27                   Rwanda 1970            129.4           45.58      8.23
+## 28                  Senegal 1970            121.7           39.59      7.34
+## 29               Seychelles 1970             54.1           64.62      5.76
+## 30             Sierra Leone 1970            191.0           43.15      6.70
+## 31             South Africa 1970               NA           52.77      5.59
+## 32                    Sudan 1970             94.7           54.26      6.89
+## 33                Swaziland 1970            119.3           48.79      6.88
+## 34                     Togo 1970            132.8           47.72      7.08
+## 35                  Tunisia 1970            122.2           52.94      6.44
+## 36                   Zambia 1970            109.3           53.88      7.44
+## 37                 Zimbabwe 1970             72.4           57.22      7.42
+## 38                  Algeria 2010             23.5           76.00      2.82
+## 39                   Angola 2010            109.6           57.60      6.22
+## 40                    Benin 2010             71.0           60.80      5.10
+## 41                 Botswana 2010             39.8           55.60      2.76
+## 42             Burkina Faso 2010             69.7           59.00      5.87
+## 43                  Burundi 2010             63.8           60.40      6.30
+## 44                 Cameroon 2010             66.2           57.80      5.02
+## 45               Cape Verde 2010             23.3           71.10      2.43
+## 46 Central African Republic 2010            101.7           47.90      4.63
+## 47                     Chad 2010             93.6           55.80      6.60
+## 48                  Comoros 2010             63.1           67.70      4.92
+## 49         Congo, Dem. Rep. 2010             84.8           58.40      6.25
+## 50              Congo, Rep. 2010             42.2           60.40      5.07
+## 51            Cote d'Ivoire 2010             76.9           56.60      4.91
+## 52                    Egypt 2010             24.3           70.10      2.88
+## 53        Equatorial Guinea 2010             78.9           58.60      5.14
+## 54                  Eritrea 2010             39.4           60.10      4.97
+## 55                 Ethiopia 2010             50.8           62.10      4.90
+## 56                    Gabon 2010             42.8           63.00      4.21
+## 57                   Gambia 2010             51.7           66.50      5.80
+## 58                    Ghana 2010             50.2           62.90      4.05
+## 59                   Guinea 2010             71.2           57.90      5.17
+## 60            Guinea-Bissau 2010             73.4           54.30      5.12
+## 61                    Kenya 2010             42.4           62.90      4.62
+## 62                  Lesotho 2010             75.2           46.40      3.21
+## 63                  Liberia 2010             65.2           60.80      5.02
+## 64               Madagascar 2010             42.1           62.40      4.65
+## 65                   Malawi 2010             57.5           55.40      5.64
+## 66                     Mali 2010             82.9           59.20      6.84
+## 67               Mauritania 2010             70.1           68.60      4.84
+## 68                Mauritius 2010             13.3           73.40      1.52
+## 69                  Morocco 2010             28.5           73.70      2.58
+## 70               Mozambique 2010             71.9           54.40      5.41
+## 71                  Namibia 2010             37.5           61.40      3.23
+## 72                    Niger 2010             66.1           59.20      7.58
+## 73                  Nigeria 2010             81.5           61.20      6.02
+## 74                   Rwanda 2010             43.8           65.10      4.84
+## 75                  Senegal 2010             46.7           64.20      5.05
+## 76               Seychelles 2010             12.2           73.10      2.26
+## 77             Sierra Leone 2010            107.0           55.00      4.94
+## 78             South Africa 2010             38.2           54.90      2.47
+## 79                    Sudan 2010             53.3           66.10      4.64
+## 80                Swaziland 2010             59.1           46.40      3.56
+## 81                 Tanzania 2010             42.4           61.40      5.43
+## 82                     Togo 2010             59.3           58.70      4.79
+## 83                  Tunisia 2010             14.9           77.10      2.04
+## 84                   Uganda 2010             49.5           57.80      6.16
+## 85                   Zambia 2010             52.9           53.10      5.81
+## 86                 Zimbabwe 2010             55.8           49.10      3.72
+##    population          gdp continent          region dollars_per_day
+## 1    14550033  19741305571    Africa Northern Africa       3.7172265
+## 2     2907769    831774871    Africa  Western Africa       0.7837057
+## 3      693021    283867117    Africa Southern Africa       1.1222144
+## 4     5624597    795164207    Africa  Western Africa       0.3873223
+## 5     3457113    524049198    Africa  Eastern Africa       0.4153035
+## 6     6770967   3372153343    Africa   Middle Africa       1.3644693
+## 7     1828710    647622869    Africa   Middle Africa       0.9702518
+## 8     3644911    829387598    Africa   Middle Africa       0.6234157
+## 9    20009902   6728080745    Africa   Middle Africa       0.9211988
+## 10    1335090    939633199    Africa   Middle Africa       1.9282127
+## 11    5241914   4619775632    Africa  Western Africa       2.4145607
+## 12   34808599  20331718433    Africa Northern Africa       1.6002752
+## 13     590119   1722664256    Africa   Middle Africa       7.9977566
+## 14     447283    247459869    Africa  Western Africa       1.5157568
+## 15    8596977   2549677064    Africa  Western Africa       0.8125434
+## 16     711828    104038537    Africa  Western Africa       0.4004297
+## 17   11252466   3276361787    Africa  Eastern Africa       0.7977215
+## 18    1032240    184783955    Africa Southern Africa       0.4904454
+## 19    1419728   1094083642    Africa  Western Africa       2.1113125
+## 20    6576301   2807129955    Africa  Eastern Africa       1.1694670
+## 21    4603739    549382768    Africa  Eastern Africa       0.3269426
+## 22    5949043   1038617256    Africa  Western Africa       0.4783167
+## 23    1148908    700627427    Africa  Western Africa       1.6707406
+## 24   16039600  12097898528    Africa Northern Africa       2.0664435
+## 25    4497355   1343819364    Africa  Western Africa       0.8186360
+## 26   56131844  19793025795    Africa  Western Africa       0.9660732
+## 27    3754546    809941587    Africa  Eastern Africa       0.5910217
+## 28    4217754   2266115562    Africa  Western Africa       1.4720005
+## 29      52364    141888524    Africa  Eastern Africa       7.4237202
+## 30    2514151    739785784    Africa  Western Africa       0.8061610
+## 31   22502502  68558449204    Africa Southern Africa       8.3471326
+## 32   10232758   3901968151    Africa Northern Africa       1.0447158
+## 33     445844    257078586    Africa Southern Africa       1.5797564
+## 34    2115521    618863063    Africa  Western Africa       0.8014646
+## 35    5060393   4688590613    Africa Northern Africa       2.5384301
+## 36    4185378   2384401746    Africa  Eastern Africa       1.5608166
+## 37    5206311   2682438620    Africa  Eastern Africa       1.4115843
+## 38   36036159  79164339611    Africa Northern Africa       6.0186382
+## 39   21219954  26125663270    Africa   Middle Africa       3.3731063
+## 40    9509798   3336801340    Africa  Western Africa       0.9613161
+## 41    2047831   8408166868    Africa Southern Africa      11.2490111
+## 42   15632066   4655655008    Africa  Western Africa       0.8159650
+## 43    9461117   1158914103    Africa  Eastern Africa       0.3355954
+## 44   20590666  13986616694    Africa   Middle Africa       1.8610130
+## 45     490379    971606715    Africa  Western Africa       5.4283242
+## 46    4444973   1054122016    Africa   Middle Africa       0.6497240
+## 47   11896380   3369354207    Africa   Middle Africa       0.7759594
+## 48     698695    247231031    Africa  Eastern Africa       0.9694434
+## 49   65938712   6961485000    Africa   Middle Africa       0.2892468
+## 50    4066078   5067059617    Africa   Middle Africa       3.4141881
+## 51   20131707  11603002049    Africa  Western Africa       1.5790537
+## 52   82040994 160258746162    Africa Northern Africa       5.3517764
+## 53     728710   5979285835    Africa   Middle Africa      22.4802803
+## 54    4689664    771116883    Africa  Eastern Africa       0.4504905
+## 55   87561814  18291486355    Africa  Eastern Africa       0.5723232
+## 56    1541936   6343809583    Africa   Middle Africa      11.2717391
+## 57    1693002   1217357172    Africa  Western Africa       1.9700066
+## 58   24317734   8779397392    Africa  Western Africa       0.9891194
+## 59   11012406   5493989673    Africa  Western Africa       1.3668245
+## 60    1634196    244395463    Africa  Western Africa       0.4097285
+## 61   40328313  18988282813    Africa  Eastern Africa       1.2899794
+## 62    2010586   1076239050    Africa Southern Africa       1.4665377
+## 63    3957990   1040653199    Africa  Western Africa       0.7203416
+## 64   21079532   5026822443    Africa  Eastern Africa       0.6533407
+## 65   14769824   2758392725    Africa  Eastern Africa       0.5116676
+## 66   15167286   4199858651    Africa  Western Africa       0.7586368
+## 67    3591400   2107593972    Africa  Western Africa       1.6077936
+## 68    1247951   6636426093    Africa  Eastern Africa      14.5694737
+## 69   32107739  59908047776    Africa Northern Africa       5.1119027
+## 70   24321457   8972305823    Africa  Eastern Africa       1.0106985
+## 71    2193643   6155469329    Africa Southern Africa       7.6878050
+## 72   16291990   2781188119    Africa  Western Africa       0.4676957
+## 73  159424742  85581744176    Africa  Western Africa       1.4707286
+## 74   10293669   3583713093    Africa  Eastern Africa       0.9538282
+## 75   12956791   6984284544    Africa  Western Africa       1.4768337
+## 76      93081    760361490    Africa  Eastern Africa      22.3803157
+## 77    5775902   1574302614    Africa  Western Africa       0.7467505
+## 78   51621594 187639624489    Africa Southern Africa       9.9586457
+## 79   36114885  22819076998    Africa Northern Africa       1.7310873
+## 80    1193148   1911603442    Africa Southern Africa       4.3894552
+## 81   45648525  19965679449    Africa  Eastern Africa       1.1982970
+## 82    6390851   1595792895    Africa  Western Africa       0.6841085
+## 83   10639194  33161453137    Africa Northern Africa       8.5394905
+## 84   33149417  12701095116    Africa  Eastern Africa       1.0497174
+## 85   13917439   5587389858    Africa  Eastern Africa       1.0999091
+## 86   13973897   4032423429    Africa  Eastern Africa       0.7905980
+##                 group
+## 1     Northern Africa
+## 2  Sub-Saharan Africa
+## 3  Sub-Saharan Africa
+## 4  Sub-Saharan Africa
+## 5  Sub-Saharan Africa
+## 6  Sub-Saharan Africa
+## 7  Sub-Saharan Africa
+## 8  Sub-Saharan Africa
+## 9  Sub-Saharan Africa
+## 10 Sub-Saharan Africa
+## 11 Sub-Saharan Africa
+## 12    Northern Africa
+## 13 Sub-Saharan Africa
+## 14 Sub-Saharan Africa
+## 15 Sub-Saharan Africa
+## 16 Sub-Saharan Africa
+## 17 Sub-Saharan Africa
+## 18 Sub-Saharan Africa
+## 19 Sub-Saharan Africa
+## 20 Sub-Saharan Africa
+## 21 Sub-Saharan Africa
+## 22 Sub-Saharan Africa
+## 23 Sub-Saharan Africa
+## 24    Northern Africa
+## 25 Sub-Saharan Africa
+## 26 Sub-Saharan Africa
+## 27 Sub-Saharan Africa
+## 28 Sub-Saharan Africa
+## 29 Sub-Saharan Africa
+## 30 Sub-Saharan Africa
+## 31 Sub-Saharan Africa
+## 32    Northern Africa
+## 33 Sub-Saharan Africa
+## 34 Sub-Saharan Africa
+## 35    Northern Africa
+## 36 Sub-Saharan Africa
+## 37 Sub-Saharan Africa
+## 38    Northern Africa
+## 39 Sub-Saharan Africa
+## 40 Sub-Saharan Africa
+## 41 Sub-Saharan Africa
+## 42 Sub-Saharan Africa
+## 43 Sub-Saharan Africa
+## 44 Sub-Saharan Africa
+## 45 Sub-Saharan Africa
+## 46 Sub-Saharan Africa
+## 47 Sub-Saharan Africa
+## 48 Sub-Saharan Africa
+## 49 Sub-Saharan Africa
+## 50 Sub-Saharan Africa
+## 51 Sub-Saharan Africa
+## 52    Northern Africa
+## 53 Sub-Saharan Africa
+## 54 Sub-Saharan Africa
+## 55 Sub-Saharan Africa
+## 56 Sub-Saharan Africa
+## 57 Sub-Saharan Africa
+## 58 Sub-Saharan Africa
+## 59 Sub-Saharan Africa
+## 60 Sub-Saharan Africa
+## 61 Sub-Saharan Africa
+## 62 Sub-Saharan Africa
+## 63 Sub-Saharan Africa
+## 64 Sub-Saharan Africa
+## 65 Sub-Saharan Africa
+## 66 Sub-Saharan Africa
+## 67 Sub-Saharan Africa
+## 68 Sub-Saharan Africa
+## 69    Northern Africa
+## 70 Sub-Saharan Africa
+## 71 Sub-Saharan Africa
+## 72 Sub-Saharan Africa
+## 73 Sub-Saharan Africa
+## 74 Sub-Saharan Africa
+## 75 Sub-Saharan Africa
+## 76 Sub-Saharan Africa
+## 77 Sub-Saharan Africa
+## 78 Sub-Saharan Africa
+## 79    Northern Africa
+## 80 Sub-Saharan Africa
+## 81 Sub-Saharan Africa
+## 82 Sub-Saharan Africa
+## 83    Northern Africa
+## 84 Sub-Saharan Africa
+## 85 Sub-Saharan Africa
+## 86 Sub-Saharan Africa
 \end{verbatim}
 
-\begin{verbatim}
-data(gapminder)
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{daydollars }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(dollars_per_day, }\DataTypeTok{fill =}\NormalTok{ region)) }\OperatorTok{+}
+\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_density}\NormalTok{(}\DataTypeTok{bw =} \FloatTok{0.5}\NormalTok{, }\DataTypeTok{position =} \StringTok{"stack"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{facet_grid}\NormalTok{(.}\OperatorTok{~}\NormalTok{year)}
+\end{Highlighting}
+\end{Shaded}
 
-daydollars <- gapminder %>% mutate(dollars_per_day=gdp/population/365)%>% filter(year %in% c(1970,2010) & continent=="Africa" & !is.na(dollars_per_day))
-
-daydollars %>% ggplot(aes(dollars_per_day,fill = region)) + geom_density(bw=0.5,position='stack') + scale_x_continuous(trans='log2') + facet_grid(.~year)
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76079366-c86bba80-5fa4-11ea-8a1e-00ac6915239a.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-135-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{10}
 \tightlist
 \item
-  Infant mortality scatter plot - part 1
+  We are going to continue looking at patterns in the gapminder dataset
+  by plotting infant mortality rates versus dollars per day for African
+  countries.
 \end{enumerate}
 
-We are going to continue looking at patterns in the gapminder dataset by
-plotting infant mortality rates versus dollars per day for African
-countries. - Generate dollars\_per\_day using mutate and filter for the
-year 2010 for African countries. - Remember to remove NA values. - Store
-the mutated dataset in gapminder\_Africa\_2010. - Make a scatter plot of
-infant\_mortaility versus dollars\_per\_day for countries in the African
-continent. - Use color to denote the different regions of Africa.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gapminder_Africa_}\DecValTok{2010}\NormalTok{ <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{dollars_per_day =}\NormalTok{ gdp}\OperatorTok{/}\NormalTok{population}\OperatorTok{/}\DecValTok{365}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(continent }\OperatorTok{==}\StringTok{ "Africa"} \OperatorTok{&}\StringTok{ }\NormalTok{year }\OperatorTok{==}\StringTok{ }\DecValTok{2010} \OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(gdp))}
+\CommentTok{# now make the scatter plot}
+\NormalTok{gapminder_Africa_}\DecValTok{2010} \OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(dollars_per_day, infant_mortality, }\DataTypeTok{color =}\NormalTok{ region)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-library(dplyr)
-library(ggplot2)
-library(dslabs)
-\end{verbatim}
-
-\begin{verbatim}
-data(gapminder)
-gapminder_Africa_2010 <- daydollars <- gapminder %>% mutate(dollars_per_day=gdp/population/365)%>% filter(year %in% c(2010) & continent=="Africa" & !is.na(dollars_per_day))
-
-# now make the scatter plot
-
-gapminder_Africa_2010 %>% ggplot(aes(dollars_per_day,infant_mortality,color = region)) + geom_point()
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76079538-226c8000-5fa5-11ea-8a89-fb738049dfcf.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-136-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{11}
 \tightlist
 \item
-  Infant mortality scatter plot - part 2 - logarithmic axis
+  Now we are going to transform the x axis of the plot from the previous
+  exercise.
 \end{enumerate}
 
-Now we are going to transform the x axis of the plot from the previous
-exercise. - The mutated dataset is preloaded as gapminder\_Africa\_2010.
-- As in the previous exercise, make a scatter plot of infant\_mortaility
-versus dollars\_per\_day for countries in the African continent. - As in
-the previous exercise, use color to denote the different regions of
-Africa. - Transform the x axis to be in the log (base 2) scale.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gapminder_Africa_}\DecValTok{2010} \OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(dollars_per_day, infant_mortality, }\DataTypeTok{color =}\NormalTok{ region)) }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-gapminder_Africa_2010 %>% ggplot(aes(dollars_per_day,infant_mortality, color=region)) + geom_point() + scale_x_continuous(trans='log2')
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76079652-619ad100-5fa5-11ea-87ab-893c889572df.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-137-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{12}
 \tightlist
 \item
-  Infant mortality scatter plot - part 3 - adding labels
+  Note that there is a large variation in infant mortality and dollars
+  per day among African countries.
 \end{enumerate}
-
-Note that there is a large variation in infant mortality and dollars per
-day among African countries.
 
 As an example, one country has infant mortality rates of less than 20
 per 1000 and dollars per day of 16, while another country has infant
 mortality rates over 10\% and dollars per day of about 1.
 
 In this exercise, we will remake the plot from Exercise 12 with country
-names instead of points so we can identify which countries are which. -
-The mutated dataset is preloaded as gapminder\_Africa\_2010. - As in the
-previous exercise, make a scatter plot of infant\_mortaility versus
-dollars\_per\_day for countries in the African continent. - As in the
-previous exercise, use color to denote the different regions of Africa.
-- As in the previous exercise, transform the x axis to be in the log
-(base 2) scale. - Add a layer to display country names instead of
-points.
+names instead of points so we can identify which countries are which.
 
-\begin{verbatim}
-gapminder_Africa_2010 %>% ggplot(aes(dollars_per_day,infant_mortality, color=region,label = country)) + geom_point() + scale_x_continuous(trans='log2') +
-    geom_text()
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gapminder_Africa_}\DecValTok{2010} \OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(dollars_per_day, infant_mortality, }\DataTypeTok{color =}\NormalTok{ region, }\DataTypeTok{label =}\NormalTok{ country)) }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_text}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76079763-acb4e400-5fa5-11ea-9c68-a36471bafd20.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-138-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{13}
 \tightlist
 \item
-  Infant mortality scatter plot - part 4 - comparison of scatter plots
+  Now we are going to look at changes in the infant mortality and
+  dollars per day patterns African countries between 1970 and 2010.
 \end{enumerate}
 
-Now we are going to look at changes in the infant mortality and dollars
-per day patterns African countries between 1970 and 2010. - Generate
-dollars\_per\_day using mutate and filter for the years 1970 and 2010
-for African countries. - Remember to remove NA values. - As in the
-previous exercise, make a scatter plot of infant\_mortaility versus
-dollars\_per\_day for countries in the African continent. - As in the
-previous exercise, use color to denote the different regions of Africa.
-- As in the previous exercise, transform the x axis to be in the log
-(base 2) scale. - As in the previous exercise, add a layer to display
-country names instead of points. - Use facet\_grid to show different
-plots for 1970 and 2010.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gapminder_Africa_}\DecValTok{1970}\NormalTok{_}\DecValTok{2019}\NormalTok{ <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{dollars_per_day =}\NormalTok{ gdp}\OperatorTok{/}\NormalTok{population}\OperatorTok{/}\DecValTok{365}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(continent }\OperatorTok{==}\StringTok{ "Africa"} \OperatorTok{&}\StringTok{ }\NormalTok{year}\OperatorTok{%in%}\KeywordTok{c}\NormalTok{(}\DecValTok{1970}\NormalTok{,}\DecValTok{2010}\NormalTok{) }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(gdp) }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(infant_mortality))}
+\NormalTok{gapminder_Africa_}\DecValTok{1970}\NormalTok{_}\DecValTok{2019} \OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(dollars_per_day, infant_mortality, }\DataTypeTok{color =}\NormalTok{ region, }\DataTypeTok{label =}\NormalTok{ country)) }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_text}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{facet_grid}\NormalTok{(year }\OperatorTok{~}\StringTok{ }\NormalTok{.)}
+\end{Highlighting}
+\end{Shaded}
 
-\begin{verbatim}
-library(dplyr)
-library(ggplot2)
-library(dslabs)
-\end{verbatim}
-
-\begin{verbatim}
-data(gapminder)
-gapminder  %>%
-    filter(continent == "Africa" & year %in% c(1970,2010) & !is.na(gdp) & !is.na(year) & !is.na(infant_mortality)) %>%
-    mutate(dollars_per_day = gdp/population/365) %>%
-    ggplot(aes(dollars_per_day, infant_mortality, color = region,label = country)) +
-    geom_point() +
-    scale_x_continuous(trans = "log2") +
-    geom_text() +
-    facet_grid(year~.)
-\end{verbatim}
-
-\begin{figure}
-\centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76079914-09b09a00-5fa6-11ea-8f39-f8556253ee2c.png}
-\caption{index}
-\end{figure}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-139-1.pdf}
 
 \hypertarget{section-5-overview}{%
 \subsection{Section 5 Overview}\label{section-5-overview}}
@@ -5706,17 +6368,48 @@ gapminder  %>%
 Section 5 covers some general principles that can serve as guides for
 effective data visualization.
 
-After completing Section 5, you will: - understand basic principles of
-effective data visualization. - understand the importance of keeping
-your goal in mind when deciding on a visualization approach. -
-understand principles for encoding data, including position, aligned
-lengths, angles, area, brightness, and color hue. - know when to include
-the number zero in visualizations. - be able to use techniques to ease
-comparisons, such as using common axes, putting visual cues to be
-compared adjacent to one another, and using color effectively.
+After completing Section 5, you will:
+
+\begin{itemize}
+\tightlist
+\item
+  understand basic principles of effective data visualization.
+\item
+  understand the importance of keeping your goal in mind when deciding
+  on a visualization approach.
+\item
+  understand principles for encoding data, including position, aligned
+  lengths, angles, area, brightness, and color hue.
+\item
+  know when to include the number zero in visualizations.
+\item
+  be able to use techniques to ease comparisons, such as using common
+  axes, putting visual cues to be compared adjacent to one another, and
+  using color effectively.
+\end{itemize}
+
+\hypertarget{introduction-to-data-visualization-principles}{%
+\subsection{Introduction to Data Visualization
+Principles}\label{introduction-to-data-visualization-principles}}
 
 The textbook for this section is available
 \href{https://rafalab.github.io/dsbook/data-visualization-principles.html}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  We aim to provide some general guidelines for effective data
+  visualization.
+\item
+  We show examples of plot styles to avoid, discuss how to improve them,
+  and use these examples to explain research-based principles for
+  effective visualization.
+\item
+  When choosing a visualization approach, keep your goal and audience in
+  mind.
+\end{itemize}
 
 \hypertarget{assessment-9-data-visualization-principles-part-1}{%
 \subsection{Assessment 9 (Data Visualization Principles, Part
@@ -6413,7 +7106,7 @@ Make a density plot of the magnitude.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-128-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-142-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6434,7 +7127,7 @@ best characterizes the temperature distribution?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-129-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-143-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6457,7 +7150,7 @@ star.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-130-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-144-1.pdf}
 
 \textbf{Question 5}\\
 For various reasons, scientists do not always follow straight
@@ -6481,7 +7174,7 @@ The brighest, highest temperature stars are in the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-131-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-145-1.pdf}
 
 \textbf{Question 6}\\
 The trends you see allow scientists to learn about the evolution and
@@ -6524,7 +7217,7 @@ Fill in the blanks in the statements below:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-132-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-146-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6560,7 +7253,7 @@ amount of light produced at various wavelengths.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-133-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-147-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6730,7 +7423,7 @@ first available year to the last available year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-136-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-150-1.pdf}
 
 \textbf{Question 3}\\
 Inspect the difference in temperature in temp\_carbon from the first
@@ -6808,7 +7501,7 @@ mean temperature?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-138-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-152-1.pdf}
 
 \textbf{Question 5}\\
 Continue working with p, the plot created in the previous question.
@@ -6833,7 +7526,7 @@ and the text color should be blue.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-139-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-153-1.pdf}
 
 \textbf{Question 6}
 
@@ -6913,7 +7606,7 @@ Which region has the largest 2018 temperature anomaly relative to the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-143-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-157-1.pdf}
 
 \textbf{Question 8} A major determinant of Earth's temperature is the
 greenhouse effect. Many gases trap heat and reflect it towards the
@@ -6961,7 +7654,7 @@ ppm.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-145-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-159-1.pdf}
 
 \textbf{Question 10} Make a time series line plot of carbon emissions
 (carbon\_emissions) from the temp\_carbon dataset. The y-axis is metric
@@ -6976,7 +7669,7 @@ tons of carbon emitted per year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-146-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-160-1.pdf}
 
 \textbf{Question 11}\\
 We saw how greenhouse gases have changed over the course of human
@@ -7001,7 +7694,7 @@ measurement source (source). Save this plot as co2\_time for later use.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-147-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-161-1.pdf}
 
 \textbf{Question 12}\\
 One way to differentiate natural co2 oscillations from today's manmade

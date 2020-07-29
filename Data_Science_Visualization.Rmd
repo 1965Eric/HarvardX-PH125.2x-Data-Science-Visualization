@@ -1,9 +1,10 @@
 ---
 title: "Data Science Visualization"
 output:
+  word_document: default
+  html_document: default
   pdf_document:
     latex_engine: xelatex
-  html_document: default
 urlcolor: blue
 ---
 
@@ -2234,7 +2235,7 @@ surv_income %>% ggplot(aes(income, infant_survival_rate, label = group, color = 
 
 ## Assessment - Exploring the Gapminder Dataset
 
-1. The [Gapminder Foundation](www.gapminder.org) is a non-profit organization based in Sweden that promotes global development through the use of statistics that can help reduce misconceptions about global development.
+1. The [Gapminder Foundation](https://www.gapminder.org) is a non-profit organization based in Sweden that promotes global development through the use of statistics that can help reduce misconceptions about global development.
 
 ```{r}
 ## fill out the missing parts in filter and aes
