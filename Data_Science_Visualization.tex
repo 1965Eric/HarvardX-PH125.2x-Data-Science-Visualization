@@ -86,6 +86,15 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -4222,17 +4231,935 @@ of the \texttt{Race1} variable for males between the ages of 40-49.
 \subsection{Section 4 Overview}\label{section-4-overview}}
 
 In Section 4, you will look at a case study involving data from the
-Gapminder Foundation about trends in world health and economics.
+\href{https://www.gapminder.org}{Gapminder Foundation} about trends in
+world health and economics.
 
-After completing Section 4, you will: - understand how Hans Rosling and
-the Gapminder Foundation use effective data visualization to convey
-data-based trends. - be able to apply the ggplot2 techniques from the
-previous section to answer questions using data. - understand how fixed
-scales across plots can ease comparisons. - be able to modify graphs to
-improve data visualization.
+After completing Section 4, you will:
+
+\begin{itemize}
+\tightlist
+\item
+  understand how Hans Rosling and the Gapminder Foundation use effective
+  data visualization to convey data-based trends.
+\item
+  be able to apply the ggplot2 techniques from the previous section to
+  answer questions using data.
+\item
+  understand how fixed scales across plots can ease comparisons.
+\item
+  be able to modify graphs to improve data visualization.
+\end{itemize}
+
+\hypertarget{case-study-trends-in-world-health-and-economics}{%
+\subsection{Case Study: Trends in World Health and
+Economics}\label{case-study-trends-in-world-health-and-economics}}
 
 The textbook for this section is available
 \href{https://rafalab.github.io/dsbook/gapminder.html\#case-study-new-insights-on-poverty}{here}
+
+\textbf{More about Gapminder}
+
+The original Gapminder TED talks are available and we encourage you to
+watch them.
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://www.ted.com/talks/hans_rosling_the_best_stats_you_ve_ever_seen?language=en}{The
+  Best Stats You've Ever Seen}
+\item
+  \href{https://www.ted.com/talks/hans_rosling_new_insights_on_poverty?language=en}{New
+  Insights on Poverty}
+\end{itemize}
+
+You can also find more information and raw data (in addition to what we
+analyze in class) \href{https://www.gapminder.org/}{at}.
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  Data visualization can be used to dispel common myths and educate the
+  public and contradict sensationalist or outdated claims and stories.
+\item
+  We will use real data to answer the following questions about world
+  health and economics:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Is it still fair to consider the world as divided into the West and
+    the developing world?
+  \item
+    Has income inequality across countries worsened over the last 40
+    years?
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{gapminder-dataset}{%
+\subsection{Gapminder Dataset}\label{gapminder-dataset}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/gapminder.html\#case-study-new-insights-on-poverty}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  A selection of world health and economics statistics from the
+  Gapminder project can be found in the \textbf{dslabs} package as
+  \texttt{data(gapminder)}.
+\item
+  Most people have misconceptions about world health and economics,
+  which can be addressed by considering real data.
+\end{itemize}
+
+\emph{Code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# load and inspect gapminder data}
+\KeywordTok{data}\NormalTok{(gapminder)}
+\KeywordTok{head}\NormalTok{(gapminder)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##               country year infant_mortality life_expectancy fertility
+## 1             Albania 1960           115.40           62.87      6.19
+## 2             Algeria 1960           148.20           47.50      7.65
+## 3              Angola 1960           208.00           35.98      7.32
+## 4 Antigua and Barbuda 1960               NA           62.97      4.43
+## 5           Argentina 1960            59.87           65.39      3.11
+## 6             Armenia 1960               NA           66.86      4.55
+##   population          gdp continent          region
+## 1    1636054           NA    Europe Southern Europe
+## 2   11124892  13828152297    Africa Northern Africa
+## 3    5270844           NA    Africa   Middle Africa
+## 4      54681           NA  Americas       Caribbean
+## 5   20619075 108322326649  Americas   South America
+## 6    1867396           NA      Asia    Western Asia
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compare infant mortality in Sri Lanka and Turkey}
+\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ }\DecValTok{2015} \OperatorTok{&}\StringTok{ }\NormalTok{country }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Sri Lanka"}\NormalTok{, }\StringTok{"Turkey"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(country, infant_mortality)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     country infant_mortality
+## 1 Sri Lanka              8.4
+## 2    Turkey             11.6
+\end{verbatim}
+
+\hypertarget{life-expectancy-and-fertility-rates}{%
+\subsection{Life Expectancy and Fertility
+Rates}\label{life-expectancy-and-fertility-rates}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/gapminder.html\#scatterplots}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  A prevalent worldview is that the world is divided into two groups of
+  countries:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Western world: high life expectancy, low fertility rate
+  \item
+    Developing world: lower life expectancy, higher fertility rate
+  \end{itemize}
+\item
+  Gapminder data can be used to evaluate the validity of this view.
+\item
+  A scatterplot of life expectancy versus fertility rate in 1962
+  suggests that this viewpoint was grounded in reality 50 years ago. Is
+  it still the case today?
+\end{itemize}
+
+\emph{Code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# basic scatterplot of life expectancy versus fertility}
+\KeywordTok{ds_theme_set}\NormalTok{()    }\CommentTok{# set plot theme}
+\KeywordTok{filter}\NormalTok{(gapminder, year }\OperatorTok{==}\StringTok{ }\DecValTok{1962}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(fertility, life_expectancy)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-109-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# add color as continent}
+\KeywordTok{filter}\NormalTok{(gapminder, year }\OperatorTok{==}\StringTok{ }\DecValTok{1962}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(fertility, life_expectancy, }\DataTypeTok{color =}\NormalTok{ continent)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-109-2.pdf}
+
+\hypertarget{faceting}{%
+\subsection{Faceting}\label{faceting}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/gapminder.html\#faceting}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  Faceting makes multiple side-by-side plots stratified by some
+  variable. This is a way to ease comparisons.
+\item
+  The \texttt{facet\_grid} function allows faceting by up to two
+  variables, with rows faceted by one variable and columns faceted by
+  the other variable. To facet by only one variable, use the dot
+  operator as the other variable.
+\item
+  The \texttt{facet\_wrap} function facets by one variable and
+  automatically wraps the series of plots so they have readable
+  dimensions.
+\item
+  Faceting keeps the axes fixed across all plots, easing comparisons
+  between plots.
+\item
+  The data suggest that the developing versus Western world view no
+  longer makes sense in 2012.
+\end{itemize}
+
+\emph{Code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# facet by continent and year}
+\KeywordTok{filter}\NormalTok{(gapminder, year }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1962}\NormalTok{, }\DecValTok{2012}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(fertility, life_expectancy, }\DataTypeTok{col =}\NormalTok{ continent)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{facet_grid}\NormalTok{(continent }\OperatorTok{~}\StringTok{ }\NormalTok{year)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-110-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# facet by year only}
+\KeywordTok{filter}\NormalTok{(gapminder, year }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1962}\NormalTok{, }\DecValTok{2012}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(fertility, life_expectancy, }\DataTypeTok{col =}\NormalTok{ continent)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{facet_grid}\NormalTok{(. }\OperatorTok{~}\StringTok{ }\NormalTok{year)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-110-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# facet by year, plots wrapped onto multiple rows}
+\NormalTok{years <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1962}\NormalTok{, }\DecValTok{1980}\NormalTok{, }\DecValTok{1990}\NormalTok{, }\DecValTok{2000}\NormalTok{, }\DecValTok{2012}\NormalTok{)}
+\NormalTok{continents <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Europe"}\NormalTok{, }\StringTok{"Asia"}\NormalTok{)}
+\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{%in%}\StringTok{ }\NormalTok{years }\OperatorTok{&}\StringTok{ }\NormalTok{continent }\OperatorTok{%in%}\StringTok{ }\NormalTok{continents) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(fertility, life_expectancy, }\DataTypeTok{col =}\NormalTok{ continent)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\NormalTok{year)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-110-3.pdf}
+
+\hypertarget{time-series-plots}{%
+\subsection{Time Series Plots}\label{time-series-plots}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/gapminder.html\#time-series-plots}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  Time series plots have time on the x-axis and a variable of interest
+  on the y-axis.
+\item
+  The \texttt{geom\_line} geometry connects adjacent data points to form
+  a continuous line. A line plot is appropriate when points are
+  regularly spaced, densely packed and from a single data series.
+\item
+  You can plot multiple lines on the same graph. Remember to group or
+  color by a variable so that the lines are plotted independently.
+\item
+  Labeling is usually preferred over legends. However, legends are
+  easier to make and appear by default. Add a label with
+  \texttt{geom\_text}, specifying the coordinates where the label should
+  appear on the graph.
+\end{itemize}
+
+\emph{Code: Single time series}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# scatterplot of US fertility by year}
+\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(country }\OperatorTok{==}\StringTok{ "United States"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(year, fertility)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 1 rows containing missing values (geom_point).
+\end{verbatim}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-111-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# line plot of US fertility by year}
+\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(country }\OperatorTok{==}\StringTok{ "United States"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(year, fertility)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 1 row(s) containing missing values (geom_path).
+\end{verbatim}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-111-2.pdf}
+
+\emph{Code: Multiple time series}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# line plot fertility time series for two countries- only one line (incorrect)}
+\NormalTok{countries <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"South Korea"}\NormalTok{, }\StringTok{"Germany"}\NormalTok{)}
+\NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(country }\OperatorTok{%in%}\StringTok{ }\NormalTok{countries) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(year, fertility)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 2 row(s) containing missing values (geom_path).
+\end{verbatim}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-112-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# line plot fertility time series for two countries - one line per country}
+\NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(country }\OperatorTok{%in%}\StringTok{ }\NormalTok{countries) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(year, fertility, }\DataTypeTok{group =}\NormalTok{ country)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 2 row(s) containing missing values (geom_path).
+\end{verbatim}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-112-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# fertility time series for two countries - lines colored by country}
+\NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(country }\OperatorTok{%in%}\StringTok{ }\NormalTok{countries) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(year, fertility, }\DataTypeTok{col =}\NormalTok{ country)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 2 row(s) containing missing values (geom_path).
+\end{verbatim}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-112-3.pdf}
+
+\emph{Code: Adding text labels to a plot}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# life expectancy time series - lines colored by country and labeled, no legend}
+\NormalTok{labels <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{country =}\NormalTok{ countries, }\DataTypeTok{x =} \KeywordTok{c}\NormalTok{(}\DecValTok{1975}\NormalTok{, }\DecValTok{1965}\NormalTok{), }\DataTypeTok{y =} \KeywordTok{c}\NormalTok{(}\DecValTok{60}\NormalTok{, }\DecValTok{72}\NormalTok{))}
+\NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(country }\OperatorTok{%in%}\StringTok{ }\NormalTok{countries) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(year, life_expectancy, }\DataTypeTok{col =}\NormalTok{ country)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_line}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ labels, }\KeywordTok{aes}\NormalTok{(x, y, }\DataTypeTok{label =}\NormalTok{ country), }\DataTypeTok{size =} \DecValTok{5}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-113-1.pdf}
+
+\hypertarget{transformations}{%
+\subsection{Transformations}\label{transformations}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/gapminder.html\#data-transformations}{here}
+and
+{[}here(\url{https://rafalab.github.io/dsbook/gapminder.html\#visualizing-multimodal-distributions})
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  We use GDP data to compute income in US dollars per day, adjusted for
+  inflation.
+\item
+  Log transformations convert multiplicative changes into additive
+  changes.
+\item
+  Common transformations are the log base 2 transformation and the log
+  base 10 transformation. The choice of base depends on the range of the
+  data. The natural log is not recommended for visualization because it
+  is difficult to interpret.
+\item
+  The mode of a distribution is the value with the highest frequency.
+  The mode of a normal distribution is the average. A distribution can
+  have multiple local modes.
+\item
+  There are two ways to use log transformations in plots: transform the
+  data before plotting or transform the axes of the plot. Log scales
+  have the advantage of showing the original values as axis labels,
+  while log transformed values ease interpretation of intermediate
+  values between labels.
+\item
+  Scale the x-axis using \texttt{scale\_x\_continuous} or
+  \texttt{scale\_x\_log10} layers in ggplot2. Similar functions exist
+  for the y-axis.
+\item
+  In 1970, income distribution is bimodal, consistent with the
+  dichotomous Western versus developing worldview.
+\end{itemize}
+
+\emph{Code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# add dollars per day variable}
+\NormalTok{gapminder <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{dollars_per_day =}\NormalTok{ gdp}\OperatorTok{/}\NormalTok{population}\OperatorTok{/}\DecValTok{365}\NormalTok{)}
+
+\CommentTok{# histogram of dollars per day}
+\NormalTok{past_year <-}\StringTok{ }\DecValTok{1970}
+\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ }\NormalTok{past_year }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(gdp)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(dollars_per_day)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{, }\DataTypeTok{color =} \StringTok{"black"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-114-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# repeat histogram with log2 scaled data}
+\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ }\NormalTok{past_year }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(gdp)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\KeywordTok{log2}\NormalTok{(dollars_per_day))) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{, }\DataTypeTok{color =} \StringTok{"black"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-114-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# repeat histogram with log2 scaled x-axis}
+\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ }\NormalTok{past_year }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(gdp)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(dollars_per_day)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{, }\DataTypeTok{color =} \StringTok{"black"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log2"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-114-3.pdf}
+
+\hypertarget{stratify-and-boxplot}{%
+\subsection{Stratify and Boxplot}\label{stratify-and-boxplot}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/gapminder.html\#comparing-multiple-distributions-with-boxplots-and-ridge-plots}{here}.
+Note that many boxplots from the video are instead dot plots in the
+textbook and that a different boxplot is constructed in the textbook.
+Also read that section to see an example of grouping factors with the
+\texttt{case\_when} function.
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  Make boxplots stratified by a categorical variable using the
+  \texttt{geom\_boxplot} geometry.
+\item
+  Rotate axis labels by changing the theme through
+  \texttt{element\_text}. You can change the angle and justification of
+  the text labels.
+\item
+  Consider ordering your factors by a meaningful value with the
+  \texttt{reorder} function, which changes the order of factor levels
+  based on a related numeric vector. This is a way to ease comparisons.
+\item
+  Show the data by adding data points to the boxplot with a
+  \texttt{geom\_point} layer. This adds information beyond the
+  five-number summary to your plot, but too many data points it can
+  obfuscate your message.
+\end{itemize}
+
+\emph{Code: Boxplot of GDP by region}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# add dollars per day variable}
+\NormalTok{gapminder <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{dollars_per_day =}\NormalTok{ gdp}\OperatorTok{/}\NormalTok{population}\OperatorTok{/}\DecValTok{365}\NormalTok{)}
+
+\CommentTok{# number of regions}
+\KeywordTok{length}\NormalTok{(}\KeywordTok{levels}\NormalTok{(gapminder}\OperatorTok{$}\NormalTok{region))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 22
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# boxplot of GDP by region in 1970}
+\NormalTok{past_year <-}\StringTok{ }\DecValTok{1970}
+\NormalTok{p <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ }\NormalTok{past_year }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(gdp)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(region, dollars_per_day))}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-115-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# rotate names on x-axis}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_boxplot}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text.x =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{angle =} \DecValTok{90}\NormalTok{, }\DataTypeTok{hjust =} \DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-115-2.pdf}
+
+\emph{Code: The reorder function}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# by default, factor order is alphabetical}
+\NormalTok{fac <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"Asia"}\NormalTok{, }\StringTok{"Asia"}\NormalTok{, }\StringTok{"West"}\NormalTok{, }\StringTok{"West"}\NormalTok{, }\StringTok{"West"}\NormalTok{))}
+\KeywordTok{levels}\NormalTok{(fac)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Asia" "West"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# reorder factor by the category means}
+\NormalTok{value <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{11}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{4}\NormalTok{)}
+\NormalTok{fac <-}\StringTok{ }\KeywordTok{reorder}\NormalTok{(fac, value, }\DataTypeTok{FUN =}\NormalTok{ mean)}
+\KeywordTok{levels}\NormalTok{(fac)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "West" "Asia"
+\end{verbatim}
+
+\emph{Code: Enhanced boxplot ordered by median income, scaled, and
+showing data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# reorder by median income and color by continent}
+\NormalTok{p <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ }\NormalTok{past_year }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(gdp)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{region =} \KeywordTok{reorder}\NormalTok{(region, dollars_per_day, }\DataTypeTok{FUN =}\NormalTok{ median)) }\OperatorTok{%>%}\StringTok{    }\CommentTok{# reorder}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(region, dollars_per_day, }\DataTypeTok{fill =}\NormalTok{ continent)) }\OperatorTok{+}\StringTok{    }\CommentTok{# color by continent}
+\StringTok{    }\KeywordTok{geom_boxplot}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text.x =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{angle =} \DecValTok{90}\NormalTok{, }\DataTypeTok{hjust =} \DecValTok{1}\NormalTok{)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{)}
+\NormalTok{p}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-117-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# log2 scale y-axis}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log2"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-117-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# add data points}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{show.legend =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-117-3.pdf}
+
+\hypertarget{comparing-distributions}{%
+\subsection{Comparing Distributions}\label{comparing-distributions}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/gapminder.html\#example-1970-versus-2010-income-distributions}{here}.
+Note that the boxplots are slightly different.
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  Use \texttt{intersect} to find the overlap between two vectors.
+\item
+  To make boxplots where grouped variables are adjacaent, color the
+  boxplot by a factor instead of faceting by that factor. This is a way
+  to ease comparisons.
+\item
+  The data suggest that the income gap between rich and poor countries
+  has narrowed, not expanded.
+\end{itemize}
+
+\emph{Code: Histogram of income in West versus developing world, 1970
+and 2010}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# add dollars per day variable and define past year}
+\NormalTok{gapminder <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{dollars_per_day =}\NormalTok{ gdp}\OperatorTok{/}\NormalTok{population}\OperatorTok{/}\DecValTok{365}\NormalTok{)}
+\NormalTok{past_year <-}\StringTok{ }\DecValTok{1970}
+
+\CommentTok{# define Western countries}
+\NormalTok{west <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Western Europe"}\NormalTok{, }\StringTok{"Northern Europe"}\NormalTok{, }\StringTok{"Southern Europe"}\NormalTok{, }\StringTok{"Northern America"}\NormalTok{, }\StringTok{"Australia and New Zealand"}\NormalTok{)}
+
+\CommentTok{# facet by West vs devloping}
+\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ }\NormalTok{past_year }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(gdp)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{group =} \KeywordTok{ifelse}\NormalTok{(region }\OperatorTok{%in%}\StringTok{ }\NormalTok{west, }\StringTok{"West"}\NormalTok{, }\StringTok{"Developing"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(dollars_per_day)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{, }\DataTypeTok{color =} \StringTok{"black"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log2"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{facet_grid}\NormalTok{(. }\OperatorTok{~}\StringTok{ }\NormalTok{group)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-118-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# facet by West/developing and year}
+\NormalTok{present_year <-}\StringTok{ }\DecValTok{2010}
+\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(past_year, present_year) }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(gdp)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{group =} \KeywordTok{ifelse}\NormalTok{(region }\OperatorTok{%in%}\StringTok{ }\NormalTok{west, }\StringTok{"West"}\NormalTok{, }\StringTok{"Developing"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(dollars_per_day)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{, }\DataTypeTok{color =} \StringTok{"black"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log2"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{facet_grid}\NormalTok{(year }\OperatorTok{~}\StringTok{ }\NormalTok{group)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-118-2.pdf}
+
+\emph{Code: Income distribution of West versus developing world, only
+countries with data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# define countries that have data available in both years}
+\NormalTok{country_list_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ }\NormalTok{past_year }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(dollars_per_day)) }\OperatorTok{%>%}\StringTok{ }\NormalTok{.}\OperatorTok{$}\NormalTok{country}
+\NormalTok{country_list_}\DecValTok{2}\NormalTok{ <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ }\NormalTok{present_year }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(dollars_per_day)) }\OperatorTok{%>%}\StringTok{ }\NormalTok{.}\OperatorTok{$}\NormalTok{country}
+\NormalTok{country_list <-}\StringTok{ }\KeywordTok{intersect}\NormalTok{(country_list_}\DecValTok{1}\NormalTok{, country_list_}\DecValTok{2}\NormalTok{)}
+
+\CommentTok{# make histogram including only countries with data available in both years}
+\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(past_year, present_year) }\OperatorTok{&}\StringTok{ }\NormalTok{country }\OperatorTok{%in%}\StringTok{ }\NormalTok{country_list) }\OperatorTok{%>%}\StringTok{    }\CommentTok{# keep only selected countries}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{group =} \KeywordTok{ifelse}\NormalTok{(region }\OperatorTok{%in%}\StringTok{ }\NormalTok{west, }\StringTok{"West"}\NormalTok{, }\StringTok{"Developing"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(dollars_per_day)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{, }\DataTypeTok{color =} \StringTok{"black"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log2"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{facet_grid}\NormalTok{(year }\OperatorTok{~}\StringTok{ }\NormalTok{group)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-119-1.pdf}
+
+\emph{Code: Boxplots of income in West versus developing world, 1970 and
+2010}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(past_year, present_year) }\OperatorTok{&}\StringTok{ }\NormalTok{country }\OperatorTok{%in%}\StringTok{ }\NormalTok{country_list) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{region =} \KeywordTok{reorder}\NormalTok{(region, dollars_per_day, }\DataTypeTok{FUN =}\NormalTok{ median)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text.x =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{angle =} \DecValTok{90}\NormalTok{, }\DataTypeTok{hjust =} \DecValTok{1}\NormalTok{)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log2"}\NormalTok{)}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_boxplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(region, dollars_per_day, }\DataTypeTok{fill =}\NormalTok{ continent)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{facet_grid}\NormalTok{(year }\OperatorTok{~}\StringTok{ }\NormalTok{.)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-120-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# arrange matching boxplots next to each other, colored by year}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_boxplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(region, dollars_per_day, }\DataTypeTok{fill =} \KeywordTok{factor}\NormalTok{(year)))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-120-2.pdf}
+
+\hypertarget{density-plots}{%
+\subsection{Density Plots}\label{density-plots}}
+
+The textbook for this section is available:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://rafalab.github.io/dsbook/gapminder.html\#example-1970-versus-2010-income-distributions}{1970
+  versus 2010 income distributions}
+\item
+  \href{https://rafalab.github.io/dsbook/gapminder.html\#accessing-computed-variables}{Accessing
+  computed variables}
+\item
+  \href{https://rafalab.github.io/dsbook/gapminder.html\#weighted-densities}{Weighted
+  densities}
+\end{itemize}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  Change the y-axis of density plots to variable counts using
+  \texttt{..count..} as the y argument.
+\item
+  The \texttt{case\_when} function defines a factor whose levels are
+  defined by a variety of logical operations to group data.
+\item
+  Plot stacked density plots using \texttt{position="stack"}.
+\item
+  Define a weight \texttt{aesthetic} mapping to change the relative
+  weights of density plots - for example, this allows weighting of plots
+  by population rather than number of countries.
+\end{itemize}
+
+\emph{Code: Faceted smooth density plots}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# smooth density plots - area under each curve adds to 1}
+\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ }\NormalTok{past_year }\OperatorTok{&}\StringTok{ }\NormalTok{country }\OperatorTok{%in%}\StringTok{ }\NormalTok{country_list) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{group =} \KeywordTok{ifelse}\NormalTok{(region }\OperatorTok{%in%}\StringTok{ }\NormalTok{west, }\StringTok{"West"}\NormalTok{, }\StringTok{"Developing"}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(group) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{n =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}\StringTok{ }\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` ungrouping output (override with `.groups` argument)
+\end{verbatim}
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule
+group & n\tabularnewline
+\midrule
+\endhead
+Developing & 87\tabularnewline
+West & 21\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# smooth density plots - variable counts on y-axis}
+\NormalTok{p <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ }\NormalTok{past_year }\OperatorTok{&}\StringTok{ }\NormalTok{country }\OperatorTok{%in%}\StringTok{ }\NormalTok{country_list) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{group =} \KeywordTok{ifelse}\NormalTok{(region }\OperatorTok{%in%}\StringTok{ }\NormalTok{west, }\StringTok{"West"}\NormalTok{, }\StringTok{"Developing"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(dollars_per_day, }\DataTypeTok{y =}\NormalTok{ ..count.., }\DataTypeTok{fill =}\NormalTok{ group)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log2"}\NormalTok{)}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_density}\NormalTok{(}\DataTypeTok{alpha =} \FloatTok{0.2}\NormalTok{, }\DataTypeTok{bw =} \FloatTok{0.75}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{facet_grid}\NormalTok{(year }\OperatorTok{~}\StringTok{ }\NormalTok{.)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-121-1.pdf}
+
+\emph{Code: Add new region groups with case\_when}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# add group as a factor, grouping regions}
+\NormalTok{gapminder <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{group =} \KeywordTok{case_when}\NormalTok{(}
+\NormalTok{        .}\OperatorTok{$}\NormalTok{region }\OperatorTok{%in%}\StringTok{ }\NormalTok{west }\OperatorTok{~}\StringTok{ "West"}\NormalTok{,}
+\NormalTok{        .}\OperatorTok{$}\NormalTok{region }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Eastern Asia"}\NormalTok{, }\StringTok{"South-Eastern Asia"}\NormalTok{) }\OperatorTok{~}\StringTok{ "East Asia"}\NormalTok{,}
+\NormalTok{        .}\OperatorTok{$}\NormalTok{region }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Caribbean"}\NormalTok{, }\StringTok{"Central America"}\NormalTok{, }\StringTok{"South America"}\NormalTok{) }\OperatorTok{~}\StringTok{ "Latin America"}\NormalTok{,}
+\NormalTok{        .}\OperatorTok{$}\NormalTok{continent }\OperatorTok{==}\StringTok{ "Africa"} \OperatorTok{&}\StringTok{ }\NormalTok{.}\OperatorTok{$}\NormalTok{region }\OperatorTok{!=}\StringTok{ "Northern Africa"} \OperatorTok{~}\StringTok{ "Sub-Saharan Africa"}\NormalTok{,}
+        \OtherTok{TRUE} \OperatorTok{~}\StringTok{ "Others"}\NormalTok{))}
+
+\CommentTok{# reorder factor levels}
+\NormalTok{gapminder <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{group =} \KeywordTok{factor}\NormalTok{(group, }\DataTypeTok{levels =} \KeywordTok{c}\NormalTok{(}\StringTok{"Others"}\NormalTok{, }\StringTok{"Latin America"}\NormalTok{, }\StringTok{"East Asia"}\NormalTok{, }\StringTok{"Sub-Saharan Africa"}\NormalTok{, }\StringTok{"West"}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{Code: Stacked density plot}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# note you must redefine p with the new gapminder object first}
+\NormalTok{p <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(past_year, present_year) }\OperatorTok{&}\StringTok{ }\NormalTok{country }\OperatorTok{%in%}\StringTok{ }\NormalTok{country_list) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(dollars_per_day, }\DataTypeTok{fill =}\NormalTok{ group)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log2"}\NormalTok{)}
+
+\CommentTok{# stacked density plot}
+\NormalTok{p }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_density}\NormalTok{(}\DataTypeTok{alpha =} \FloatTok{0.2}\NormalTok{, }\DataTypeTok{bw =} \FloatTok{0.75}\NormalTok{, }\DataTypeTok{position =} \StringTok{"stack"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{facet_grid}\NormalTok{(year }\OperatorTok{~}\StringTok{ }\NormalTok{.)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-123-1.pdf}
+
+\emph{Code: Weighted stacked density plot}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# weighted stacked density plot}
+\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(past_year, present_year) }\OperatorTok{&}\StringTok{ }\NormalTok{country }\OperatorTok{%in%}\StringTok{ }\NormalTok{country_list) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(year) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{weight =}\NormalTok{ population}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(population}\OperatorTok{*}\DecValTok{2}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(dollars_per_day, }\DataTypeTok{fill =}\NormalTok{ group, }\DataTypeTok{weight =}\NormalTok{ weight)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log2"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_density}\NormalTok{(}\DataTypeTok{alpha =} \FloatTok{0.2}\NormalTok{, }\DataTypeTok{bw =} \FloatTok{0.75}\NormalTok{, }\DataTypeTok{position =} \StringTok{"stack"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{facet_grid}\NormalTok{(year }\OperatorTok{~}\StringTok{ }\NormalTok{.)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-124-1.pdf}
+
+\hypertarget{ecological-fallacy}{%
+\subsection{Ecological Fallacy}\label{ecological-fallacy}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/gapminder.html\#the-ecological-fallacy-and-importance-of-showing-the-data}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  The \emph{breaks} argument allows us to set the location of the axis
+  labels and tick marks.
+\item
+  The \emph{logistic} or \emph{logit transformation} is defined as
+  \(f(p) = log \frac{p}{1-p}\), or the log of odds. This scale is useful
+  for highlighting differences near 0 or near 1 and converts fold
+  changes into constant increases.
+\item
+  The \emph{ecological fallacy} is assuming that conclusions made from
+  the average of a group apply to all members of that group.
+\end{itemize}
+
+\emph{Code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# add additional cases}
+\NormalTok{gapminder <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{group =} \KeywordTok{case_when}\NormalTok{(}
+\NormalTok{        .}\OperatorTok{$}\NormalTok{region }\OperatorTok{%in%}\StringTok{ }\NormalTok{west }\OperatorTok{~}\StringTok{ "The West"}\NormalTok{,}
+\NormalTok{        .}\OperatorTok{$}\NormalTok{region }\OperatorTok{%in%}\StringTok{ "Northern Africa"} \OperatorTok{~}\StringTok{ "Northern Africa"}\NormalTok{,}
+\NormalTok{        .}\OperatorTok{$}\NormalTok{region }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Eastern Asia"}\NormalTok{, }\StringTok{"South-Eastern Asia"}\NormalTok{) }\OperatorTok{~}\StringTok{ "East Asia"}\NormalTok{,}
+\NormalTok{        .}\OperatorTok{$}\NormalTok{region }\OperatorTok{==}\StringTok{ "Southern Asia"} \OperatorTok{~}\StringTok{ "Southern Asia"}\NormalTok{,}
+\NormalTok{        .}\OperatorTok{$}\NormalTok{region }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Central America"}\NormalTok{, }\StringTok{"South America"}\NormalTok{, }\StringTok{"Caribbean"}\NormalTok{) }\OperatorTok{~}\StringTok{ "Latin America"}\NormalTok{,}
+\NormalTok{        .}\OperatorTok{$}\NormalTok{continent }\OperatorTok{==}\StringTok{ "Africa"} \OperatorTok{&}\StringTok{ }\NormalTok{.}\OperatorTok{$}\NormalTok{region }\OperatorTok{!=}\StringTok{ "Northern Africa"} \OperatorTok{~}\StringTok{ "Sub-Saharan Africa"}\NormalTok{,}
+\NormalTok{        .}\OperatorTok{$}\NormalTok{region }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Melanesia"}\NormalTok{, }\StringTok{"Micronesia"}\NormalTok{, }\StringTok{"Polynesia"}\NormalTok{) }\OperatorTok{~}\StringTok{ "Pacific Islands"}\NormalTok{))}
+
+\CommentTok{# define a data frame with group average income and average infant survival rate}
+\NormalTok{surv_income <-}\StringTok{ }\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{%in%}\StringTok{ }\NormalTok{present_year }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(gdp) }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(infant_mortality) }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(group)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(group) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{income =} \KeywordTok{sum}\NormalTok{(gdp)}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(population)}\OperatorTok{/}\DecValTok{365}\NormalTok{,}
+                        \DataTypeTok{infant_survival_rate =} \DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{sum}\NormalTok{(infant_mortality}\OperatorTok{/}\DecValTok{1000}\OperatorTok{*}\NormalTok{population)}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(population))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` ungrouping output (override with `.groups` argument)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{surv_income }\OperatorTok{%>%}\StringTok{ }\KeywordTok{arrange}\NormalTok{(income)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 7 x 3
+##   group              income infant_survival_rate
+##   <chr>               <dbl>                <dbl>
+## 1 Sub-Saharan Africa   1.76                0.936
+## 2 Southern Asia        2.07                0.952
+## 3 Pacific Islands      2.70                0.956
+## 4 Northern Africa      4.94                0.970
+## 5 Latin America       13.2                 0.983
+## 6 East Asia           13.4                 0.985
+## 7 The West            77.1                 0.995
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot infant survival versus income, with transformed axes}
+\NormalTok{surv_income }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(income, infant_survival_rate, }\DataTypeTok{label =}\NormalTok{ group, }\DataTypeTok{color =}\NormalTok{ group)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"log2"}\NormalTok{, }\DataTypeTok{limit =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\DecValTok{150}\NormalTok{)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{trans =} \StringTok{"logit"}\NormalTok{, }\DataTypeTok{limit =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.875}\NormalTok{, }\FloatTok{.9981}\NormalTok{),}
+                                       \DataTypeTok{breaks =} \KeywordTok{c}\NormalTok{(.}\DecValTok{85}\NormalTok{, }\FloatTok{.90}\NormalTok{, }\FloatTok{.95}\NormalTok{, }\FloatTok{.99}\NormalTok{, }\FloatTok{.995}\NormalTok{, }\FloatTok{.998}\NormalTok{)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_label}\NormalTok{(}\DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{show.legend =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-125-1.pdf}
 
 \hypertarget{assessment-8-exploring-the-gapminder-dataset}{%
 \subsection{Assessment 8 (Exploring the Gapminder
@@ -5486,7 +6413,7 @@ Make a density plot of the magnitude.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-110-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-128-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5507,7 +6434,7 @@ best characterizes the temperature distribution?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-111-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-129-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5530,7 +6457,7 @@ star.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-112-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-130-1.pdf}
 
 \textbf{Question 5}\\
 For various reasons, scientists do not always follow straight
@@ -5554,7 +6481,7 @@ The brighest, highest temperature stars are in the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-113-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-131-1.pdf}
 
 \textbf{Question 6}\\
 The trends you see allow scientists to learn about the evolution and
@@ -5597,7 +6524,7 @@ Fill in the blanks in the statements below:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-114-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-132-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5633,7 +6560,7 @@ amount of light produced at various wavelengths.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-115-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-133-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5803,7 +6730,7 @@ first available year to the last available year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-118-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-136-1.pdf}
 
 \textbf{Question 3}\\
 Inspect the difference in temperature in temp\_carbon from the first
@@ -5881,7 +6808,7 @@ mean temperature?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-120-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-138-1.pdf}
 
 \textbf{Question 5}\\
 Continue working with p, the plot created in the previous question.
@@ -5906,7 +6833,7 @@ and the text color should be blue.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-121-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-139-1.pdf}
 
 \textbf{Question 6}
 
@@ -5986,7 +6913,7 @@ Which region has the largest 2018 temperature anomaly relative to the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-125-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-143-1.pdf}
 
 \textbf{Question 8} A major determinant of Earth's temperature is the
 greenhouse effect. Many gases trap heat and reflect it towards the
@@ -6034,7 +6961,7 @@ ppm.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-127-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-145-1.pdf}
 
 \textbf{Question 10} Make a time series line plot of carbon emissions
 (carbon\_emissions) from the temp\_carbon dataset. The y-axis is metric
@@ -6049,7 +6976,7 @@ tons of carbon emitted per year.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-128-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-146-1.pdf}
 
 \textbf{Question 11}\\
 We saw how greenhouse gases have changed over the course of human
@@ -6074,7 +7001,7 @@ measurement source (source). Save this plot as co2\_time for later use.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-129-1.pdf}
+\includegraphics{Data_Science_Visualization_files/figure-latex/unnamed-chunk-147-1.pdf}
 
 \textbf{Question 12}\\
 One way to differentiate natural co2 oscillations from today's manmade
