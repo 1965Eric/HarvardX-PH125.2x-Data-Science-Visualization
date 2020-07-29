@@ -2,9 +2,9 @@
 title: "Data Science Visualization"
 output:
   word_document: default
-  html_document: default
   pdf_document:
     latex_engine: xelatex
+  html_document: default
 urlcolor: blue
 ---
 
@@ -2441,7 +2441,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 3. Take a look at the following two plots. They show the same information: rates of measles by state in the United States for 1928.
 
-![Rates of measles in the US for 1928](Rates of measles.png)
+![Rates of measles in the US for 1928](images/Rates of measles.png)
 
 - [ ] A. Both plots provide the same information, so they are equally good.
 - [ ] B. The plot on the left is better because it orders the states alphabetically.

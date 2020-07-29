@@ -6411,31 +6411,129 @@ The textbook for this section is available
   mind.
 \end{itemize}
 
-\hypertarget{assessment-9-data-visualization-principles-part-1}{%
-\subsection{Assessment 9 (Data Visualization Principles, Part
-1)}\label{assessment-9-data-visualization-principles-part-1}}
+\hypertarget{encoding-data-using-visual-cues}{%
+\subsection{Encoding Data Using Visual
+Cues}\label{encoding-data-using-visual-cues}}
 
-1: Customizing plots - Pie charts
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/data-visualization-principles.html\#encoding-data-using-visual-cues}{here}
 
-Pie charts are appropriate: - {[} {]} A. When we want to display
-percentages. - {[} {]} B. When ggplot2 is not available. - {[} {]} C.
-When I am in a bakery. - {[}X{]} D. Never. Barplots and tables are
-always better.
+You can learn more about barplots in the textbook section on
+\href{https://rafalab.github.io/dsbook/distributions.html\#barplots}{barplots}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  Visual cues for encoding data include position, length, angle, area,
+  brightness and color hue.
+\item
+  Position and length are the preferred way to display quantities,
+  followed by angles, which are preferred over area. Brightness and
+  color are even harder to quantify but can sometimes be useful.
+\item
+  Pie charts represent visual cues as both angles and area, while donut
+  charts use only area. Humans are not good at visually quantifying
+  angles and are even worse at quantifying area. Therefore pie and donut
+  charts should be avoided - use a bar plot instead. If you must make a
+  pie chart, include percentages as labels.
+\item
+  Bar plots represent visual cues as position and length. Humans are
+  good at visually quantifying linear measures, making bar plots a
+  strong alternative to pie or donut charts.
+\end{itemize}
+
+\hypertarget{know-when-to-include-zero}{%
+\subsection{Know When to Include Zero}\label{know-when-to-include-zero}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/data-visualization-principles.html\#know-when-to-include-0}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  When using bar plots, always start at 0. It is deceptive not to start
+  at 0 because bar plots imply length is proportional to the quantity
+  displayed. Cutting off the y-axis can make differences look bigger
+  than they actually are.
+\item
+  When using position rather than length, it is not necessary to include
+  0 (scatterplot, dot plot, boxplot).
+\end{itemize}
+
+\hypertarget{do-not-distort-quantities}{%
+\subsection{Do Not Distort Quantities}\label{do-not-distort-quantities}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/data-visualization-principles.html\#do-not-distort-quantities}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  Make sure your visualizations encode the correct quantities.
+\item
+  For example, if you are using a plot that relies on circle area, make
+  sure the area (rather than the radius) is proportional to the
+  quantity.
+\end{itemize}
+
+\hypertarget{order-by-a-meaningful-value}{%
+\subsection{Order by a Meaningful
+Value}\label{order-by-a-meaningful-value}}
+
+The textbook for this section is available
+\href{https://rafalab.github.io/dsbook/data-visualization-principles.html\#order-categories-by-a-meaningful-value}{here}
+
+\textbf{Key points}
+
+\begin{itemize}
+\tightlist
+\item
+  It is easiest to visually extract information from a plot when
+  categories are ordered by a meaningful value. The exact value on which
+  to order will depend on your data and the message you wish to convey
+  with your plot.
+\item
+  The default ordering for categories is alphabetical if the categories
+  are strings or by factor level if factors. However, we rarely want
+  alphabetical order.
+\end{itemize}
+
+\hypertarget{assessment---data-visualization-principles-part-1}{%
+\subsection{Assessment - Data Visualization Principles, Part
+1}\label{assessment---data-visualization-principles-part-1}}
+
+1: Pie charts are appropriate:
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  A. When we want to display percentages.
+\item[$\square$]
+  B. When ggplot2 is not available.
+\item[$\square$]
+  C. When I am in a bakery.
+\item[$\boxtimes$]
+  D. Never. Barplots and tables are always better.
+\end{itemize}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{1}
 \tightlist
 \item
-  Customizing plots - What's wrong?
+  What is the problem with this plot?
 \end{enumerate}
-
-What is the problem with this plot?
 
 \begin{figure}
 \centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76088773-e6431a80-5fb8-11ea-9346-3e065a4b05df.png}
-\caption{index}
+\includegraphics{images/Results of Presidential Election.png}
+\caption{Result of Presidential Election 2016}
 \end{figure}
 
 \begin{itemize}
@@ -6457,16 +6555,14 @@ What is the problem with this plot?
 \setcounter{enumi}{2}
 \tightlist
 \item
-  Customizing plots - What's wrong 2?.
+  Take a look at the following two plots. They show the same
+  information: rates of measles by state in the United States for 1928.
 \end{enumerate}
-
-Take a look at the following two plots. They show the same information:
-rates of measles by state in the United States for 1928.
 
 \begin{figure}
 \centering
-\includegraphics{https://user-images.githubusercontent.com/17474099/76088976-37530e80-5fb9-11ea-9642-a94d5f40d7ae.png}
-\caption{index}
+\includegraphics{images/Rates of measles.png}
+\caption{Rates of measles in the US for 1928}
 \end{figure}
 
 \begin{itemize}
