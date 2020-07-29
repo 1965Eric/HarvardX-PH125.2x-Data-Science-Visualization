@@ -2448,134 +2448,105 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 - [X] C. The plot on the right is better because it orders the states by disease rate so we can quickly see the states with highest and lowest rates.
 - [ ] D. Both plots should be pie charts instead.
 
-## Assessment 10 (Data Visualization Principles, Part 2)
+## Show the Data
 
-1: Customizing plots - watch and learn
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#show-the-data-1)
 
-To make the plot on the right in the exercise from the last set of assessments, we had to reorder the levels of the states’ variables.
-- Redefine the state object so that the levels are re-ordered by rate.
-- Print the new object state and its levels so you can see that the vector is now re-ordered by the levels.
+**Key points**
+
+* A dynamite plot - a bar graph of group averages with error bars denoting standard errors - provides almost no information about a distribution.
+* By showing the data, you provide viewers extra information about distributions.
+Jitter is adding a small random shift to each point in order to minimize the number of overlapping points. To add jitter, use the ```geom_jitter``` geometry instead of ```geom_point```.
+* Alpha blending is making points somewhat transparent, helping visualize the density of overlapping points. Add an ```alpha``` argument to the geometry.
+
+*Code*
+
+```{r}
+# dot plot showing the data
+heights %>% ggplot(aes(sex, height)) + geom_point()
+
+# jittered, alpha blended point plot
+heights %>% ggplot(aes(sex, height)) + geom_jitter(width = 0.1, alpha = 0.2)
 ```
-library(dplyr)
-library(ggplot2)
-library(dslabs)
+
+## Ease Comparisons: Use Common Axes
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#ease-comparisons)
+
+**Key points**
+
+* Ease comparisons by keeping axes the same when comparing data across multiple plots.
+* Align plots vertically to see horizontal changes. Align plots horizontally to see vertical changes.
+* Bar plots are useful for showing one number but not useful for showing distributions.
+
+## Consider Transformations
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#consider-transformations)
+
+**Key points**
+
+* Use transformations when warranted to ease visual interpretation.
+* The log transformation is useful for data with multiplicative changes. The logistic transformation is useful for fold changes in odds. The square root transformation is useful for count data.
+* We learned how to apply transformations earlier in the course.
+
+## Ease Comparisons: Compared Visual Cues Should Be Adjacent
+
+The textbook for this section is available:
+
+* [Compared visual cues being adjacent](https://rafalab.github.io/dsbook/data-visualization-principles.html#visual-cues-to-be-compared-should-be-adjacent)
+* [Using color](https://rafalab.github.io/dsbook/data-visualization-principles.html#use-color)
+* [Considering the color blind](https://rafalab.github.io/dsbook/data-visualization-principles.html#think-of-the-color-blind)
+
+**Key points**
+
+* When two groups are to be compared, it is optimal to place them adjacent in the plot.
+* Use color to encode groups to be compared.
+* Consider using a color blind friendly palette.
+
+*Code*
+
+```{r}
+color_blind_friendly_cols <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+p1 <- data.frame(x = 1:8, y = 1:8, col = as.character(1:8)) %>%
+    ggplot(aes(x, y, color = col)) +
+    geom_point(size = 5)
+p1 + scale_color_manual(values = color_blind_friendly_cols)
 ```
-```
+
+## Assessment - Data Visualization Principles, Part 2
+
+1. To make the plot on the right in the exercise from the last set of assessments, we had to reorder the levels of the states’ variables.
+
+```{r}
 dat <- us_contagious_diseases %>%
 filter(year == 1967 & disease=="Measles" & !is.na(population)) %>% mutate(rate = count / population * 10000 * 52 / weeks_reporting)
 state <- dat$state 
 rate <- dat$count/(dat$population/10000)*(52/dat$weeks_reporting)
-
-state <- reorder(state,rate)
-print(state)
-```
-```
-##  [1] Alabama              Alaska               Arizona             
-##  [4] Arkansas             California           Colorado            
-##  [7] Connecticut          Delaware             District Of Columbia
-## [10] Florida              Georgia              Hawaii              
-## [13] Idaho                Illinois             Indiana             
-## [16] Iowa                 Kansas               Kentucky            
-## [19] Louisiana            Maine                Maryland            
-## [22] Massachusetts        Michigan             Minnesota           
-## [25] Mississippi          Missouri             Montana             
-## [28] Nebraska             Nevada               New Hampshire       
-## [31] New Jersey           New Mexico           New York            
-## [34] North Carolina       North Dakota         Ohio                
-## [37] Oklahoma             Oregon               Pennsylvania        
-## [40] Rhode Island         South Carolina       South Dakota        
-## [43] Tennessee            Texas                Utah                
-## [46] Vermont              Virginia             Washington          
-## [49] West Virginia        Wisconsin            Wyoming             
-## attr(,"scores")
-##              Alabama               Alaska              Arizona 
-##           4.16107582           5.46389893           6.32695891 
-##             Arkansas           California             Colorado 
-##           6.87899954           2.79313560           7.96331905 
-##          Connecticut             Delaware District Of Columbia 
-##           0.36986840           1.13098183           0.35873614 
-##              Florida              Georgia               Hawaii 
-##           2.89358806           0.09987991           2.50173748 
-##                Idaho             Illinois              Indiana 
-##           6.03115170           1.20115480           1.34027323 
-##                 Iowa               Kansas             Kentucky 
-##           2.94948911           0.66386422           4.74576011 
-##            Louisiana                Maine             Maryland 
-##           0.46088071           2.57520433           0.49922233 
-##        Massachusetts             Michigan            Minnesota 
-##           0.74762338           1.33466700           0.37722410 
-##          Mississippi             Missouri              Montana 
-##           3.11366532           0.75696354           5.00433320 
-##             Nebraska               Nevada        New Hampshire 
-##           3.64389801           6.43683882           0.47181511 
-##           New Jersey           New Mexico             New York 
-##           0.88414264           6.15969926           0.66849058 
-##       North Carolina         North Dakota                 Ohio 
-##           1.92529764          14.48024642           1.16382241 
-##             Oklahoma               Oregon         Pennsylvania 
-##           3.27496900           8.75036439           0.67687303 
-##         Rhode Island       South Carolina         South Dakota 
-##           0.68207448           2.10412531           0.90289534 
-##            Tennessee                Texas                 Utah 
-##           5.47344506          12.49773953           4.03005836 
-##              Vermont             Virginia           Washington 
-##           1.00970314           5.28270939          17.65180349 
-##        West Virginia            Wisconsin              Wyoming 
-##           8.59456463           4.96246019           6.97303449 
-## 51 Levels: Georgia District Of Columbia Connecticut ... Washington
-```
-```
+state = reorder(state, rate)
 levels(state)
 ```
-```
-##  [1] "Georgia"              "District Of Columbia" "Connecticut"         
-##  [4] "Minnesota"            "Louisiana"            "New Hampshire"       
-##  [7] "Maryland"             "Kansas"               "New York"            
-## [10] "Pennsylvania"         "Rhode Island"         "Massachusetts"       
-## [13] "Missouri"             "New Jersey"           "South Dakota"        
-## [16] "Vermont"              "Delaware"             "Ohio"                
-## [19] "Illinois"             "Michigan"             "Indiana"             
-## [22] "North Carolina"       "South Carolina"       "Hawaii"              
-## [25] "Maine"                "California"           "Florida"             
-## [28] "Iowa"                 "Mississippi"          "Oklahoma"            
-## [31] "Nebraska"             "Utah"                 "Alabama"             
-## [34] "Kentucky"             "Wisconsin"            "Montana"             
-## [37] "Virginia"             "Alaska"               "Tennessee"           
-## [40] "Idaho"                "New Mexico"           "Arizona"             
-## [43] "Nevada"               "Arkansas"             "Wyoming"             
-## [46] "Colorado"             "West Virginia"        "Oregon"              
-## [49] "Texas"                "North Dakota"         "Washington"
-```
-2. Customizing plots - redefining
 
-Now we are going to customize this plot a little more by creating a rate variable and reordering by that variable instead.
-- Add a single line of code to the definition of the dat table that uses mutate to reorder the states by the rate variable.
-- The sample code provided will then create a bar plot using the newly defined dat.
-```
-library(dplyr)
-library(ggplot2)
-library(dslabs)
-```
-```
-data(us_contagious_diseases)
+2. Now we are going to customize this plot a little more by creating a rate variable and reordering by that variable instead.
+
+```{r}
 dat <- us_contagious_diseases %>% filter(year == 1967 & disease=="Measles" & count>0 & !is.na(population)) %>%
-  mutate(rate = count / population * 10000 * 52 / weeks_reporting) %>% mutate(state = reorder(state, rate))
-dat %>% ggplot(aes(state, rate)) +
+  mutate(rate = count / population * 10000 * 52 / weeks_reporting)
+dat %>% mutate(state = reorder(state, rate)) %>% ggplot(aes(state, rate)) +
   geom_bar(stat="identity") +
   coord_flip()
 ```
 
-![index](https://user-images.githubusercontent.com/17474099/76089443-f4456b00-5fb9-11ea-965f-31e0e94ee988.png)
-
 3. Showing the data and customizing plots
 
-Say we are interested in comparing gun homicide rates across regions of the US. We see this plot:
-```
+Say we are interested in comparing gun homicide rates across regions of the US. 
+
+We see this plot:
+
+```{r, eval=FALSE, echo=TRUE)
 library(dplyr)
 library(ggplot2)
 library(dslabs)
-```
-```
 data("murders")
 murders %>% mutate(rate = total/population*100000) %>%
   group_by(region) %>%
@@ -2586,35 +2557,20 @@ murders %>% mutate(rate = total/population*100000) %>%
   ylab("Murder Rate Average")
 ```
 
-![index](https://user-images.githubusercontent.com/17474099/76089561-2e167180-5fba-11ea-901f-7335621734ff.png)
+[Gun homicide rates across regions of the US](images/Gun homicide rates.png)
 
-and decide to move to a state in the western region. What is the main problem with this interpretaion?
+and decide to move to a state in the western region. What is the main problem with this interpretation?
+
 - [ ] A. The categories are ordered alphabetically.
 - [ ] B. The graph does not show standard errors.
 - [X] C. It does not show all the data. We do not see the variability within a region and it's possible that the safest states are not in the West.
 - [ ] D. The Northeast has the lowest average.
 
-4. Making a box plot
+4. To further investigate whether moving to the western region is a wise decision, let’s make a box plot of murder rates by region, showing all points.
 
-To further investigate whether moving to the western region is a wise decision, let’s make a box plot of murder rates by region, showing all points.
-- Make a box plot of the murder rates by region.
-- Order the regions by their median murder rate.
-- Show all of the points on the box plot.
+```{r}
+murders %>% mutate(rate = total/population*100000) %>% mutate(region = reorder(region, rate, FUN = median)) %>% ggplot(aes(region, rate)) + geom_boxplot() + geom_point()
 ```
-library(dplyr)
-library(ggplot2)
-library(dslabs)
-```
-```
-data("murders")
-murders %>% mutate(rate = total/population*100000) %>%
-  mutate(region=reorder(region, rate, FUN=median)) %>%
-  ggplot(aes(region, rate)) +
-  geom_boxplot() +
-  geom_point()
-```
-
-![index](https://user-images.githubusercontent.com/17474099/76089763-97968000-5fba-11ea-914e-0d5817ff7665.png)
 
 ## Assessment 11 (Data Visualization Principles, Part 3)
 
