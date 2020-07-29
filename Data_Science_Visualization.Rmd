@@ -2789,9 +2789,185 @@ us_contagious_diseases %>% filter(!is.na(population)) %>%
 
 ## Titanic Survival Exercises
 
+Put all your new skills together to perform exploratory data analysis on a classic machine learning dataset: Titanic survival!
+
+**Background**
+
+The Titanic was a British ocean liner that struck an iceberg and sunk on its maiden voyage in 1912 from the United Kingdom to New York. More than 1,500 of the estimated 2,224 passengers and crew died in the accident, making this one of the largest maritime disasters ever outside of war. The ship carried a wide range of passengers of all ages and both genders, from luxury travelers in first-class to immigrants in the lower classes. However, not all passengers were equally likely to survive the accident. We use real data about a selection of 891 passengers to learn who was on the Titanic and which passengers were more likely to survive.
+
+**Libraries, Options, and Data** 
+
+Define the titanic dataset starting from the **titanic** library with the following code:
+
 ```{r}
 if(!require(titanic)) install.packages("titanic")
+
+options(digits = 3)    # report 3 significant digits
+library(tidyverse)
+library(titanic)
+titanic <- titanic_train %>%
+    select(Survived, Pclass, Sex, Age, SibSp, Parch, Fare) %>%
+    mutate(Survived = factor(Survived),
+           Pclass = factor(Pclass),
+           Sex = factor(Sex))
 ```
+
+1. Variable Types
+
+Inspect the data and also use ```?titanic_train``` to learn more about the variables in the dataset. Match these variables from the dataset to their variable type. There is at least one variable of each type (ordinal categorical, non-ordinal categorical, continuous, discrete).
+
+* ```Survived``` non-ordinal categorical
+* ```Pclass``` ordinal categorical
+* ```Sex``` non-ordinal categorical
+* ```SibSp``` discrete
+* ```Parch``` discrete  
+* ```Fare``` continuous
+
+2. Demographics of Titanic Passengers
+
+Make density plots of age grouped by sex. Try experimenting with combinations of faceting, alpha blending, stacking and using variable counts on the y-axis to answer the following questions. Some questions may be easier to answer with different versions of the density plot.
+
+A faceted plot is useful for comparing the distributions of males and females for A. Each sex has the same general shape with two modes at the same locations, though proportions differ slightly across ages and there are more males than females.
+
+```{r}
+titanic %>%
+    ggplot(aes(Age, fill = Sex)) +
+    geom_density(alpha = 0.2) +
+    facet_grid(Sex ~ .)
+```
+
+A stacked density plot with count on the y-axis is useful for answering B, C and D. The main mode is around age 25 and a second smaller mode is around age 4-5. There are more males than females as indicated by a higher total area and higher counts at almost all ages. With count on the y-axis, it is clear that more males than females are age 40.
+
+```{r}
+titanic %>%
+    ggplot(aes(Age, y = ..count.., fill = Sex)) +
+    geom_density(alpha = 0.2, position = "stack")
+```
+
+A plot filled by sex with alpha blending helps reveal the answers to E, F and G. There is a higher proportion of females than males below age 17, a higher proportion of males than females for ages 18-35, approximately the same proportion of males and females age 35-55, and a higher proportion of males over age 55. The oldest individuals are male.
+
+```{r}
+titanic %>%
+    ggplot(aes(Age, fill = Sex)) +
+    geom_density(alpha = 0.2)
+```
+
+Which of the following are true? Select all correct answers.
+
+- [X] A. Females and males had the same general shape of age distribution.
+- [X] B. The age distribution was bimodal, with one mode around 25 years of age and a second smaller mode around 5 years of age.
+- [ ] C. There were more females than males.
+- [X] D. The count of males of age 40 was higher than the count of females of age 40.
+- [X] E. The proportion of males age 18-35 was higher than the proportion of females age 18-35.
+- [X] F. The proportion of females under age 17 was higher than the proportion of males under age 17.
+- [ ] G. The oldest passengers were female.
+
+3. QQ-plot of Age Distribution
+
+Use ```geom_qq``` to make a QQ-plot of passenger age and add an identity line with ```geom_abline```. Filter out any individuals with an age of NA first. Use the following object as the ```dparams``` argument in ```geom_qq```:
+
+```{r}
+params <- titanic %>%
+    filter(!is.na(Age)) %>%
+    summarize(mean = mean(Age), sd = sd(Age))
+    
+titanic %>%
+    filter(!is.na(Age)) %>%
+    ggplot(aes(sample = Age)) +
+    geom_qq(dparams = params) +
+    geom_abline()
+```
+
+What is the correct plot according to the instructions above? ```QQ-plot C```
+
+![QQ-plot C](images/qqplotC.png)
+
+4. Survival by Sex
+
+To answer the following questions, make barplots of the ```Survived``` and ```Sex``` variables using ```geom_bar```. Try plotting one variable and filling by the other variable. You may want to try the default plot, then try adding ```position = position_dodge()``` to ```geom_bar``` to make separate bars for each group.
+
+You can read more about making barplots in the textbook section on [ggplot2 geometries](https://rafalab.github.io/dsbook/distributions.html#other-geometries).
+
+A and B can be clearly seen in the barplot of survival status filled by sex. The count of survivors is lower than the count of non-survivors. The bar of survivors is more than half filled by females. Alternatively, the bars can be split by sex with ```position_dodge```, showing the "Female, Survived" bar has a greater height than the "Male, survived" bar. C and D are more clearly seen in the barplot of sex filled by survival status, though they can also be determined from the first barplot. Most males did not survive, but most females did survive.
+
+```{r}
+#plot 1 - survival filled by sex
+titanic %>%
+    ggplot(aes(Survived, fill = Sex)) +
+    geom_bar()
+# plot 2 - survival filled by sex with position_dodge
+titanic %>%
+    ggplot(aes(Survived, fill = Sex)) +
+    geom_bar(position = position_dodge())
+#plot 3 - sex filled by survival
+titanic %>%
+    ggplot(aes(Sex, fill = Survived)) +
+    geom_bar()
+```
+
+Which of the following are true? Select all correct answers.
+
+- [X] A. Less than half of passengers survived.
+- [X] B. Most of the survivors were female.
+- [ ] C. Most of the males survived.
+- [X] D. Most of the females survived.
+
+5. Survival by Age
+
+Make a density plot of age filled by survival status. Change the y-axis to count and set ```alpha = 0.2```.
+
+```{r}
+titanic %>%
+    ggplot(aes(Age, y = ..count.., fill = Survived)) +
+    geom_density(alpha = 0.2)
+```
+
+Which age group is the only group more likely to survive than die?
+- [X] A. 0-8
+- [ ] B. 10-18
+- [ ] C. 18-30
+- [ ] D. 30-50
+- [ ] E. 50-70
+- [ ] F. 70-80
+
+Which age group had the most deaths?
+- [ ] A. 0-8
+- [ ] B. 10-18
+- [X] C. 18-30
+- [ ] D. 30-50
+- [ ] E. 50-70
+- [ ] F. 70-80
+
+Which age group had the highest proportion of deaths?
+- [ ] A. 0-8
+- [ ] B. 10-18
+- [ ] C. 18-30
+- [ ] D. 30-50
+- [ ] E. 50-70
+- [X] F. 70-80
+
+6. Survival by Fare
+
+Filter the data to remove individuals who paid a fare of 0. Make a boxplot of fare grouped by survival status. Try a log2 transformation of fares. Add the data points with jitter and alpha blending.
+
+```{r}
+titanic %>%
+    filter(Fare > 0) %>%
+    ggplot(aes(Survived, Fare)) +
+    geom_boxplot() +
+    scale_y_continuous(trans = "log2") +
+    geom_jitter(alpha = 0.2)
+```
+
+Which of the following are true? Select all correct answers.
+
+- [X] A. Passengers who survived generally payed higher fares than those who did not survive.
+- [ ] B. The interquartile range for fares was smaller for passengers who survived.
+- [X] C. The median fare was lower for passengers who did not survive.
+- [ ] D. Only one individual paid a fare around $500. That individual survived.
+- [X] E. Most individuals who paid a fare around $8 did not survive.
+
+7. 
 
 ## Properties of Stars Exercises
 
