@@ -2570,81 +2570,158 @@ murders %>% mutate(rate = total/population*100000) %>%
 murders %>% mutate(rate = total/population*100000) %>% mutate(region = reorder(region, rate, FUN = median)) %>% ggplot(aes(region, rate)) + geom_boxplot() + geom_point()
 ```
 
-## Assessment 11 (Data Visualization Principles, Part 3)
+## Slope Charts
 
-1. Tile plot - measles and smallpox
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#plots-for-two-variables)
 
-The sample code given creates a tile plot showing the rate of measles cases per population. We are going to modify the tile plot to look at smallpox cases instead.
+**Key points**
+
+* Consider using a slope chart or Bland-Altman plot when comparing one variable at two different time points, especially for a small number of observations.
+* Slope charts use angle to encode change. Use ```geom_line``` to create slope charts. It is useful when comparing a small number of observations.
+* The Bland-Altman plot (Tukey mean difference plot, MA plot) graphs the difference between conditions on the y-axis and the mean between conditions on the x-axis. It is more appropriate for large numbers of observations than slope charts.
+
+*Code: Slope chart*
+
+```{r}
+west <- c("Western Europe", "Northern Europe", "Southern Europe", "Northern America", "Australia and New Zealand")
+
+dat <- gapminder %>%
+    filter(year %in% c(2010, 2015) & region %in% west & !is.na(life_expectancy) & population > 10^7)
+
+dat %>%
+    mutate(location = ifelse(year == 2010, 1, 2),
+                 location = ifelse(year == 2015 & country %in% c("United Kingdom", "Portugal"), location + 0.22, location),
+                 hjust = ifelse(year == 2010, 1, 0)) %>%
+    mutate(year = as.factor(year)) %>%
+    ggplot(aes(year, life_expectancy, group = country)) +
+    geom_line(aes(color = country), show.legend = FALSE) +
+    geom_text(aes(x = location, label = country, hjust = hjust), show.legend = FALSE) +
+    xlab("") +
+    ylab("Life Expectancy")    
 ```
+
+*Code: Bland-Altman plot*
+
+```{r}
+dat %>%
+    mutate(year = paste0("life_expectancy_", year)) %>%
+    select(country, year, life_expectancy) %>% spread(year, life_expectancy) %>%
+    mutate(average = (life_expectancy_2015 + life_expectancy_2010)/2,
+                difference = life_expectancy_2015 - life_expectancy_2010) %>%
+    ggplot(aes(average, difference, label = country)) +
+    geom_point() +
+    geom_text_repel() +
+    geom_abline(lty = 2) +
+    xlab("Average of 2010 and 2015") +
+    ylab("Difference between 2015 and 2010")
+```
+
+## Encoding a Third Variable
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#encoding-a-third-variable)
+
+**Key points**
+
+* Encode a categorical third variable on a scatterplot using color hue or shape. Use the shape argument to control shape.
+* Encode a continuous third variable on a using color intensity or size.
+
+## Case Study: Vaccines
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#vaccines). Information on color palettes can be found in the textbook section [on encoding a third variable](https://rafalab.github.io/dsbook/data-visualization-principles.html#encoding-a-third-variable)
+
+**Key points**
+
+* Vaccines save millions of lives, but misinformation has led some to question the safety of vaccines. The data support vaccines as safe and effective. We visualize data about measles incidence in order to demonstrate the impact of vaccination programs on disease rate.
+* The **RColorBrewer** package offers several color palettes. Sequential color palettes are best suited for data that span from high to low. Diverging color palettes are best suited for data that are centered and diverge towards high or low values.
+* The ```geom_tile``` geometry creates a grid of colored tiles.
+* Position and length are stronger cues than color for numeric values, but color can be appropriate sometimes.
+
+*Code: Tile plot of measles rate by year and state*
+
+```{r}
+# import data and inspect
+str(us_contagious_diseases)
+
+# assign dat to the per 10,000 rate of measles, removing Alaska and Hawaii and adjusting for weeks reporting
+the_disease <- "Measles"
+dat <- us_contagious_diseases %>%
+    filter(!state %in% c("Hawaii", "Alaska") & disease == the_disease) %>%
+    mutate(rate = count / population * 10000 * 52/weeks_reporting) %>%
+    mutate(state = reorder(state, rate))
+
+# plot disease rates per year in California
+dat %>% filter(state == "California" & !is.na(rate)) %>%
+    ggplot(aes(year, rate)) +
+    geom_line() +
+    ylab("Cases per 10,000") +
+    geom_vline(xintercept=1963, col = "blue")
+
+# tile plot of disease rate by state and year
+dat %>% ggplot(aes(year, state, fill=rate)) +
+    geom_tile(color = "grey50") +
+    scale_x_continuous(expand = c(0,0)) +
+    scale_fill_gradientn(colors = RColorBrewer::brewer.pal(9, "Reds"), trans = "sqrt") +
+    geom_vline(xintercept = 1963, col = "blue") +
+    theme_minimal() + theme(panel.grid = element_blank()) +
+    ggtitle(the_disease) +
+    ylab("") +
+    xlab("")
+```
+
+*Code: Line plot of measles rate by year and state*
+
+```{r}
+# compute US average measles rate by year
+avg <- us_contagious_diseases %>%
+    filter(disease == the_disease) %>% group_by(year) %>%
+    summarize(us_rate = sum(count, na.rm = TRUE)/sum(population, na.rm = TRUE)*10000)
+
+# make line plot of measles rate by year by state
+dat %>%
+    filter(!is.na(rate)) %>%
+    ggplot() +
+    geom_line(aes(year, rate, group = state), color = "grey50", 
+        show.legend = FALSE, alpha = 0.2, size = 1) +
+    geom_line(mapping = aes(year, us_rate), data = avg, size = 1, col = "black") +
+    scale_y_continuous(trans = "sqrt", breaks = c(5, 25, 125, 300)) +
+    ggtitle("Cases per 10,000 by state") +
+    xlab("") +
+    ylab("") +
+    geom_text(data = data.frame(x = 1955, y = 50),
+        mapping = aes(x, y, label = "US average"), color = "black") +
+    geom_vline(xintercept = 1963, col = "blue")
+```
+
+## Avoid Pseudo and Gratuitous 3D Plots
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#avoid-pseudo-three-dimensional-plots)
+
+**Key point**
+
+In general, pseudo-3D plots and gratuitous 3D plots only add confusion. Use regular 2D plots instead.
+
+## Avoid Too Many Significant Digits
+
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#avoid-too-many-significant-digits)
+
+**Key points**
+
+* In tables, avoid using too many significant digits. Too many digits can distract from the meaning of your data.
+* Reduce the number of significant digits globally by setting an option. For example, ```options(digits = 3)``` will cause all future computations that session to have 3 significant digits.
+* Reduce the number of digits locally using ```round``` or ```signif```.
+
+## Assessment - Data Visualization Principles, Part 3
+
+1. The sample code given creates a tile plot showing the rate of measles cases per population. We are going to modify the tile plot to look at smallpox cases instead.
+
+```{r}
 if(!require(RColorBrewer)) install.packages("RColorBrewer")
 
-library(dplyr)
-library(ggplot2)
 library(RColorBrewer)
-library(dslabs)
-```
-```
-data(us_contagious_diseases)
-head(us_contagious_diseases)
-```
-```
-   disease       state      year      weeks_reporting     count      population
-   <fctr>        <fctr>     <dbl>     <int>               <dbl>      <dbl>
-1  Hepatitis A	 Alabama    1966      50	          321	     3345787
-2  Hepatitis A	 Alabama    1967      49	          291	     3364130
-3  Hepatitis A	 Alabama    1968      52	          314	     3386068
-4  Hepatitis A	 Alabama    1969      49	          380	     3412450
-5  Hepatitis A	 Alabama    1970      51                  413	     3444165
-6  Hepatitis A	 Alabama    1971      51	          378	     3481798
-6 rows
-```
-```
-the_disease = "Measles"
-dat <- us_contagious_diseases %>% 
-   filter(!state%in%c("Hawaii","Alaska") & disease == the_disease) %>% 
-   mutate(rate = count / population * 10000) %>% 
-   mutate(state = reorder(state, rate))
 
-dat %>% ggplot(aes(year, state, fill = rate)) + 
-  geom_tile(color = "grey50") + 
-  scale_x_continuous(expand=c(0,0)) + 
-  scale_fill_gradientn(colors = brewer.pal(9, "Reds"), trans = "sqrt") + 
-  theme_minimal() + 
-  theme(panel.grid = element_blank()) + 
-  ggtitle(the_disease) + 
-  ylab("") + 
-  xlab("")
-```
-
-![index](https://user-images.githubusercontent.com/17474099/76090644-396a9c80-5fbc-11ea-82c3-f440dd00decd.png)
-
-- Modify the tile plot to show the rate of smallpox cases instead of measles cases.
-- Exclude years in which cases were reported in fewer than 10 weeks from the plot.
-```
-library(dplyr)
-library(ggplot2)
-library(RColorBrewer)
-library(dslabs)
-```
-```
-data(us_contagious_diseases)
-head(us_contagious_diseases)
-```
-```	
-   disease       state      year      weeks_reporting     count      population
-   <fctr>        <fctr>     <dbl>     <int>               <dbl>      <dbl>
-1  Hepatitis A	 Alabama    1966      50	          321	     3345787
-2  Hepatitis A	 Alabama    1967      49	          291        3364130
-3  Hepatitis A	 Alabama    1968      52	          314	     3386068
-4  Hepatitis A	 Alabama    1969      49	          380	     3412450
-5  Hepatitis A	 Alabama    1970      51	          413	     3444165
-6  Hepatitis A	 Alabama    1971      51	          378	     3481798
-6 rows
-```
-```
 the_disease = "Smallpox"
 dat <- us_contagious_diseases %>% 
-   filter(!state%in%c("Hawaii","Alaska") & disease == the_disease & !weeks_reporting<10) %>% 
+   filter(!state%in%c("Hawaii","Alaska") & disease == the_disease & weeks_reporting >= 10) %>% 
    mutate(rate = count / population * 10000) %>% 
    mutate(state = reorder(state, rate))
 
@@ -2659,41 +2736,17 @@ dat %>% ggplot(aes(year, state, fill = rate)) +
   xlab("")
 ```
 
-![index](https://user-images.githubusercontent.com/17474099/76090911-c9104b00-5fbc-11ea-8fac-fb1a2b2a68f5.png)
+2. The sample code given creates a time series plot showing the rate of measles cases per population by state. 
 
-2. Time series plot - measles and smallpox
+We are going to again modify this plot to look at smallpox cases instead.
 
-The sample code given creates a time series plot showing the rate of measles cases per population by state. We are going to again modify this plot to look at smallpox cases instead.
-```
-library(dplyr)
-library(ggplot2)
-library(dslabs)
-library(RColorBrewer)
-```
-```
-data(us_contagious_diseases)
-
-the_disease = "Measles"
+```{r}
+the_disease = "Smallpox"
 dat <- us_contagious_diseases %>%
-   filter(!state%in%c("Hawaii","Alaska") & disease == the_disease) %>%
+   filter(!state%in%c("Hawaii","Alaska") & disease == the_disease & weeks_reporting >= 10) %>%
    mutate(rate = count / population * 10000) %>%
    mutate(state = reorder(state, rate))
-str(dat)
-```
-```
-## 'data.frame':    3724 obs. of  7 variables:
-##  $ disease        : Factor w/ 7 levels "Hepatitis A",..: 2 2 2 2 2 2 2 2 2 2 ...
-##  $ state          : Factor w/ 51 levels "Mississippi",..: 9 9 9 9 9 9 9 9 9 9 ...
-##   ..- attr(*, "scores")= num [1:51(1d)] 9.27 NA 24.15 9.37 19.16 ...
-##   .. ..- attr(*, "dimnames")=List of 1
-##   .. .. ..$ : chr  "Alabama" "Alaska" "Arizona" "Arkansas" ...
-##  $ year           : num  1928 1929 1930 1931 1932 ...
-##  $ weeks_reporting: int  52 49 52 49 41 51 52 49 40 49 ...
-##  $ count          : num  8843 2959 4156 8934 270 ...
-##  $ population     : num  2589923 2619131 2646248 2670818 2693027 ...
-##  $ rate           : num  34.1 11.3 15.7 33.5 1 ...
-```
-```
+
 avg <- us_contagious_diseases %>%
   filter(disease==the_disease) %>% group_by(year) %>%
   summarize(us_rate = sum(count, na.rm=TRUE)/sum(population, na.rm=TRUE)*10000)
@@ -2710,107 +2763,37 @@ dat %>% ggplot() +
   geom_vline(xintercept=1963, col = "blue")
 ```
 
-![index](https://user-images.githubusercontent.com/17474099/76091054-21474d00-5fbd-11ea-9492-6f335200aba6.png)
+3. Now we are going to look at the rates of all diseases in one state. 
 
-- Modify the sample code for the time series plot to plot data for smallpox instead of for measles.
-- Once again, restrict the plot to years in which cases were reported in at least 10 weeks.
-```
-library(dplyr)
-library(ggplot2)
-library(dslabs)
-library(RColorBrewer)
-```
-```
-data(us_contagious_diseases)
+Again, you will be modifying the sample code to produce the desired plot.
 
-the_disease = "Smallpox"
-dat <- us_contagious_diseases %>%
-   filter(!state%in%c("Hawaii","Alaska") & disease == the_disease & !weeks_reporting<10) %>%
-   mutate(rate = count / population * 10000) %>%
-   mutate(state = reorder(state, rate))
-str(dat)
-```
-```
-## 'data.frame':    1014 obs. of  7 variables:
-##  $ disease        : Factor w/ 7 levels "Hepatitis A",..: 7 7 7 7 7 7 7 7 7 7 ...
-##  $ state          : Factor w/ 51 levels "Rhode Island",..: 17 17 17 17 17 17 17 17 17 17 ...
-##   ..- attr(*, "scores")= num [1:51(1d)] 0.382 NA 2.011 0.805 0.924 ...
-##   .. ..- attr(*, "dimnames")=List of 1
-##   .. .. ..$ : chr  "Alabama" "Alaska" "Arizona" "Arkansas" ...
-##  $ year           : num  1928 1929 1930 1931 1932 ...
-##  $ weeks_reporting: int  51 52 52 52 52 52 52 52 51 52 ...
-##  $ count          : num  341 378 192 295 467 82 23 42 12 54 ...
-##  $ population     : num  2589923 2619131 2646248 2670818 2693027 ...
-##  $ rate           : num  1.317 1.443 0.726 1.105 1.734 ...
-```
-```
-avg <- us_contagious_diseases %>%
-  filter(disease==the_disease) %>% group_by(year) %>%
-  summarize(us_rate = sum(count, na.rm=TRUE)/sum(population, na.rm=TRUE)*10000)
-
-dat %>% ggplot() +
-  geom_line(aes(year, rate, group = state),  color = "grey50", 
-            show.legend = FALSE, alpha = 0.2, size = 1) +
-  geom_line(mapping = aes(year, us_rate),  data = avg, size = 1, color = "black") +
-  scale_y_continuous(trans = "sqrt", breaks = c(5,25,125,300)) + 
-  ggtitle("Cases per 10,000 by state") + 
-  xlab("") + 
-  ylab("") +
-  geom_text(data = data.frame(x=1955, y=50), mapping = aes(x, y, label="US average"), color="black") + 
-  geom_vline(xintercept=1963, col = "blue")
-```
-
-![index](https://user-images.githubusercontent.com/17474099/76091191-61a6cb00-5fbd-11ea-9d09-f8d10995d59c.png)
-
-3. Time series plot - all diseases in California
-
-Now we are going to look at the rates of all diseases in one state. Again, you will be modifying the sample code to produce the desired plot.
-- For the state of California, make a time series plot showing rates for all diseases.
-- Include only years with 10 or more weeks reporting.
-- Use a different color for each disease.
-```
-library(dplyr)
-library(ggplot2)
-library(dslabs)
-library(RColorBrewer)
-```
-```
-data(us_contagious_diseases)
-
-us_contagious_diseases %>% filter(state=="California" & !weeks_reporting<10) %>% 
+```{r}
+us_contagious_diseases %>% filter(state=="California" & weeks_reporting >= 10) %>% 
   group_by(year, disease) %>%
   summarize(rate = sum(count)/sum(population)*10000) %>%
-  ggplot(aes(year, rate,color=disease)) + 
+  ggplot(aes(year, rate, color = disease)) + 
   geom_line()
 ```
 
-![index](https://user-images.githubusercontent.com/17474099/76091336-ad597480-5fbd-11ea-945b-b908f19a681d.png)
+4. Now we are going to make a time series plot for the rates of all diseases in the United States. 
 
-4. Time series plot - all diseases in the United States
+For this exercise, we have provided less sample code - you can take a look at the previous exercise to get you started.
 
-Now we are going to make a time series plot for the rates of all diseases in the United States. For this exercise, we have provided less sample code - you can take a look at the previous exercise to get you started.
-- Compute the US rate by using summarize to sum over states.
-- The US rate for each disease will be the total number of cases divided by the total population.
-- Remember to convert to cases per 10,000.
-- You will need to filter for !is.na(population) to get all the data.
-- Plot each disease in a different color.
-```
-library(dplyr)
-library(ggplot2)
-library(dslabs)
-library(RColorBrewer)
-```
-```
-data(us_contagious_diseases)
-
+```{r}
 us_contagious_diseases %>% filter(!is.na(population)) %>% 
   group_by(year, disease) %>%
-  summarize(rate=sum(count)/sum(population)*10000) %>%
-  ggplot(aes(year, rate,color=disease)) + geom_line()
+  summarize(rate = sum(count)/sum(population)*10000) %>%
+  ggplot(aes(year, rate, color = disease)) + 
+  geom_line()
 ```
-![index](https://user-images.githubusercontent.com/17474099/76091504-fb6e7800-5fbd-11ea-8a2b-469772c558a9.png)
 
-# Properties of Stars Exercises
+## Titanic Survival Exercises
+
+```{r}
+if(!require(titanic)) install.packages("titanic")
+```
+
+## Properties of Stars Exercises
 
 **Background**  
 Astronomy is one of the oldest data-driven sciences. In the late 1800s, the director of the Harvard College Observatory hired women to analyze astronomical data, which at the time was done using photographic glass plates. These women became known as the Harvard Computers. They computed the position and luminosity of various astronomical objects such as stars and galaxies. (If you are interested, you can learn more about the Harvard Computers). Today, astronomy is even more of a data-driven science, with an inordinate amount of data being produced by modern instruments every day.
