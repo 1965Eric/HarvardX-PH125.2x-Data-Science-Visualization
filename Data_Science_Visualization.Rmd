@@ -2537,13 +2537,13 @@ dat %>% mutate(state = reorder(state, rate)) %>% ggplot(aes(state, rate)) +
   coord_flip()
 ```
 
-3. Showing the data and customizing plots
+3. Say we are interested in comparing gun homicide rates across regions of the US. 
 
-Say we are interested in comparing gun homicide rates across regions of the US. 
+We see this plot and decide to move to a state in the western region. 
 
-We see this plot:
+What is the main problem with this interpretation?
 
-```{r, eval=FALSE, echo=TRUE)
+```{r, eval=FALSE, echo=TRUE}
 library(dplyr)
 library(ggplot2)
 library(dslabs)
@@ -2557,9 +2557,7 @@ murders %>% mutate(rate = total/population*100000) %>%
   ylab("Murder Rate Average")
 ```
 
-[Gun homicide rates across regions of the US](images/Gun homicide rates.png)
-
-and decide to move to a state in the western region. What is the main problem with this interpretation?
+![Rates of measles in the US for 1928](images/Gun homicide rates.png)
 
 - [ ] A. The categories are ordered alphabetically.
 - [ ] B. The graph does not show standard errors.
