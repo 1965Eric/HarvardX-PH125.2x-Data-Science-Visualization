@@ -2970,7 +2970,57 @@ Which of the following are true? Select all correct answers.
 - [ ] D. Only one individual paid a fare around $500. That individual survived.
 - [X] E. Most individuals who paid a fare around $8 did not survive.
 
-7. 
+7. Survival by Passenger Class
+
+The ```Pclass``` variable corresponds to the passenger class. Make three barplots. For the first, make a basic barplot of passenger class filled by survival. For the second, make the same barplot but use the argument ```position = position_fill()``` to show relative proportions in each group instead of counts. For the third, make a barplot of survival filled by passenger class using ```position = position_fill()```.
+
+```{r}
+# barplot of passenger class filled by survival
+titanic %>%
+    ggplot(aes(Pclass, fill = Survived)) +
+    geom_bar() +
+    ylab("Proportion")
+
+# barplot of passenger class filled by survival with position_fill
+titanic %>%
+    ggplot(aes(Pclass, fill = Survived)) +
+    geom_bar(position = position_fill()) +
+    ylab("Proportion")
+
+# barplot of survival filled by passenger class with position_fill
+titanic %>%
+    ggplot(aes(Survived, fill = Pclass)) +
+    geom_bar(position = position_fill()) +
+    ylab("Proportion")
+```
+
+Which of the following are true? Select all correct answers.
+
+- [X] A. There were more third class passengers than passengers in the first two classes combined.
+- [ ] B. There were the fewest passengers in first class, second-most passengers in second class, and most passengers in third class.
+- [X] C. Survival proportion was highest for first class passengers, followed by second class. Third-class had the lowest survival proportion.
+- [X] D. Most passengers in first class survived. Most passengers in other classes did not survive.
+- [ ] E. The majority of survivors were from first class. (Majority means over 50%.)
+- [X] F. The majority of those who did not survive were from third class.
+
+8. Survival by Age, Sex and Passenger Class
+
+Create a grid of density plots for age, filled by survival status, with count on the y-axis, faceted by sex and passenger class.
+
+```{r}
+titanic %>%
+    ggplot(aes(Age, y = ..count.., fill = Survived)) +
+    geom_density(position = "stack") +
+    facet_grid(Sex ~ Pclass)
+```
+
+Which of the following are true? Select all correct answers.
+
+- [X] A. The largest group of passengers was third-class males.
+- [ ] B. The age distribution is the same across passenger classes.
+- [ ] C. The gender distribution is the same across passenger classes.
+- [X] D. Most first-class and second-class females survived.
+- [X] E. Almost all second-class males did not survive, with the exception of children.
 
 ## Properties of Stars Exercises
 
