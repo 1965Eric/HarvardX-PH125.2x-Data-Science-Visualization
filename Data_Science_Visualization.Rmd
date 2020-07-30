@@ -1,10 +1,10 @@
 ---
 title: "Data Science Visualization"
 output:
-  html_document: default
   word_document: default
   pdf_document:
     latex_engine: xelatex
+  html_document: default
 urlcolor: blue
 ---
 
@@ -3407,7 +3407,7 @@ p <- temp_carbon %>%
   ylab("Temperature anomaly (degrees C)") +
   ggtitle("Temperature anomaly relative to 20th century mean, 1880-2018") +
   geom_text(aes(x = 2000, y = 0.05, label="20th century mean"), col='blue')
-q
+p
 ```
 
 - [ ] E.
@@ -3424,6 +3424,7 @@ Answers within 5 years of the correct answer will be accepted.
 
 ```{r}
 temp_carbon %>%
+    filter(!is.na(temp_anomaly)) %>%
     ggplot(aes(year, temp_anomaly)) +
     geom_line() +
     geom_hline(aes(yintercept = 0), col = "blue") +
@@ -3445,6 +3446,7 @@ Assign different colors to the lines. Compare the global temperature anomaly to 
 
 ```{r}
 temp_carbon %>%
+    filter(!is.na(temp_anomaly)) %>%
     ggplot(aes(year, temp_anomaly)) +
     geom_line() +
     geom_line(aes(year, land_anomaly), col = "red") +
@@ -3500,6 +3502,7 @@ Make a time series line plot of carbon emissions (```carbon_emissions```) from t
 
 ```{r}
 temp_carbon %>%
+    filter(!is.na(carbon_emissions)) %>%
     ggplot(aes(year, carbon_emissions)) +
     geom_line() +
     ylab("Carbon emissions (metric tons)") +
@@ -3521,10 +3524,11 @@ Make a line plot of ```co2``` concentration over time (```year```), coloring by 
 
 ```{r}
 co2_time <- historic_co2 %>%
-    ggplot(aes(year, co2, col = source)) +
-    geom_line() +
-    ggtitle("Atmospheric CO2 concentration, -800,000 BC to today") +
-    ylab("co2 (ppmv)")
+  filter(!is.na(co2)) %>%
+  ggplot(aes(year, co2, col=source)) +
+  geom_line() +
+  ggtitle("Atmospheric CO2 concentration, -800,000 BC to today") +
+  ylab("co2 (ppmv)")
 co2_time
 ```
 
@@ -3534,16 +3538,6 @@ Which of the following are true about ```co2_time```, the time series of ```co2`
 - [X] B. There are natural cycles of co2 increase and decrease lasting 50,000-100,000 years per cycle.
 - [X] C. In most cases, it appears to take longer for co2 levels to decrease than to increase.
 - [ ] D. co2 concentration has been at least 200 ppm for the last 800,000 years.
-
-```{r}
-co2_time <- historic_co2 %>%
-  filter(!is.na(co2)) %>%
-  ggplot(aes(year, co2, col=source)) +
-  geom_line() +
-  ggtitle("Atmospheric CO2 concentration, -800,000 BC to today") +
-  ylab("co2 (ppmv)")
-co2_time
-```
 
 12. One way to differentiate natural ```co2``` oscillations from today's manmade ```co2``` spike is by examining the rate of change of ```co2```. The planet is affected not only by the absolute concentration of ```co2``` but also by its rate of change. When the rate of change is slow, living and nonliving systems have time to adapt to new temperature and gas levels, but when the rate of change is fast, abrupt differences can overwhelm natural systems. How does the pace of natural ```co2``` change differ from the current rate of change?
 
@@ -3611,4 +3605,4 @@ co2_time + xlim(-3000, 2018)
 - [X] A. 250
 - [ ] B. 1,000
 - [ ] C. 2,000
-- [X] D. 5,000
+- [ ] D. 5,000
