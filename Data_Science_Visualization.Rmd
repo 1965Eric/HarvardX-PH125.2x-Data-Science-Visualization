@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The textbook for the Data Science course series is [freely available online](https://rafalab.github.io/dsbook/).
 
-## Learning Objectives
+# Learning Objectives
 
 * Data visualization principles to better communicate data-driven findings
 * How to use ggplot2 to create custom plots
@@ -37,7 +37,7 @@ You will see examples of ggplot2 and dplyr in action with the Gapminder dataset.
 ### Section 5: Data Visualization Principles
 You will learn general principles to guide you in developing effective data visualizations.
 
-## Section 1 Overview
+# Section 1 Overview
 
 Section 1 introduces you to Data Visualization and Distributions.
 
@@ -764,7 +764,7 @@ error_avg(10000)
 error_avg(-10000)
 ```
 
-## Section 2 Overview
+# Section 2 Overview
 
 In Section 2, you will learn how to create data visualizations in R using ggplot2.
 
@@ -1472,7 +1472,7 @@ heights %>%
   geom_density(alpha=0.2) 
 ```
 
-## Section 3 Overview
+# Section 3 Overview
 
 Section 3 introduces you to summarizing with dplyr.
 
@@ -1754,7 +1754,7 @@ In this example, we will compare systolic blood pressure across values of the ``
 NHANES %>% filter(AgeDecade == " 40-49" & Gender == "male") %>% group_by(Race1) %>% summarize(average = mean(BPSysAve, na.rm = TRUE), standard_deviation = sd(BPSysAve, na.rm=TRUE)) %>% arrange(average)
 ```
 
-## Section 4 Overview
+# Section 4 Overview
 
 In Section 4, you will look at a case study involving data from the [Gapminder Foundation](https://www.gapminder.org) about trends in world health and economics.
 
@@ -2359,7 +2359,7 @@ gapminder_Africa_1970_2019 <- gapminder %>% mutate(dollars_per_day = gdp/populat
 gapminder_Africa_1970_2019 %>% ggplot(aes(dollars_per_day, infant_mortality, color = region, label = country)) + scale_x_continuous(trans = "log2") + geom_point() + geom_text() + facet_grid(year ~ .)
 ```
 
-## Section 5 Overview
+# Section 5 Overview
 
 Section 5 covers some general principles that can serve as guides for effective data visualization.
 
@@ -3193,7 +3193,7 @@ Which star type has the highest temperature? ```O```
 
 The Sun is classified as a G-type star. Is the most luminous G-type star in this dataset also the hottest? ```No```
 
-# Climate Change Exercises
+## Climate Change Exercises
 
 **Background**
 
