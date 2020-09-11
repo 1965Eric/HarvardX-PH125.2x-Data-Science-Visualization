@@ -3,10 +3,10 @@ title: "Data Science Visualization"
 output:
   bookdown::epub_book:
       number_sections: true
-  pdf_document:
-    latex_engine: xelatex
   html_document: default
   word_document: default
+  pdf_document:
+    latex_engine: xelatex
 urlcolor: blue
 ---
 
@@ -14,7 +14,7 @@ urlcolor: blue
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-The textbook for the Data Science course series is [freely available online](https://rafalab.github.io/dsbook/).
+The textbook for the Data Science course series is [freely available online](https://rafalab.github.io/dsbook/){target="_blank"}.
 
 # Learning Objectives
 
@@ -53,7 +53,7 @@ After completing Section 1, you will:
 
 ## Introduction to Data Visualization
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/introduction-to-data-visualization.html)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/introduction-to-data-visualization.html){target="_blank"}.
 
 **Key points**
 
@@ -74,7 +74,7 @@ head(murders)
 
 ## Introduction to Distributions
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html){target="_blank"}.
 
 **Key points**
 
@@ -84,7 +84,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## Data Types
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#variable-types)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#variable-types){target="_blank"}.
 
 **Key points**
 
@@ -176,10 +176,10 @@ sum(tab==1)
 
 The textbook for this section is available:
 
-* [Case Study describing student heights](https://rafalab.github.io/dsbook/distributions.html#case-study-describing-student-heights)
-* [Distribution Function](https://rafalab.github.io/dsbook/distributions.html#distribution-function)
-* [CDF Intro](https://rafalab.github.io/dsbook/distributions.html#cdf-intro)
-* [Histograms](https://rafalab.github.io/dsbook/distributions.html#histograms)
+* [Case Study describing student heights](https://rafalab.github.io/dsbook/distributions.html#case-study-describing-student-heights){target="_blank"}.
+* [Distribution Function](https://rafalab.github.io/dsbook/distributions.html#distribution-function){target="_blank"}.
+* [CDF Intro](https://rafalab.github.io/dsbook/distributions.html#cdf-intro){target="_blank"}.
+* [Histograms](https://rafalab.github.io/dsbook/distributions.html#histograms){target="_blank"}.
 
 **Key points**
 
@@ -206,7 +206,7 @@ prop.table(table(heights$sex))
 
 ## Smooth Density Plots
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#smoothed-density)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#smoothed-density){target="_blank"}.
 
 **Key points**
 
@@ -330,7 +330,7 @@ Which of the following statements is true?
 
 ## Normal Distribution
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#normal-distribution)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#normal-distribution){target="_blank"}.
 
 **Key points**
 
@@ -515,7 +515,7 @@ What would be a fair critique of our calculations?
 
 ## Quantile-Quantile Plots
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#quantile-quantile-plots)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#quantile-quantile-plots){target="_blank"}.
 
 **Key points**
 
@@ -555,7 +555,7 @@ abline(0,1)
 
 ## Percentiles
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#percentiles)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#percentiles){target="_blank"}.
 
 **Key points**
 
@@ -565,7 +565,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## Boxplots
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#boxplots)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#boxplots){target="_blank"}.
 
 **Key points**
 
@@ -651,7 +651,7 @@ To the nearest million, what is the median population size for Africa?
 
 ## Distribution of Female Heights
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#student-height-cont)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/distributions.html#student-height-cont){target="_blank"}.
 
 **Key points**
 
@@ -778,11 +778,11 @@ After completing Section 2, you will:
 * be able to explain what the aesthetic mapping component of a graph is.
 * be able to understand the scale component of a graph and select an appropriate scale component to use.
 
-Note that it can be hard to memorize all of the functions and arguments used by ggplot2, so we recommend that you have a [cheat sheet](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf) handy to help you remember the necessary commands.
+Note that it can be hard to memorize all of the functions and arguments used by ggplot2, so we recommend that you have a [cheat sheet](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf){target="_blank"} handy to help you remember the necessary commands.
 
 ## ggplot
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/ggplot2.html)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/ggplot2.html){target="_blank"}.
 
 **Key points**
 
@@ -793,7 +793,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## Graph Components
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/ggplot2.html#the-components-of-a-graph)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/ggplot2.html#the-components-of-a-graph){target="_blank"}.
 
 **Key points**
 
@@ -808,7 +808,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 	
 ## Creating a New Plot
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/ggplot2.html#ggplot-objects)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/ggplot2.html#ggplot-objects){target="_blank"}.
 
 **Key points**
 
@@ -842,9 +842,9 @@ The functions above render a plot, in this case a blank slate since no geometry 
 
 The textbook for this section is available:
 
-* [Geometries](https://rafalab.github.io/dsbook/ggplot2.html#geometries)
-* [Aesthetic mappings](https://rafalab.github.io/dsbook/ggplot2.html#aesthetic-mappings)
-* [Layers](https://rafalab.github.io/dsbook/ggplot2.html#layers)
+* [Geometries](https://rafalab.github.io/dsbook/ggplot2.html#geometries){target="_blank"}.
+* [Aesthetic mappings](https://rafalab.github.io/dsbook/ggplot2.html#aesthetic-mappings){target="_blank"}.
+* [Layers](https://rafalab.github.io/dsbook/ggplot2.html#layers){target="_blank"}.
 
 **Key points**
 
@@ -887,7 +887,7 @@ p_test <- p + geom_text(aes(population/10^6, total), label = abb)
 
 ## Tinkering
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/ggplot2.html#tinkering-with-arguments) and [here](https://rafalab.github.io/dsbook/ggplot2.html#global-versus-local-aesthetic-mappings)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/ggplot2.html#tinkering-with-arguments){target="_blank"} and [here](https://rafalab.github.io/dsbook/ggplot2.html#global-versus-local-aesthetic-mappings){target="_blank"}.
 
 **Key points**
 
@@ -920,10 +920,10 @@ p + geom_point(size = 3) +
 
 The textbook for this section is available:
 
-* [Scales](https://rafalab.github.io/dsbook/ggplot2.html#scales)
-* [Labels and titles](https://rafalab.github.io/dsbook/ggplot2.html#labels-and-titles)
-* [Categories as colors](https://rafalab.github.io/dsbook/ggplot2.html#categories-as-colors)
-* [Annotation, shapes and adjustments](https://rafalab.github.io/dsbook/ggplot2.html#annotation-shapes-and-adjustments)
+* [Scales](https://rafalab.github.io/dsbook/ggplot2.html#scales){target="_blank"}.
+* [Labels and titles](https://rafalab.github.io/dsbook/ggplot2.html#labels-and-titles){target="_blank"}.
+* [Categories as colors](https://rafalab.github.io/dsbook/ggplot2.html#categories-as-colors){target="_blank"}.
+* [Annotation, shapes and adjustments](https://rafalab.github.io/dsbook/ggplot2.html#annotation-shapes-and-adjustments){target="_blank"}.
 
 **Key points**
 
@@ -1011,7 +1011,7 @@ p <- p + scale_color_discrete(name = "Region")    # capitalize legend title
 
 ## Add-on Packages
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/ggplot2.html#add-on-packages) and [here](https://rafalab.github.io/dsbook/ggplot2.html#putting-it-all-together)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/ggplot2.html#add-on-packages){target="_blank"} and [here](https://rafalab.github.io/dsbook/ggplot2.html#putting-it-all-together){target="_blank"}.
 
 **Key points**
 
@@ -1065,10 +1065,10 @@ murders %>%
 
 The textbook for this section is available:
 
-* [Histograms](https://rafalab.github.io/dsbook/distributions.html#histograms-1)
-* [Density plots](https://rafalab.github.io/dsbook/distributions.html#density-plots)
-* [QQ-plots](https://rafalab.github.io/dsbook/distributions.html#qq-plots)
-* [Grids of plots](https://rafalab.github.io/dsbook/ggplot2.html#grids-of-plots)
+* [Histograms](https://rafalab.github.io/dsbook/distributions.html#histograms-1){target="_blank"}.
+* [Density plots](https://rafalab.github.io/dsbook/distributions.html#density-plots){target="_blank"}.
+* [QQ-plots](https://rafalab.github.io/dsbook/distributions.html#qq-plots){target="_blank"}.
+* [Grids of plots](https://rafalab.github.io/dsbook/ggplot2.html#grids-of-plots){target="_blank"}.
 
 **Key points**
 
@@ -1488,7 +1488,7 @@ After completing Section 3, you will:
 
 ## dplyr
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/tidyverse.html#summarizing-data)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/tidyverse.html#summarizing-data){target="_blank"}.
 
 **Key points**
 
@@ -1528,9 +1528,9 @@ heights %>%
 
 ## The Dot Placeholder
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/tidyverse.html#the-dot-operator)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/tidyverse.html#the-dot-operator){target="_blank"}.
 
-Note that a common replacement for the dot operator is the pull function. Here is the [textbook section on the pull function](https://rafalab.github.io/dsbook/tidyverse.html#pull).
+Note that a common replacement for the dot operator is the pull function. Here is the [textbook section on the pull function](https://rafalab.github.io/dsbook/tidyverse.html#pull){target="_blank"}.
 
 **Key points**
 
@@ -1561,7 +1561,7 @@ us_murder_rate <- murders %>%
 
 ## Group By
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/tidyverse.html#group-by)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/tidyverse.html#group-by){target="_blank"}.
 
 **Key points**
 
@@ -1587,7 +1587,7 @@ murders %>%
 
 ## Sorting Data Tables
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/tidyverse.html#sorting-data-frames)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/tidyverse.html#sorting-data-frames){target="_blank"}.
 
 **Key points**
 
@@ -1758,7 +1758,7 @@ NHANES %>% filter(AgeDecade == " 40-49" & Gender == "male") %>% group_by(Race1) 
 
 # Section 4 Overview
 
-In Section 4, you will look at a case study involving data from the [Gapminder Foundation](https://www.gapminder.org) about trends in world health and economics.
+In Section 4, you will look at a case study involving data from the [Gapminder Foundation](https://www.gapminder.org){target="_blank"} about trends in world health and economics.
 
 After completing Section 4, you will:
 
@@ -1769,16 +1769,16 @@ After completing Section 4, you will:
 
 ## Case Study: Trends in World Health and Economics
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#case-study-new-insights-on-poverty)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#case-study-new-insights-on-poverty){target="_blank"}.
 
 **More about Gapminder**
 
 The original Gapminder TED talks are available and we encourage you to watch them.
 
-* [The Best Stats You've Ever Seen](https://www.ted.com/talks/hans_rosling_the_best_stats_you_ve_ever_seen?language=en)
-* [New Insights on Poverty](https://www.ted.com/talks/hans_rosling_new_insights_on_poverty?language=en)
+* [The Best Stats You've Ever Seen](https://www.ted.com/talks/hans_rosling_the_best_stats_you_ve_ever_seen?language=en){target="_blank"}.
+* [New Insights on Poverty](https://www.ted.com/talks/hans_rosling_new_insights_on_poverty?language=en){target="_blank"}.
 
-You can also find more information and raw data (in addition to what we analyze in class) [at](https://www.gapminder.org/).
+You can also find more information and raw data (in addition to what we analyze in class) [at](https://www.gapminder.org/){target="_blank"}.
 
 **Key points**
 
@@ -1789,7 +1789,7 @@ You can also find more information and raw data (in addition to what we analyze 
 	
 ## Gapminder Dataset
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#case-study-new-insights-on-poverty)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#case-study-new-insights-on-poverty){target="_blank"}.
 
 **Key points**
 
@@ -1811,7 +1811,7 @@ gapminder %>%
 
 ## Life Expectancy and Fertility Rates
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#scatterplots)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#scatterplots){target="_blank"}.
 
 **Key points**
 
@@ -1838,7 +1838,7 @@ filter(gapminder, year == 1962) %>%
 
 ## Faceting
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#faceting)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#faceting){target="_blank"}.
 
 **Key points**
 
@@ -1875,7 +1875,7 @@ gapminder %>%
 
 ## Time Series Plots
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#time-series-plots)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#time-series-plots){target="_blank"}.
 
 **Key points**
 
@@ -1934,7 +1934,7 @@ gapminder %>% filter(country %in% countries) %>%
 
 ## Transformations
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#data-transformations) and [here](https://rafalab.github.io/dsbook/gapminder.html#visualizing-multimodal-distributions)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#data-transformations){target="_blank"} and [here](https://rafalab.github.io/dsbook/gapminder.html#visualizing-multimodal-distributions){target="_blank"}.
 
 **Key points**
 
@@ -1976,7 +1976,7 @@ gapminder %>%
 
 ## Stratify and Boxplot
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#comparing-multiple-distributions-with-boxplots-and-ridge-plots). Note that many boxplots from the video are instead dot plots in the textbook and that a different boxplot is constructed in the textbook. Also read that section to see an example of grouping factors with the ```case_when``` function.
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#comparing-multiple-distributions-with-boxplots-and-ridge-plots){target="_blank"}. Note that many boxplots from the video are instead dot plots in the textbook and that a different boxplot is constructed in the textbook. Also read that section to see an example of grouping factors with the ```case_when``` function.
 
 **Key points**
 
@@ -2042,7 +2042,7 @@ p + scale_y_continuous(trans = "log2") + geom_point(show.legend = FALSE)
 
 ## Comparing Distributions
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#example-1970-versus-2010-income-distributions). Note that the boxplots are slightly different.
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#example-1970-versus-2010-income-distributions){target="_blank"}. Note that the boxplots are slightly different.
 
 **Key points**
 
@@ -2121,9 +2121,9 @@ p + geom_boxplot(aes(region, dollars_per_day, fill = factor(year)))
 
 The textbook for this section is available:
 
-* [1970 versus 2010 income distributions](https://rafalab.github.io/dsbook/gapminder.html#example-1970-versus-2010-income-distributions)
-* [Accessing computed variables](https://rafalab.github.io/dsbook/gapminder.html#accessing-computed-variables)
-* [Weighted densities](https://rafalab.github.io/dsbook/gapminder.html#weighted-densities)
+* [1970 versus 2010 income distributions](https://rafalab.github.io/dsbook/gapminder.html#example-1970-versus-2010-income-distributions){target="_blank"}.
+* [Accessing computed variables](https://rafalab.github.io/dsbook/gapminder.html#accessing-computed-variables){target="_blank"}.
+* [Weighted densities](https://rafalab.github.io/dsbook/gapminder.html#weighted-densities){target="_blank"}.
 
 **Key points**
 
@@ -2197,7 +2197,7 @@ gapminder %>%
 
 ## Ecological Fallacy
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#the-ecological-fallacy-and-importance-of-showing-the-data)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/gapminder.html#the-ecological-fallacy-and-importance-of-showing-the-data){target="_blank"}.
 
 **Key points**
 
@@ -2237,7 +2237,7 @@ surv_income %>% ggplot(aes(income, infant_survival_rate, label = group, color = 
 
 ## Assessment - Exploring the Gapminder Dataset
 
-1. The [Gapminder Foundation](https://www.gapminder.org) is a non-profit organization based in Sweden that promotes global development through the use of statistics that can help reduce misconceptions about global development.
+1. The [Gapminder Foundation](https://www.gapminder.org){target="_blank"} is a non-profit organization based in Sweden that promotes global development through the use of statistics that can help reduce misconceptions about global development.
 
 ```{r}
 ## fill out the missing parts in filter and aes
@@ -2375,7 +2375,7 @@ After completing Section 5, you will:
 
 ## Introduction to Data Visualization Principles
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html){target="_blank"}.
 
 **Key points**
 
@@ -2385,9 +2385,9 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## Encoding Data Using Visual Cues
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#encoding-data-using-visual-cues)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#encoding-data-using-visual-cues){target="_blank"}.
 
-You can learn more about barplots in the textbook section on [barplots](https://rafalab.github.io/dsbook/distributions.html#barplots)
+You can learn more about barplots in the textbook section on [barplots](https://rafalab.github.io/dsbook/distributions.html#barplots){target="_blank"}.
 
 **Key points**
 
@@ -2398,7 +2398,7 @@ You can learn more about barplots in the textbook section on [barplots](https://
 
 ## Know When to Include Zero
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#know-when-to-include-0)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#know-when-to-include-0){target="_blank"}.
 
 **Key points**
 
@@ -2407,7 +2407,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## Do Not Distort Quantities
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#do-not-distort-quantities)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#do-not-distort-quantities){target="_blank"}.
 
 **Key points**
 
@@ -2416,7 +2416,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## Order by a Meaningful Value
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#order-categories-by-a-meaningful-value)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#order-categories-by-a-meaningful-value){target="_blank"}.
 
 **Key points**
 
@@ -2452,7 +2452,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## Show the Data
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#show-the-data-1)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#show-the-data-1){target="_blank"}.
 
 **Key points**
 
@@ -2473,7 +2473,7 @@ heights %>% ggplot(aes(sex, height)) + geom_jitter(width = 0.1, alpha = 0.2)
 
 ## Ease Comparisons: Use Common Axes
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#ease-comparisons)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#ease-comparisons){target="_blank"}.
 
 **Key points**
 
@@ -2483,7 +2483,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## Consider Transformations
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#consider-transformations)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#consider-transformations){target="_blank"}.
 
 **Key points**
 
@@ -2495,9 +2495,9 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 The textbook for this section is available:
 
-* [Compared visual cues being adjacent](https://rafalab.github.io/dsbook/data-visualization-principles.html#visual-cues-to-be-compared-should-be-adjacent)
-* [Using color](https://rafalab.github.io/dsbook/data-visualization-principles.html#use-color)
-* [Considering the color blind](https://rafalab.github.io/dsbook/data-visualization-principles.html#think-of-the-color-blind)
+* [Compared visual cues being adjacent](https://rafalab.github.io/dsbook/data-visualization-principles.html#visual-cues-to-be-compared-should-be-adjacent){target="_blank"}.
+* [Using color](https://rafalab.github.io/dsbook/data-visualization-principles.html#use-color){target="_blank"}.
+* [Considering the color blind](https://rafalab.github.io/dsbook/data-visualization-principles.html#think-of-the-color-blind){target="_blank"}.
 
 **Key points**
 
@@ -2574,7 +2574,7 @@ murders %>% mutate(rate = total/population*100000) %>% mutate(region = reorder(r
 
 ## Slope Charts
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#plots-for-two-variables)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#plots-for-two-variables){target="_blank"}.
 
 **Key points**
 
@@ -2620,7 +2620,7 @@ dat %>%
 
 ## Encoding a Third Variable
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#encoding-a-third-variable)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#encoding-a-third-variable){target="_blank"}.
 
 **Key points**
 
@@ -2629,7 +2629,7 @@ The textbook for this section is available [here](https://rafalab.github.io/dsbo
 
 ## Case Study: Vaccines
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#vaccines). Information on color palettes can be found in the textbook section [on encoding a third variable](https://rafalab.github.io/dsbook/data-visualization-principles.html#encoding-a-third-variable)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#vaccines){target="_blank"}. Information on color palettes can be found in the textbook section [on encoding a third variable](https://rafalab.github.io/dsbook/data-visualization-principles.html#encoding-a-third-variable){target="_blank"}.
 
 **Key points**
 
@@ -2696,7 +2696,7 @@ dat %>%
 
 ## Avoid Pseudo and Gratuitous 3D Plots
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#avoid-pseudo-three-dimensional-plots)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#avoid-pseudo-three-dimensional-plots){target="_blank"}.
 
 **Key point**
 
@@ -2704,7 +2704,7 @@ In general, pseudo-3D plots and gratuitous 3D plots only add confusion. Use regu
 
 ## Avoid Too Many Significant Digits
 
-The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#avoid-too-many-significant-digits)
+The textbook for this section is available [here](https://rafalab.github.io/dsbook/data-visualization-principles.html#avoid-too-many-significant-digits){target="_blank"}.
 
 **Key points**
 
@@ -2888,7 +2888,7 @@ What is the correct plot according to the instructions above? ```QQ-plot C```
 
 To answer the following questions, make barplots of the ```Survived``` and ```Sex``` variables using ```geom_bar```. Try plotting one variable and filling by the other variable. You may want to try the default plot, then try adding ```position = position_dodge()``` to ```geom_bar``` to make separate bars for each group.
 
-You can read more about making barplots in the textbook section on [ggplot2 geometries](https://rafalab.github.io/dsbook/distributions.html#other-geometries).
+You can read more about making barplots in the textbook section on [ggplot2 geometries](https://rafalab.github.io/dsbook/distributions.html#other-geometries){target="_blank"}.
 
 A and B can be clearly seen in the barplot of survival status filled by sex. The count of survivors is lower than the count of non-survivors. The bar of survivors is more than half filled by females. Alternatively, the bars can be split by sex with ```position_dodge```, showing the "Female, Survived" bar has a greater height than the "Male, survived" bar. C and D are more clearly seen in the barplot of sex filled by survival status, though they can also be determined from the first barplot. Most males did not survive, but most females did survive.
 
@@ -3028,7 +3028,7 @@ Which of the following are true? Select all correct answers.
 
 **Background**
 
-Astronomy is one of the oldest data-driven sciences. In the late 1800s, the director of the Harvard College Observatory hired women to analyze astronomical data, which at the time was done using photographic glass plates. These women became known as the Harvard Computers. They computed the position and luminosity of various astronomical objects such as stars and galaxies. (If you are interested, you can [learn more about the Harvard Computers](https://platestacks.cfa.harvard.edu/women-computers)). Today, astronomy is even more of a data-driven science, with an inordinate amount of data being produced by modern instruments every day.
+Astronomy is one of the oldest data-driven sciences. In the late 1800s, the director of the Harvard College Observatory hired women to analyze astronomical data, which at the time was done using photographic glass plates. These women became known as the Harvard Computers. They computed the position and luminosity of various astronomical objects such as stars and galaxies. (If you are interested, you can [learn more about the Harvard Computers](https://platestacks.cfa.harvard.edu/women-computers){target="_blank"}). Today, astronomy is even more of a data-driven science, with an inordinate amount of data being produced by modern instruments every day.
 
 In the following exercises we will analyze some actual astronomical data to inspect properties of stars, their absolute magnitude (which relates to a star's **luminosity**, or brightness), temperature and type (spectral class).
 
